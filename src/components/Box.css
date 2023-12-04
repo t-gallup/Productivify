@@ -1,0 +1,15 @@
+.day-box {
+  border: solid;
+  border-color: rgba(49, 49, 49, 0.2);
+}
+
+.day-num {
+  text-align: center;
+  margin: none;
+  padding: none;
+}
+
+.box-tasks {
+  display: flex;
+  height: 50%;
+}
