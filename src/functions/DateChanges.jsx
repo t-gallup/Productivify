@@ -1,45 +1,27 @@
 import PropTypes from "prop-types";
 
-export function AddMonth({displayDay, setDisplayDay, setFebDays, setFirstDayOfMonth, firstDayOfMonth}) {
-  if (displayDay.getMonth() == 11) {
-    const newDate = new Date(displayDay.getFullYear() + 1, 0, displayDay.getDay());
-    displayDay = newDate;
-    setDisplayDay(newDate);
-    if (displayDay.getFullYear() % 4 == 0) {
-      setFebDays(29);
-    }
-    else {
-      setFebDays(28);
-    }
-  } else {
-    const newDate = new Date(displayDay.getFullYear(), displayDay.getMonth() + 1, displayDay.getDay());
-    displayDay = newDate;
-    setDisplayDay(newDate);
+export function AddMonth({displayDay, setDisplayDay, setFebDays}) {
+  const newDate = new Date(displayDay.getFullYear(), displayDay.getMonth() + 1, displayDay.getDay());
+  displayDay = newDate;
+  setDisplayDay(newDate);
+  if (displayDay.getFullYear() % 4 == 0) {
+    setFebDays(29);
   }
-  setFirstDayOfMonth(new Date(displayDay.getFullYear(), displayDay.getMonth(), 1).getDay());
-  console.log("Display Month: ", displayDay.getMonth());
-  console.log("First Day of Month: ", firstDayOfMonth);
+  else {
+    setFebDays(28);
+  }
 }
 
-export function SubtractMonth({displayDay, setDisplayDay, setFebDays, setFirstDayOfMonth, firstDayOfMonth}) {
-  if (displayDay.getMonth() == 0) {
-    const newDate = new Date(displayDay.getFullYear() - 1, 11, displayDay.getDay());
-    displayDay = newDate;
-    setDisplayDay(newDate);
-    if (displayDay.getFullYear() % 4 == 0) {
-      setFebDays(29);
-    }
-    else {
-      setFebDays(28);
-    }
-  } else {
-    const newDate = new Date(displayDay.getFullYear(), displayDay.getMonth() - 1, displayDay.getDay())
-    setDisplayDay(newDate);
-    displayDay = newDate;
+export function SubtractMonth({displayDay, setDisplayDay, setFebDays}) {
+  const newDate = new Date(displayDay.getFullYear(), displayDay.getMonth() - 1, displayDay.getDay())
+  setDisplayDay(newDate);
+  displayDay = newDate;
+  if (displayDay.getFullYear() % 4 == 0) {
+    setFebDays(29);
   }
-  setFirstDayOfMonth(new Date(displayDay.getFullYear(), displayDay.getMonth(), 1).getDay());
-  console.log("Display Month: ", displayDay.getMonth());
-  console.log("First Day of Month: ", firstDayOfMonth);
+  else {
+    setFebDays(28);
+  }
 }
 
 AddMonth.propTypes = {

@@ -17,8 +17,7 @@ function App() {
   const [openWindow, setOpenWindow] = useState(false);
   const currentDay = new Date(Date.now())
   const [displayDay, setDisplayDay] = useState(currentDay);
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState(new Date(displayDay.getFullYear(), displayDay.getMonth(), 1).getDay());
-  console.log(displayDay.getMonth());
+  const firstDayOfMonth = new Date(displayDay.getFullYear(), displayDay.getMonth(), 1).getDay();
 
   const monthMappings = {
     0: "January",
@@ -64,11 +63,11 @@ function App() {
         
         <div className="month">
           <button className="month-item" 
-          onClick={() => SubtractMonth({displayDay, setDisplayDay, setFebDays, setFirstDayOfMonth, firstDayOfMonth})}
+          onClick={() => SubtractMonth({displayDay, setDisplayDay, setFebDays})}
           >&#10094;</button>
           <p className="month-item month-text">{monthMappings[displayDay.getMonth()]} {displayDay.getFullYear()}</p>
           <button className="month-item" 
-          onClick={() => AddMonth({displayDay, setDisplayDay, setFebDays, setFirstDayOfMonth, firstDayOfMonth})}
+          onClick={() => AddMonth({displayDay, setDisplayDay, setFebDays})}
           >&#10095;</button>
         </div>
 
@@ -85,12 +84,7 @@ function App() {
         <div className="boxes">
           {[...Array(firstDayOfMonth)].map((x) => {return (<Box key={x} className="box-child" day="" tasks={emptyList}/>)})}
           {[...Array.from({ length: numDaysPerMonth[displayDay.getMonth()] }, (_, index) => index + 1)].map((x) => {return (<Box key={x} className="box-child" day={x} tasks={emptyList}/>)})}
-          <Box className="box-child" day="" tasks={emptyList} />
-          <Box className="box-child" day="" tasks={emptyList} />
-          <Box className="box-child" day="" tasks={emptyList} />
-          <Box className="box-child" day="" tasks={emptyList} />
-          <Box className="box-child" day="" tasks={emptyList} />
-          <Box className="box-child" day="" tasks={emptyList} />
+          {[...Array(7 - (firstDayOfMonth + numDaysPerMonth[displayDay.getMonth()]) % 7)].map((x) => {return (<Box key={x} className="box-child" day="" tasks={emptyList}/>)})}
         </div>
 
         {/* <div>
