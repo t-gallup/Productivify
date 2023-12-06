@@ -1,7 +1,7 @@
 #root {
   /* max-width: 1280px; */
   margin: 0 auto;
-  margin: 100px 200px 100px 200px;
+  /* margin: 100px 200px 100px 200px; */
   width: 80%;
   padding: 2rem;
   /* text-align: center; */
@@ -9,14 +9,24 @@
 
 .boxes {
   display: grid;
-  grid-template-columns: repeat(7,minmax(160px, 1fr));
-  width: 500px;
-  height: 800px;
+  grid-template-columns: repeat(7,minmax(11.5vw, 1fr));
+  width: 70vw;
+  height: 70vw;
 }
 
-.boxes>* {
-  /* flex: 14%; */
+.header-wrap {
+  /* width: 80%; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.task-button {
+  width: 15vw;
+  height: 8vh;
+}
+
+
 
 .box-child {
   
@@ -33,15 +43,32 @@
   /* display: flex;
   flex-direction: column;
   align-content: flex-start; */
+  /* width: 100%; */
 }
 
 
 .month {
   display: flex;
   /* margin: auto; */
+  align-items: center;
   
 }
 
 .month-item {
   padding: 10px;
+  background-color: #1a1a1a;
+  height: 100%;
+  border-radius: 0;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.month-text {
+  width: 15vw;
+  text-align: center;
+}
+
+.weekdays {
+  display: flex;
+  justify-content: space-around;
 }
