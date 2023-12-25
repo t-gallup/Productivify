@@ -1,7 +1,19 @@
 .task-box {
-
+    background-color: black;
+    /* height: fit-content; */
+    width: 90%;
+    /* justify-content: center;
+    display: flex; */
+    /* flex-direction: row; */
+    /* word-wrap: break-word; */
 }
 
 .task-description {
+    margin: 0;
+    word-wrap: break-word;
+    text-align: center;
+}
 
+li {
+    list-style-type: none;
 }

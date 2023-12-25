@@ -11,5 +11,7 @@
 
 .box-tasks {
   display: flex;
-  height: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

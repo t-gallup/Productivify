@@ -1,25 +1,22 @@
 import "./App.css";
 import Box from "./components/Box";
 import NewTaskWindow from "./components/NewTaskWindow";
-import {useState} from 'react';
-import {SubtractMonth, AddMonth} from "./functions/DateChanges";
+import { useCallback, useState, useMemo } from "react";
+import { SubtractMonth, AddMonth } from "./functions/DateChanges";
 
 function App() {
-  // const [count, setCount] = useState(0)
-  // const taskLists = [
-  //   {
-  //     3: "String racket"
-  //   }
-  // ]
-  const emptyList = [];
-  const days = [...Array(31).keys()].map(x => ++x);
-  const taskLists = days.map((day) => <li key={day.toString()}>{[]}</li>)
+  const [emptyList, ] = useState({})
+  const [years,] = useState(Array.from({ length: 4 }, (_, index) => index + 2021));
   const [openWindow, setOpenWindow] = useState(false);
-  const currentDay = new Date(Date.now())
+  const [currentDay,] = useState(new Date(Date.now()));
   const [displayDay, setDisplayDay] = useState(currentDay);
-  const firstDayOfMonth = new Date(displayDay.getFullYear(), displayDay.getMonth(), 1).getDay();
+  const firstDayOfMonth = new Date(
+    displayDay.getFullYear(),
+    displayDay.getMonth(),
+    1
+  ).getDay();
 
-  const monthMappings = {
+  const [monthMappings,] = useState({
     0: "January",
     1: "Feburary",
     2: "March",
@@ -31,13 +28,13 @@ function App() {
     8: "September",
     9: "October",
     10: "November",
-    11: "December"
-  };
-  
+    11: "December",
+  });
 
-
-  const [febDays, setFebDays] = useState((displayDay.getFullYear() % 4 == 0) ? 29 : 28);
-  const numDaysPerMonth = {
+  const [febDays, setFebDays] = useState(
+    displayDay.getFullYear() % 4 == 0 ? 29 : 28
+  );
+  const numDaysPerMonth = useMemo(() => ({
     0: 31,
     1: febDays,
     2: 31,
@@ -49,93 +46,170 @@ function App() {
     8: 30,
     9: 31,
     10: 30,
-    11: 31
-  }
+    11: 31,
+  }), [febDays]);
+
+
+    
+
+  const [taskLists, setTaskLists] = useState({});
+  const newTaskLists = {...taskLists}
+  years.forEach((year) => {
+    for (let month = 1; month <= 12; month++) {
+      var currNumDays = numDaysPerMonth[month - 1];
+      if (year % 4 == 0 && month == 2) {
+        currNumDays = 29;
+      }
+      for (let day = 1; day <= currNumDays; day++) {
+        const key = `${year}-${month.toString().padStart(2, "0")}-${day
+          .toString()
+          .padStart(2, "0")}`;
+        newTaskLists[key] = [];
+      }
+    }
+  });
+  setTaskLists(newTaskLists);
+  const handleAddTask = useCallback((completionDay, taskDescription) => {
+    const newTaskLists = {...taskLists};
+    const key = `${completionDay.substring(0, 4)}-${completionDay
+      .substring(5, 7)
+      .padStart(2, "0")}-${completionDay
+      .substring(8, 10)
+      .padStart(2, "0")}`;
+
+    if (newTaskLists[key] !== undefined) {
+      newTaskLists[key].push(taskDescription);
+    }
+
+    setTaskLists(newTaskLists);
+    setOpenWindow(false);
+  }, [taskLists, setOpenWindow]);
+
+  const weekdays = useMemo(() => (
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  ), []);
+
+  const boxes = useMemo(() => {
+    const daysArray = Array.from({ length: numDaysPerMonth[displayDay.getMonth()] }, (_, index) => index + 1);
+
+    return [
+      ...Array(firstDayOfMonth).map((x) => {
+          <Box
+            key={x}
+            className="box-child"
+            day=""
+            month=""
+            year=""
+            taskList={emptyList}
+          />
+      }),
+      ...daysArray.map(x => (
+        <Box key={x} className="box-child" day={x} month={displayDay.getMonth() + 1} year={displayDay.getFullYear()} taskList={taskLists} />
+      )),
+      ...Array(7 - ((firstDayOfMonth + daysArray.length) % 7)).map((x) => {
+        <Box
+          key={x}
+          className="box-child"
+          day=""
+          month=""
+          year=""
+          taskList={emptyList}
+        />
+      }),
+    ];
+  }, [displayDay, firstDayOfMonth, numDaysPerMonth, taskLists, emptyList]);
 
   return (
     <>
-      <NewTaskWindow openWindow={openWindow} setOpenWindow={setOpenWindow}></NewTaskWindow>
+      <NewTaskWindow
+        openWindow={openWindow}
+        setOpenWindow={setOpenWindow}
+        taskList={taskLists}
+        handleAddTask={handleAddTask}
+      ></NewTaskWindow>
       <div className="calendar">
         <div className="header-wrap">
           <h1>Task Tracker</h1>
-          <button className="task-button" onClick={() => setOpenWindow(true)}>Add Task</button>
+          <button className="task-button" onClick={() => setOpenWindow(true)}>
+            Add Task
+          </button>
         </div>
-        
+
         <div className="month">
-          <button className="month-item" 
-          onClick={() => SubtractMonth({displayDay, setDisplayDay, setFebDays})}
-          >&#10094;</button>
-          <p className="month-item month-text">{monthMappings[displayDay.getMonth()]} {displayDay.getFullYear()}</p>
-          <button className="month-item" 
-          onClick={() => AddMonth({displayDay, setDisplayDay, setFebDays})}
-          >&#10095;</button>
+          <button
+            className="month-item"
+            onClick={() =>
+              SubtractMonth({ displayDay, setDisplayDay, setFebDays })
+            }
+          >
+            &#10094;
+          </button>
+          <p className="month-item month-text">
+            {monthMappings[displayDay.getMonth()]} {displayDay.getFullYear()}
+          </p>
+          <button
+            className="month-item"
+            onClick={() => AddMonth({ displayDay, setDisplayDay, setFebDays })}
+          >
+            &#10095;
+          </button>
         </div>
 
         <div className="weekdays">
-          <p className="weekday">Sun</p>
-          <p className="weekday">Mon</p>
-          <p className="weekday">Tues</p>
-          <p className="weekday">Wed</p>
-          <p className="weekday">Thurs</p>
-          <p className="weekday">Fri</p>
-          <p className="weekday">Sat</p>
+          {weekdays.map((day) => (
+          <><p className="weekday">{day}</p></>)
+          )}
         </div>
 
         <div className="boxes">
-          {[...Array(firstDayOfMonth)].map((x) => {return (<Box key={x} className="box-child" day="" tasks={emptyList}/>)})}
-          {[...Array.from({ length: numDaysPerMonth[displayDay.getMonth()] }, (_, index) => index + 1)].map((x) => {return (<Box key={x} className="box-child" day={x} tasks={emptyList}/>)})}
-          {[...Array(7 - (firstDayOfMonth + numDaysPerMonth[displayDay.getMonth()]) % 7)].map((x) => {return (<Box key={x} className="box-child" day="" tasks={emptyList}/>)})}
+          {boxes}
+          {/* {[...Array(firstDayOfMonth)].map((x) => {
+            return (
+              <Box
+                key={x}
+                className="box-child"
+                day=""
+                month=""
+                year=""
+                taskList={emptyList}
+              />
+            );
+          })}
+          {[
+            ...Array.from(
+              { length: numDaysPerMonth[displayDay.getMonth()] },
+              (_, index) => index + 1
+            ),
+          ].map((x) => {
+            return (
+              <Box
+                key={x}
+                className="box-child"
+                day={x}
+                month={displayDay.getMonth()+1}
+                year={displayDay.getFullYear()}
+                taskList={taskLists}
+              />
+            );
+          })}
+          {[
+            ...Array(
+              7 -
+                ((firstDayOfMonth + numDaysPerMonth[displayDay.getMonth()]) % 7)
+            ),
+          ].map((x) => {
+            return (
+              <Box
+                key={x}
+                className="box-child"
+                day=""
+                month=""
+                year=""
+                taskList={emptyList}
+              />
+            );
+          })} */}
         </div>
-
-        {/* <div>
-
-    <ul class="weekdays">
-      <li>Mo</li>
-      <li>Tu</li>
-      <li>We</li>
-      <li>Th</li>
-      <li>Fr</li>
-      <li>Sa</li>
-      <li>Su</li>
-    </ul>
-    </div>
-
-    <div>
-
-    <ul class="days">
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li><span class="active">10</span></li>
-      <li>11</li>
-      <li>12</li>
-      <li>13</li>
-      <li>14</li>
-      <li>15</li>
-      <li>16</li>
-      <li>17</li>
-      <li>18</li>
-      <li>19</li>
-      <li>20</li>
-      <li>21</li>
-      <li>22</li>
-      <li>23</li>
-      <li>24</li>
-      <li>25</li>
-      <li>26</li>
-      <li>27</li>
-      <li>28</li>
-      <li>29</li>
-      <li>30</li>
-      <li>31</li>
-    </ul>
-  </div> */}
       </div>
     </>
   );

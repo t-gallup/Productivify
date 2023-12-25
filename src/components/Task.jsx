@@ -2,6 +2,7 @@ import "./Task.css";
 import PropTypes from "prop-types";
 
 function Task({ description }) {
+  {console.log(description)}
   return (
     <>
       <div className="task-box">
