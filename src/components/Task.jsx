@@ -6,7 +6,9 @@ function Task({ description }) {
   return (
     <>
       <div className="task-box">
-        <p className="task-description"> {description}</p>
+        <button className="ind-task-button">
+          <p className="task-description"> {description}</p>
+        </button>
       </div>
     </>
   );

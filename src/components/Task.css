@@ -1,5 +1,5 @@
 .task-box {
-    background-color: black;
+    /* background-color: black; */
     /* height: fit-content; */
     width: 90%;
     /* justify-content: center;
@@ -12,6 +12,10 @@
     margin: 0;
     word-wrap: break-word;
     text-align: center;
+}
+
+.ind-task-button {
+    /* padding: 0; */
 }
 
 li {

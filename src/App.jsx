@@ -3,12 +3,16 @@ import Box from "./components/Box";
 import NewTaskWindow from "./components/NewTaskWindow";
 import { useCallback, useState, useMemo } from "react";
 import { SubtractMonth, AddMonth } from "./functions/DateChanges";
+import EditWindow from "./components/EditWindow";
 
 function App() {
-  const [emptyList, ] = useState({})
-  const [years,] = useState(Array.from({ length: 4 }, (_, index) => index + 2021));
+  const [emptyList] = useState({});
+  const [years] = useState(
+    Array.from({ length: 30 }, (_, index) => index + 2011)
+  );
   const [openWindow, setOpenWindow] = useState(false);
-  const [currentDay,] = useState(new Date(Date.now()));
+  const [openEditWindow, setOpenEditWindow] = useState(false);
+  const [currentDay] = useState(new Date(Date.now()));
   const [displayDay, setDisplayDay] = useState(currentDay);
   const firstDayOfMonth = new Date(
     displayDay.getFullYear(),
@@ -16,7 +20,7 @@ function App() {
     1
   ).getDay();
 
-  const [monthMappings,] = useState({
+  const [monthMappings] = useState({
     0: "January",
     1: "Feburary",
     2: "March",
@@ -34,26 +38,26 @@ function App() {
   const [febDays, setFebDays] = useState(
     displayDay.getFullYear() % 4 == 0 ? 29 : 28
   );
-  const numDaysPerMonth = useMemo(() => ({
-    0: 31,
-    1: febDays,
-    2: 31,
-    3: 30,
-    4: 31,
-    5: 30,
-    6: 31,
-    7: 31,
-    8: 30,
-    9: 31,
-    10: 30,
-    11: 31,
-  }), [febDays]);
-
-
-    
+  const numDaysPerMonth = useMemo(
+    () => ({
+      0: 31,
+      1: febDays,
+      2: 31,
+      3: 30,
+      4: 31,
+      5: 30,
+      6: 31,
+      7: 31,
+      8: 30,
+      9: 31,
+      10: 30,
+      11: 31,
+    }),
+    [febDays]
+  );
 
   const [taskLists, setTaskLists] = useState({});
-  const newTaskLists = {...taskLists}
+  const newTaskLists = { ...taskLists };
   years.forEach((year) => {
     for (let month = 1; month <= 12; month++) {
       var currNumDays = numDaysPerMonth[month - 1];
@@ -68,57 +72,78 @@ function App() {
       }
     }
   });
-  setTaskLists(newTaskLists);
-  const handleAddTask = useCallback((completionDay, taskDescription) => {
-    const newTaskLists = {...taskLists};
+  if (taskLists["2021-01-01"] == undefined) {
+    setTaskLists(newTaskLists);
+  }
+
+  const handleAddTask = useCallback(
+    (completionDay, taskDescription) => {
+      const newTaskLists = { ...taskLists };
+      const key = `${completionDay.substring(0, 4)}-${completionDay
+        .substring(5, 7)
+        .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
+
+      if (newTaskLists[key] !== undefined) {
+        newTaskLists[key].push(taskDescription);
+      }
+
+      setTaskLists(newTaskLists);
+      setOpenWindow(false);
+    },
+    [taskLists, setOpenWindow]
+  );
+
+  // TODO: figure out how to pass in proper parameters to this func
+  const handleDeleteTask = useMemo((completionDay, taskDescription) => {
+    const newTaskLists = { ...taskLists };
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
-      .padStart(2, "0")}-${completionDay
-      .substring(8, 10)
-      .padStart(2, "0")}`;
+      .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
 
     if (newTaskLists[key] !== undefined) {
-      newTaskLists[key].push(taskDescription);
+      // TODO: lookup delete func for javascript
+      // newTaskLists[key].push(taskDescription);
     }
-
     setTaskLists(newTaskLists);
-    setOpenWindow(false);
-  }, [taskLists, setOpenWindow]);
+    setOpenEditWindow(false);
+  });
 
-  const weekdays = useMemo(() => (
-    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  ), []);
+  // TODO: Implement this func
+  const handleEditTask = useMemo(() => [], []);
+  const weekdays = useMemo(
+    () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    []
+  );
 
-  const boxes = useMemo(() => {
-    const daysArray = Array.from({ length: numDaysPerMonth[displayDay.getMonth()] }, (_, index) => index + 1);
-
-    return [
-      ...Array(firstDayOfMonth).map((x) => {
-          <Box
-            key={x}
-            className="box-child"
-            day=""
-            month=""
-            year=""
-            taskList={emptyList}
-          />
-      }),
-      ...daysArray.map(x => (
-        <Box key={x} className="box-child" day={x} month={displayDay.getMonth() + 1} year={displayDay.getFullYear()} taskList={taskLists} />
-      )),
-      ...Array(7 - ((firstDayOfMonth + daysArray.length) % 7)).map((x) => {
-        <Box
-          key={x}
-          className="box-child"
-          day=""
-          month=""
-          year=""
-          taskList={emptyList}
-        />
-      }),
-    ];
-  }, [displayDay, firstDayOfMonth, numDaysPerMonth, taskLists, emptyList]);
-
+  // const daysArray = Array.from({ length: numDaysPerMonth[displayDay.getMonth()] }, (_, index) => index + 1);
+  // const boxes = useMemo(() => (
+  //   [
+  //     ...Array(firstDayOfMonth).map((x) => {
+  //         <Box
+  //           key={x}
+  //           className="box-child"
+  //           day=""
+  //           month=""
+  //           year=""
+  //           taskList={emptyList}
+  //         />
+  //     }),
+  //     // ...daysArray.map(x => (
+  //     //   <Box key={x} className="box-child" day={x} month={displayDay.getMonth() + 1} year={displayDay.getFullYear()} taskList={taskLists} />
+  //     // )),
+  //     ...Array(7 - ((firstDayOfMonth + daysArray.length) % 7)).map((x) => {
+  //       <Box
+  //         key={x}
+  //         className="box-child"
+  //         day=""
+  //         month=""
+  //         year=""
+  //         taskList={emptyList}
+  //       />
+  //     }),
+  //   ]
+  // ), [displayDay, firstDayOfMonth, numDaysPerMonth, emptyList, daysArray]);
+  // console.log(boxes);
   return (
     <>
       <NewTaskWindow
@@ -127,6 +152,13 @@ function App() {
         taskList={taskLists}
         handleAddTask={handleAddTask}
       ></NewTaskWindow>
+      <EditWindow
+        openEditWindow={openEditWindow}
+        setOpenEditWindow={setOpenEditWindow}
+        taskList={taskLists}
+        handleDeleteTask={handleDeleteTask}
+        handleEditTask={handleEditTask}
+      ></EditWindow>
       <div className="calendar">
         <div className="header-wrap">
           <h1>Task Tracker</h1>
@@ -157,13 +189,15 @@ function App() {
 
         <div className="weekdays">
           {weekdays.map((day) => (
-          <><p className="weekday">{day}</p></>)
-          )}
+            <>
+              <p className="weekday">{day}</p>
+            </>
+          ))}
         </div>
 
         <div className="boxes">
-          {boxes}
-          {/* {[...Array(firstDayOfMonth)].map((x) => {
+          {/* {boxes} */}
+          {[...Array(firstDayOfMonth)].map((x) => {
             return (
               <Box
                 key={x}
@@ -186,7 +220,7 @@ function App() {
                 key={x}
                 className="box-child"
                 day={x}
-                month={displayDay.getMonth()+1}
+                month={displayDay.getMonth() + 1}
                 year={displayDay.getFullYear()}
                 taskList={taskLists}
               />
@@ -208,7 +242,7 @@ function App() {
                 taskList={emptyList}
               />
             );
-          })} */}
+          })}
         </div>
       </div>
     </>
