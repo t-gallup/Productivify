@@ -5,9 +5,9 @@ import Task from "./Task.jsx";
 function taskMapping(
   currList,
   key,
-  setOpenEditWindow,
   setEditDay,
-  setEditDescription
+  setEditDescription,
+  setOpenEditWindow,
 ) {
   if (currList == undefined) {
     return;
@@ -47,9 +47,9 @@ function Box({
           {taskMapping(
             taskList[key],
             key,
-            setOpenEditWindow,
             setEditDay,
-            setEditDescription
+            setEditDescription,
+            setOpenEditWindow,
           )}
         </div>
       </div>

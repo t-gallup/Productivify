@@ -11,11 +11,8 @@ function EditWindow(props) {
   };
   const oldDay = props.editDay + "";
   const oldDescription = props.editDescription + "";
-  const [newDay, setNewDay] = useState(props.editDay);
-  const [newDescription, setNewDescription] = useState(props.editDescription);
-  console.log("Test:, ", newDay, newDescription);
-  // setNewDay(oldDay);
-  // setNewDescription(oldDescription);
+  const [newDay, setNewDay] = useState(props.editDay + "");
+  const [newDescription, setNewDescription] = useState(props.editDescription + "");
   return props.openEditWindow ? (
     <div className="window-wrapper">
       <h1>Edit This Task</h1>
@@ -64,7 +61,7 @@ EditWindow.propTypes = {
   setOpenEditWindow: PropTypes.func,
   taskLists: PropTypes.object,
   handleEditTask: PropTypes.func,
-  editDay: PropTypes.object,
+  editDay: PropTypes.string,
   editDescription: PropTypes.string,
   setEditDay: PropTypes.func,
   setEditDescription: PropTypes.func,

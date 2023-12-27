@@ -7,9 +7,9 @@ import EditWindow from "./components/EditWindow";
 
 function App() {
   const [emptyList] = useState({});
-  const [years] = useState(
-    Array.from({ length: 30 }, (_, index) => index + 2011)
-  );
+  // const [years] = useState(
+  //   Array.from({ length: 30 }, (_, index) => index + 2011)
+  // );
   const [openWindow, setOpenWindow] = useState(false);
   const [openEditWindow, setOpenEditWindow] = useState(false);
   const [currentDay] = useState(new Date(Date.now()));
@@ -59,51 +59,52 @@ function App() {
   );
   
   const [taskLists, setTaskLists] = useState({});
-  const newTaskLists = { ...taskLists };
-  years.forEach((year) => {
-    for (let month = 1; month <= 12; month++) {
-      var currNumDays = numDaysPerMonth[month - 1];
-      if (year % 4 == 0 && month == 2) {
-        currNumDays = 29;
-      }
-      for (let day = 1; day <= currNumDays; day++) {
-        const key = `${year}-${month.toString().padStart(2, "0")}-${day
-          .toString()
-          .padStart(2, "0")}`;
-        newTaskLists[key] = [];
+  // const newTaskLists = { ...taskLists };
+  // years.forEach((year) => {
+  //   for (let month = 1; month <= 12; month++) {
+  //     var currNumDays = numDaysPerMonth[month - 1];
+  //     if (year % 4 == 0 && month == 2) {
+  //       currNumDays = 29;
+  //     }
+  //     for (let day = 1; day <= currNumDays; day++) {
+  //       const key = `${year}-${month.toString().padStart(2, "0")}-${day
+  //         .toString()
+  //         .padStart(2, "0")}`;
+  //       newTaskLists[key] = [];
+  //     }
+  //   }
+  // });
+  // if (taskLists["2021-01-01"] == undefined) {
+  //   setTaskLists(newTaskLists);
+  // }
+  useEffect(() => {
+    const savedTaskLists = localStorage.getItem('myTaskLists');
+    // console.log(savedTaskLists);
+    if (savedTaskLists) {
+      setTaskLists(JSON.parse(savedTaskLists));
+    }
+    else {
+      const newTaskLists = { ...taskLists };
+      const years = Array.from({ length: 30 }, (_, index) => index + 2011)
+      years.forEach((year) => {
+        for (let month = 1; month <= 12; month++) {
+          var currNumDays = numDaysPerMonth[month - 1];
+          if (year % 4 == 0 && month == 2) {
+            currNumDays = 29;
+          }
+          for (let day = 1; day <= currNumDays; day++) {
+            const key = `${year}-${month.toString().padStart(2, "0")}-${day
+              .toString()
+              .padStart(2, "0")}`;
+            newTaskLists[key] = [];
+          }
+        }
+      });
+      if (taskLists["2021-01-01"] == undefined) {
+        setTaskLists(newTaskLists);
       }
     }
-  });
-  if (taskLists["2021-01-01"] == undefined) {
-    setTaskLists(newTaskLists);
-  }
-  // useEffect(() => {
-  //   const savedTaskLists = localStorage.getItem('myTaskLists');
-  //   console.log(savedTaskLists);
-    // if (savedTaskLists && false) {
-    //   setTaskLists(savedTaskLists);
-    // }
-    // else {
-    // const newTaskLists = { ...taskLists };
-    // years.forEach((year) => {
-    //   for (let month = 1; month <= 12; month++) {
-    //     var currNumDays = numDaysPerMonth[month - 1];
-    //     if (year % 4 == 0 && month == 2) {
-    //       currNumDays = 29;
-    //     }
-    //     for (let day = 1; day <= currNumDays; day++) {
-    //       const key = `${year}-${month.toString().padStart(2, "0")}-${day
-    //         .toString()
-    //         .padStart(2, "0")}`;
-    //       newTaskLists[key] = [];
-    //     }
-    //   }
-    // });
-    // if (taskLists["2021-01-01"] == undefined) {
-    //   setTaskLists(newTaskLists);
-    // }
-    // }
-  // }, []);
+  }, []);
 
   const handleAddTask = useCallback(
     (completionDay, taskDescription) => {
@@ -137,7 +138,7 @@ function App() {
   }, [taskLists, setOpenEditWindow]);
 
   const handleEditTask = useCallback((oldDay, newDay, oldDescription, newDescription) => {
-    console.log(oldDay, newDay);
+    console.log("Test: ", oldDay, newDay);
     const oldKey = `${oldDay.substring(0, 4)}-${oldDay
       .substring(5, 7)
       .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
@@ -154,10 +155,10 @@ function App() {
       newTaskLists[oldKey].splice(delIndex, 1);
       newTaskLists[newKey].push(newDescription);
     }
-    
     setTaskLists(newTaskLists);
     setOpenEditWindow(false);
   }, [taskLists, setOpenEditWindow]);
+  
   const weekdays = useMemo(
     () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     []
@@ -219,7 +220,6 @@ function App() {
         </div>
 
         <div className="boxes">
-          {/* {boxes} */}
           {[...Array(firstDayOfMonth)].map((x) => {
             return (
               <Box
