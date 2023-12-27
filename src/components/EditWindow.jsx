@@ -1,18 +1,25 @@
 import "./EditWindow.css";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function EditWindow(props) {
   const oldDay = props.editDay + "";
   const oldDescription = props.editDescription + "";
+  // console.log("Old: ", oldDay, oldDescription);
+
   const [newDay, setNewDay] = useState(oldDay);
   const [newDescription, setNewDescription] = useState(oldDescription);
+  // console.log("New: ", newDay, newDescription);
   const handleEditDayChange = (event) => {
     setNewDay(event.target.value);
   };
   const handleEditDescriptionChange = (event) => {
     setNewDescription(event.target.value);
   };
+  useEffect(() => {
+    setNewDay(props.editDay);
+    setNewDescription(props.editDescription);
+  }, [props.editDay, props.editDescription]);
   return props.openEditWindow ? (
     <div className="window-wrapper">
       <h1>Edit This Task</h1>
