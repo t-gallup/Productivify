@@ -14,9 +14,9 @@ function taskMapping(
   }
   return (
     <>
-      {currList.map((task) => (
+      {currList.map((task, index) => (
         <Task
-          key={key}
+          key={key + index}
           day={key}
           description={task}
           setEditDescription={setEditDescription}

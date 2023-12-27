@@ -1,0 +1,26 @@
+.window-wrapper {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background-color: black;
+    text-align: center;
+}
+  
+.close-button {
+    position: fixed;
+    top: 15%;
+    left: 85%
+}
+
+
+.submit-button {
+    margin-top: 8%;
+    height: 10vh;
+    width: 15vw;
+}
+
+.list-wrapper {
+    display: flex;
+}

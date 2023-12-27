@@ -138,7 +138,7 @@ function App() {
   }, [taskLists, setOpenEditWindow]);
 
   const handleEditTask = useCallback((oldDay, newDay, oldDescription, newDescription) => {
-    console.log("Test: ", oldDay, newDay);
+    console.log("Test: ", oldDay, newDay, oldDescription, newDescription);
     const oldKey = `${oldDay.substring(0, 4)}-${oldDay
       .substring(5, 7)
       .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
@@ -156,9 +156,10 @@ function App() {
       newTaskLists[newKey].push(newDescription);
     }
     setTaskLists(newTaskLists);
+    console.log(taskLists[oldKey]);
     setOpenEditWindow(false);
   }, [taskLists, setOpenEditWindow]);
-  
+
   const weekdays = useMemo(
     () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     []
