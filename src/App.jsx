@@ -59,34 +59,51 @@ function App() {
   );
   
   const [taskLists, setTaskLists] = useState({});
-
-  useEffect(() => {
-    const savedTaskLists = localStorage.getItem('myTaskLists');
-    console.log(savedTaskLists);
+  const newTaskLists = { ...taskLists };
+  years.forEach((year) => {
+    for (let month = 1; month <= 12; month++) {
+      var currNumDays = numDaysPerMonth[month - 1];
+      if (year % 4 == 0 && month == 2) {
+        currNumDays = 29;
+      }
+      for (let day = 1; day <= currNumDays; day++) {
+        const key = `${year}-${month.toString().padStart(2, "0")}-${day
+          .toString()
+          .padStart(2, "0")}`;
+        newTaskLists[key] = [];
+      }
+    }
+  });
+  if (taskLists["2021-01-01"] == undefined) {
+    setTaskLists(newTaskLists);
+  }
+  // useEffect(() => {
+  //   const savedTaskLists = localStorage.getItem('myTaskLists');
+  //   console.log(savedTaskLists);
     // if (savedTaskLists && false) {
     //   setTaskLists(savedTaskLists);
     // }
     // else {
-    const newTaskLists = { ...taskLists };
-    years.forEach((year) => {
-      for (let month = 1; month <= 12; month++) {
-        var currNumDays = numDaysPerMonth[month - 1];
-        if (year % 4 == 0 && month == 2) {
-          currNumDays = 29;
-        }
-        for (let day = 1; day <= currNumDays; day++) {
-          const key = `${year}-${month.toString().padStart(2, "0")}-${day
-            .toString()
-            .padStart(2, "0")}`;
-          newTaskLists[key] = [];
-        }
-      }
-    });
-    if (taskLists["2021-01-01"] == undefined) {
-      setTaskLists(newTaskLists);
-    }
+    // const newTaskLists = { ...taskLists };
+    // years.forEach((year) => {
+    //   for (let month = 1; month <= 12; month++) {
+    //     var currNumDays = numDaysPerMonth[month - 1];
+    //     if (year % 4 == 0 && month == 2) {
+    //       currNumDays = 29;
+    //     }
+    //     for (let day = 1; day <= currNumDays; day++) {
+    //       const key = `${year}-${month.toString().padStart(2, "0")}-${day
+    //         .toString()
+    //         .padStart(2, "0")}`;
+    //       newTaskLists[key] = [];
+    //     }
+    //   }
+    // });
+    // if (taskLists["2021-01-01"] == undefined) {
+    //   setTaskLists(newTaskLists);
     // }
-  }, []);
+    // }
+  // }, []);
 
   const handleAddTask = useCallback(
     (completionDay, taskDescription) => {

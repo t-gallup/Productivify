@@ -2,7 +2,6 @@ import "./EditWindow.css";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-// TODO: Set task to open this window and pass in proper params
 function EditWindow(props) {
   const handleNewDayChange = (event) => {
     setNewDay(event.target.value);
@@ -12,8 +11,11 @@ function EditWindow(props) {
   };
   const oldDay = props.editDay + "";
   const oldDescription = props.editDescription + "";
-  const [newDay, setNewDay] = useState(oldDay);
-  const [newDescription, setNewDescription] = useState(oldDescription);
+  const [newDay, setNewDay] = useState(props.editDay);
+  const [newDescription, setNewDescription] = useState(props.editDescription);
+  console.log("Test:, ", newDay, newDescription);
+  // setNewDay(oldDay);
+  // setNewDescription(oldDescription);
   return props.openEditWindow ? (
     <div className="window-wrapper">
       <h1>Edit This Task</h1>
@@ -23,14 +25,9 @@ function EditWindow(props) {
       >
         X
       </button>
-      {/* // TODO: Figure out how to pass in old value and change it if someone edits it */}
       <div className="task-attributes">
         <h2>Completion Day</h2>
-        <input
-          type="date"
-          value={newDay}
-          onChange={handleNewDayChange}
-        />
+        <input type="date" value={newDay} onChange={handleNewDayChange} />
         <h2>Task Description</h2>
         <input
           type="text"
@@ -41,12 +38,7 @@ function EditWindow(props) {
       <button
         className="edit-button"
         onClick={() =>
-          props.handleEditTask(
-            oldDay,
-            newDay,
-            oldDescription,
-            newDescription
-          )
+          props.handleEditTask(oldDay, newDay, oldDescription, newDescription)
         }
       >
         Submit Edits
