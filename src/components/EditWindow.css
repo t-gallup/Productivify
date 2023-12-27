@@ -10,6 +10,12 @@
 
 .delete-button {
     position: fixed;
-    top: 15%;
-    left: 85%
+    top: 75%;
+    left: 70%
+}
+
+.edit-button {
+    position: fixed;
+    top: 75%;
+    left: 20%;
 }

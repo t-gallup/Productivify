@@ -38,7 +38,11 @@ function NewTaskWindow(props) {
       </button>
       <div className="task-attributes">
         <h2>Completion Day</h2>
-        <input type="date" value={completionDay} onChange={handleCompletionDayChange} />
+        <input
+          type="date"
+          value={completionDay}
+          onChange={handleCompletionDayChange}
+        />
         <h2>Task Description</h2>
         <input
           type="text"
@@ -63,7 +67,7 @@ NewTaskWindow.propTypes = {
   openWindow: PropTypes.bool,
   setOpenWindow: PropTypes.func,
   taskList: PropTypes.object,
-  handleAddTask: PropTypes.func
+  handleAddTask: PropTypes.func,
 };
 
 export default NewTaskWindow;

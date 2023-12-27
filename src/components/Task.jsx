@@ -1,12 +1,19 @@
 import "./Task.css";
 import PropTypes from "prop-types";
 
-function Task({ description }) {
-  {console.log(description)}
+
+function handleEditButtonClick(description, day, setEditDay, setEditDescription, setOpenEditWindow) {
+  console.log(day);
+  console.log(description);
+  setEditDay(day);
+  setEditDescription(description)
+  setOpenEditWindow(true);
+}
+function Task({ description, day, setEditDescription, setEditDay, setOpenEditWindow }) {
   return (
     <>
       <div className="task-box">
-        <button className="ind-task-button">
+        <button className="ind-task-button" onClick={() => handleEditButtonClick(description, day, setEditDay, setEditDescription, setOpenEditWindow)}>
           <p className="task-description"> {description}</p>
         </button>
       </div>
@@ -16,6 +23,11 @@ function Task({ description }) {
 
 Task.propTypes = {
   description: PropTypes.string,
+  day: PropTypes.string,
+  setEditDescription: PropTypes.func,
+  setEditDay: PropTypes.func,
+  setOpenEditWindow: PropTypes.func,
+
 };
 
 export default Task;
