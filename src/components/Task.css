@@ -5,12 +5,12 @@
     /* justify-content: center;
     display: flex; */
     /* flex-direction: row; */
-    /* word-wrap: break-word; */
+    word-wrap: break-word;
+    overflow: auto;
 }
 
 .task-description {
     margin: 0;
-    word-wrap: break-word;
     text-align: center;
 }
 

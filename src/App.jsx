@@ -2,7 +2,7 @@ import "./App.css";
 import Box from "./components/Box";
 import NewTaskWindow from "./components/NewTaskWindow";
 import { useCallback, useState, useMemo, useEffect } from "react";
-import { SubtractMonth, AddMonth } from "./functions/DateChanges";
+import { SubtractMonth, AddMonth, SubtractYear, AddYear } from "./functions/DateChanges";
 import EditWindow from "./components/EditWindow";
 
 function App() {
@@ -85,7 +85,7 @@ function App() {
     }
     else {
       const newTaskLists = { ...taskLists };
-      const years = Array.from({ length: 30 }, (_, index) => index + 2011)
+      const years = Array.from({ length: 2500 }, (_, index) => index)
       years.forEach((year) => {
         for (let month = 1; month <= 12; month++) {
           var currNumDays = numDaysPerMonth[month - 1];
@@ -156,7 +156,6 @@ function App() {
       newTaskLists[newKey].push(newDescription);
     }
     setTaskLists(newTaskLists);
-    console.log(taskLists[oldKey]);
     setOpenEditWindow(false);
   }, [taskLists, setOpenEditWindow]);
 
@@ -193,6 +192,11 @@ function App() {
         </div>
 
         <div className="month">
+          <button className="month-item" onClick={() => SubtractYear({
+            displayDay, setDisplayDay, setFebDays
+          })} >
+            &#10094;&#10094;
+          </button>
           <button
             className="month-item"
             onClick={() =>
@@ -209,6 +213,11 @@ function App() {
             onClick={() => AddMonth({ displayDay, setDisplayDay, setFebDays })}
           >
             &#10095;
+          </button>
+          <button className="month-item" onClick={() => AddYear({
+            displayDay, setDisplayDay, setFebDays
+          })} >
+            &#10095;&#10095;
           </button>
         </div>
 
