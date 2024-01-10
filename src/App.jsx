@@ -2,8 +2,14 @@ import "./App.css";
 import Box from "./components/Box";
 import NewTaskWindow from "./components/NewTaskWindow";
 import { useCallback, useState, useMemo, useEffect } from "react";
-import { SubtractMonth, AddMonth, SubtractYear, AddYear } from "./functions/DateChanges";
+import {
+  SubtractMonth,
+  AddMonth,
+  SubtractYear,
+  AddYear,
+} from "./functions/DateChanges";
 import EditWindow from "./components/EditWindow";
+import SignIn from "./components/SignIn";
 
 function App() {
   const [emptyList] = useState({});
@@ -57,7 +63,7 @@ function App() {
     }),
     [febDays]
   );
-  
+
   const [taskLists, setTaskLists] = useState({});
   // const newTaskLists = { ...taskLists };
   // years.forEach((year) => {
@@ -78,14 +84,13 @@ function App() {
   //   setTaskLists(newTaskLists);
   // }
   useEffect(() => {
-    const savedTaskLists = localStorage.getItem('myTaskLists');
+    const savedTaskLists = localStorage.getItem("myTaskLists");
     // console.log(savedTaskLists);
     if (savedTaskLists) {
       setTaskLists(JSON.parse(savedTaskLists));
-    }
-    else {
+    } else {
       const newTaskLists = { ...taskLists };
-      const years = Array.from({ length: 2500 }, (_, index) => index)
+      const years = Array.from({ length: 2500 }, (_, index) => index);
       years.forEach((year) => {
         for (let month = 1; month <= 12; month++) {
           var currNumDays = numDaysPerMonth[month - 1];
@@ -108,11 +113,12 @@ function App() {
 
   const handleAddTask = useCallback(
     (completionDay, taskDescription) => {
+      console.log(completionDay);
       const newTaskLists = { ...taskLists };
       const key = `${completionDay.substring(0, 4)}-${completionDay
         .substring(5, 7)
         .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-
+      console.log(key);
       if (newTaskLists[key] !== undefined) {
         newTaskLists[key].push(taskDescription);
       }
@@ -123,41 +129,50 @@ function App() {
     [taskLists, setOpenWindow]
   );
 
-  const handleDeleteTask = useCallback((completionDay, taskDescription) => {
-    const newTaskLists = { ...taskLists };
-    const key = `${completionDay.substring(0, 4)}-${completionDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
+  const handleDeleteTask = useCallback(
+    (completionDay, taskDescription) => {
+      const newTaskLists = { ...taskLists };
+      const key = `${completionDay.substring(0, 4)}-${completionDay
+        .substring(5, 7)
+        .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
 
-    if (newTaskLists[key] !== undefined) {
-      const delIndex = newTaskLists[key].indexOf(taskDescription);
-      newTaskLists[key].splice(delIndex, 1);
-    }
-    setTaskLists(newTaskLists);
-    setOpenEditWindow(false);
-  }, [taskLists, setOpenEditWindow]);
+      if (newTaskLists[key] !== undefined) {
+        const delIndex = newTaskLists[key].indexOf(taskDescription);
+        newTaskLists[key].splice(delIndex, 1);
+      }
+      setTaskLists(newTaskLists);
+      setOpenEditWindow(false);
+    },
+    [taskLists, setOpenEditWindow]
+  );
 
-  const handleEditTask = useCallback((oldDay, newDay, oldDescription, newDescription) => {
-    console.log("Test: ", oldDay, newDay, oldDescription, newDescription);
-    const oldKey = `${oldDay.substring(0, 4)}-${oldDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
-    const newKey = `${newDay.substring(0, 4)}-${newDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
-    const newTaskLists = { ...taskLists };
-    if ((newTaskLists[oldKey] !== undefined) && (oldDescription !== newDescription)) {
-      const editIndex = newTaskLists[oldKey].indexOf(oldDescription);
-      newTaskLists[oldKey][editIndex] = newDescription;
-    }
-    if ((oldKey !== newKey)) {
-      const delIndex = newTaskLists[oldKey].indexOf(newDescription);
-      newTaskLists[oldKey].splice(delIndex, 1);
-      newTaskLists[newKey].push(newDescription);
-    }
-    setTaskLists(newTaskLists);
-    setOpenEditWindow(false);
-  }, [taskLists, setOpenEditWindow]);
+  const handleEditTask = useCallback(
+    (oldDay, newDay, oldDescription, newDescription) => {
+      console.log("Test: ", oldDay, newDay, oldDescription, newDescription);
+      const oldKey = `${oldDay.substring(0, 4)}-${oldDay
+        .substring(5, 7)
+        .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
+      const newKey = `${newDay.substring(0, 4)}-${newDay
+        .substring(5, 7)
+        .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
+      const newTaskLists = { ...taskLists };
+      if (
+        newTaskLists[oldKey] !== undefined &&
+        oldDescription !== newDescription
+      ) {
+        const editIndex = newTaskLists[oldKey].indexOf(oldDescription);
+        newTaskLists[oldKey][editIndex] = newDescription;
+      }
+      if (oldKey !== newKey) {
+        const delIndex = newTaskLists[oldKey].indexOf(newDescription);
+        newTaskLists[oldKey].splice(delIndex, 1);
+        newTaskLists[newKey].push(newDescription);
+      }
+      setTaskLists(newTaskLists);
+      setOpenEditWindow(false);
+    },
+    [taskLists, setOpenEditWindow]
+  );
 
   const weekdays = useMemo(
     () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -165,6 +180,7 @@ function App() {
   );
   return (
     <>
+      <SignIn></SignIn>
       <NewTaskWindow
         openWindow={openWindow}
         setOpenWindow={setOpenWindow}
@@ -185,16 +201,30 @@ function App() {
       <div className="calendar">
         <div className="header-wrap">
           <h1>Task Tracker</h1>
-          <button className="save-button" onClick={() => localStorage.setItem('myTaskLists', JSON.stringify(taskLists))}>Save Tasks</button>
+          <button
+            className="save-button"
+            onClick={() =>
+              localStorage.setItem("myTaskLists", JSON.stringify(taskLists))
+            }
+          >
+            Save Tasks
+          </button>
           <button className="task-button" onClick={() => setOpenWindow(true)}>
             Add Task
           </button>
         </div>
 
         <div className="month">
-          <button className="month-item" onClick={() => SubtractYear({
-            displayDay, setDisplayDay, setFebDays
-          })} >
+          <button
+            className="month-item"
+            onClick={() =>
+              SubtractYear({
+                displayDay,
+                setDisplayDay,
+                setFebDays,
+              })
+            }
+          >
             &#10094;&#10094;
           </button>
           <button
@@ -214,9 +244,16 @@ function App() {
           >
             &#10095;
           </button>
-          <button className="month-item" onClick={() => AddYear({
-            displayDay, setDisplayDay, setFebDays
-          })} >
+          <button
+            className="month-item"
+            onClick={() =>
+              AddYear({
+                displayDay,
+                setDisplayDay,
+                setFebDays,
+              })
+            }
+          >
             &#10095;&#10095;
           </button>
         </div>
