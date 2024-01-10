@@ -9,13 +9,11 @@ import {
   AddYear,
 } from "./functions/DateChanges";
 import EditWindow from "./components/EditWindow";
-import SignIn from "./components/SignIn";
+import SignIn from "./components/SignInWindow";
 
 function App() {
   const [emptyList] = useState({});
-  // const [years] = useState(
-  //   Array.from({ length: 30 }, (_, index) => index + 2011)
-  // );
+  const [signInWindow, setSignInWindow] = useState(false);
   const [openWindow, setOpenWindow] = useState(false);
   const [openEditWindow, setOpenEditWindow] = useState(false);
   const [currentDay] = useState(new Date(Date.now()));
@@ -65,27 +63,8 @@ function App() {
   );
 
   const [taskLists, setTaskLists] = useState({});
-  // const newTaskLists = { ...taskLists };
-  // years.forEach((year) => {
-  //   for (let month = 1; month <= 12; month++) {
-  //     var currNumDays = numDaysPerMonth[month - 1];
-  //     if (year % 4 == 0 && month == 2) {
-  //       currNumDays = 29;
-  //     }
-  //     for (let day = 1; day <= currNumDays; day++) {
-  //       const key = `${year}-${month.toString().padStart(2, "0")}-${day
-  //         .toString()
-  //         .padStart(2, "0")}`;
-  //       newTaskLists[key] = [];
-  //     }
-  //   }
-  // });
-  // if (taskLists["2021-01-01"] == undefined) {
-  //   setTaskLists(newTaskLists);
-  // }
   useEffect(() => {
     const savedTaskLists = localStorage.getItem("myTaskLists");
-    // console.log(savedTaskLists);
     if (savedTaskLists) {
       setTaskLists(JSON.parse(savedTaskLists));
     } else {
@@ -180,7 +159,10 @@ function App() {
   );
   return (
     <>
-      <SignIn></SignIn>
+      <SignIn
+        signInWindow={signInWindow}
+        setSignInWindow={setSignInWindow}
+      ></SignIn>
       <NewTaskWindow
         openWindow={openWindow}
         setOpenWindow={setOpenWindow}
@@ -201,16 +183,14 @@ function App() {
       <div className="calendar">
         <div className="header-wrap">
           <h1>Task Tracker</h1>
-          <button
-            className="save-button"
-            onClick={() =>
-              localStorage.setItem("myTaskLists", JSON.stringify(taskLists))
-            }
-          >
-            Save Tasks
-          </button>
           <button className="task-button" onClick={() => setOpenWindow(true)}>
             Add Task
+          </button>
+          <button
+            className="sign-in-button"
+            onClick={() => setSignInWindow(true)}
+          >
+            Sign In
           </button>
         </div>
 
