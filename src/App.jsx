@@ -9,17 +9,37 @@ import {
   AddYear,
 } from "./functions/DateChanges";
 import EditWindow from "./components/EditWindow";
-import SignIn from "./components/SignInWindow";
+import SignInWindow from "./components/SignInWindow";
+import SignUpWindow from "./components/SignUpWindow";
+import { auth } from "./firebase.js";
+import { signOut } from "firebase/auth";
+// import { getDatabase } from "firebase/database";
+import { writeUserData, readUserData } from "./functions/DataBaseFunctions";
 
 function App() {
   const [emptyList] = useState({});
+  const [emptyTaskLists, setEmptyTaskLists] = useState({});
+  const [taskLists, setTaskLists] = useState({});
   const [signInWindow, setSignInWindow] = useState(false);
+  const [signUpWindow, setSignUpWindow] = useState(false);
   const [openWindow, setOpenWindow] = useState(false);
   const [openEditWindow, setOpenEditWindow] = useState(false);
   const [currentDay] = useState(new Date(Date.now()));
   const [displayDay, setDisplayDay] = useState(currentDay);
   const [editDescription, setEditDescription] = useState("");
   const [editDay, setEditDay] = useState("");
+  const [user, setUser] = useState(null);
+  const handleSignOut = () => {
+    signOut(auth);
+    setTaskLists(emptyTaskLists);
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  });
+  console.log(user);
   const firstDayOfMonth = new Date(
     displayDay.getFullYear(),
     displayDay.getMonth(),
@@ -62,32 +82,25 @@ function App() {
     [febDays]
   );
 
-  const [taskLists, setTaskLists] = useState({});
   useEffect(() => {
-    const savedTaskLists = localStorage.getItem("myTaskLists");
-    if (savedTaskLists) {
-      setTaskLists(JSON.parse(savedTaskLists));
-    } else {
-      const newTaskLists = { ...taskLists };
-      const years = Array.from({ length: 2500 }, (_, index) => index);
-      years.forEach((year) => {
-        for (let month = 1; month <= 12; month++) {
-          var currNumDays = numDaysPerMonth[month - 1];
-          if (year % 4 == 0 && month == 2) {
-            currNumDays = 29;
-          }
-          for (let day = 1; day <= currNumDays; day++) {
-            const key = `${year}-${month.toString().padStart(2, "0")}-${day
-              .toString()
-              .padStart(2, "0")}`;
-            newTaskLists[key] = [];
-          }
+    const newTaskLists = { ...taskLists };
+    const years = Array.from({ length: 2500 }, (_, index) => index);
+    years.forEach((year) => {
+      for (let month = 1; month <= 12; month++) {
+        var currNumDays = numDaysPerMonth[month - 1];
+        if (year % 4 == 0 && month == 2) {
+          currNumDays = 29;
         }
-      });
-      if (taskLists["2021-01-01"] == undefined) {
-        setTaskLists(newTaskLists);
+        for (let day = 1; day <= currNumDays; day++) {
+          const key = `${year}-${month.toString().padStart(2, "0")}-${day
+            .toString()
+            .padStart(2, "0")}`;
+          newTaskLists[key] = [];
+        }
       }
-    }
+    });
+    setEmptyTaskLists({ ...newTaskLists });
+    setTaskLists(newTaskLists);
   }, []);
 
   const handleAddTask = useCallback(
@@ -103,6 +116,7 @@ function App() {
       }
 
       setTaskLists(newTaskLists);
+      writeUserData(auth.currentUser.uid, taskLists);
       setOpenWindow(false);
     },
     [taskLists, setOpenWindow]
@@ -159,10 +173,18 @@ function App() {
   );
   return (
     <>
-      <SignIn
+      <SignInWindow
         signInWindow={signInWindow}
         setSignInWindow={setSignInWindow}
-      ></SignIn>
+        setSignUpWindow={setSignUpWindow}
+        setTaskLists={setTaskLists}
+      ></SignInWindow>
+      <SignUpWindow
+        signUpWindow={signUpWindow}
+        setSignUpWindow={setSignUpWindow}
+        taskLists={taskLists}
+        setSignInWindow={setSignInWindow}
+      ></SignUpWindow>
       <NewTaskWindow
         openWindow={openWindow}
         setOpenWindow={setOpenWindow}
@@ -186,12 +208,18 @@ function App() {
           <button className="task-button" onClick={() => setOpenWindow(true)}>
             Add Task
           </button>
-          <button
-            className="sign-in-button"
-            onClick={() => setSignInWindow(true)}
-          >
-            Sign In
-          </button>
+          {user?.email ? (
+            <button className="sign-in-button" onClick={handleSignOut}>
+              Sign Out
+            </button>
+          ) : (
+            <button
+              className="sign-in-button"
+              onClick={() => setSignInWindow(true)}
+            >
+              Sign In
+            </button>
+          )}
         </div>
 
         <div className="month">

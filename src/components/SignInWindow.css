@@ -1,3 +1,4 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
 .window-wrapper {
     position: fixed;
     top: 10%;
@@ -21,6 +22,33 @@
     width: 15vw;
 }
 
-.list-wrapper {
+.email-wrapper {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.sign-in-buttons {
+    display: flex;
+    /* width: 30%; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+    padding: 5vh;
+}
+
+.button, .google-button {
+    width: 30%;
+}
+
+.google-button {
+    display: flex;
+    gap: 15%;
+    align-items: center;
+}
+
+.google-icon {
+    font-size: 20px;
 }
