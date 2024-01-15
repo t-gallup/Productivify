@@ -1,5 +1,5 @@
 import "./SignUpWindow.css";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase";
 import { useState } from "react";
 import PropTypes from "prop-types";
@@ -31,14 +31,13 @@ function SignUpWindow(props) {
       alert("Passwords don't match");
     } else {
       const actionCodeSettings = {
-        url: "http://localhost:5173/",
-        handleCodeInApp: false,
-      };
+        url: "https://productivify.net"
+      }
       const userCredentials = createUserWithEmailAndPassword(auth, email, password);
       userCredentials.then((userCredential) => {
         writeUserData(userCredential.user.uid, props.taskLists);
-        // userCredential.user.sendVerificationEmail(actionCodeSettings);
-        auth.currentUser.sendEmailVerification(actionCodeSettings);
+        sendEmailVerification(userCredential.user, actionCodeSettings);
+        // auth.currentUser.sendEmailVerification(actionCodeSettings);
         props.setSignUpWindow(false);
         props.setSignInWindow(true);
         alert('User created successfully! Please verify email before signing in.');
@@ -109,10 +108,6 @@ function SignUpWindow(props) {
             Sign Up
           </button>
         </div>
-
-        {/* <button className="button" onClick={googleSignIn}>
-              <i className="fab fa-google"></i>Sign In with Google
-            </button> */}
       </form>
     </div>
   ) : (

@@ -11,9 +11,9 @@ import {
 import EditWindow from "./components/EditWindow";
 import SignInWindow from "./components/SignInWindow";
 import SignUpWindow from "./components/SignUpWindow";
+import ForgotPasswordWindow from "./components/ForgotPasswordWindow";
 import { auth } from "./firebase.js";
 import { signOut } from "firebase/auth";
-// import { getDatabase } from "firebase/database";
 import { writeUserData } from "./functions/DataBaseFunctions";
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
   const [signUpWindow, setSignUpWindow] = useState(false);
   const [openWindow, setOpenWindow] = useState(false);
   const [openEditWindow, setOpenEditWindow] = useState(false);
+  const [forgotPasswordWindow, setForgotPasswordWindow] = useState(false);
   const [currentDay] = useState(new Date(Date.now()));
   const [displayDay, setDisplayDay] = useState(currentDay);
   const [editDescription, setEditDescription] = useState("");
@@ -176,6 +177,7 @@ function App() {
         signInWindow={signInWindow}
         setSignInWindow={setSignInWindow}
         setSignUpWindow={setSignUpWindow}
+        setForgotPasswordWindow={setForgotPasswordWindow}
         setTaskLists={setTaskLists}
         emptyTaskLists={emptyTaskLists}
       ></SignInWindow>
@@ -202,6 +204,11 @@ function App() {
         editDay={editDay}
         setEditDay={setEditDay}
       ></EditWindow>
+      <ForgotPasswordWindow
+        forgotPasswordWindow={forgotPasswordWindow}
+        setForgotPasswordWindow={setForgotPasswordWindow}
+        setSignInWindow={setSignInWindow}
+      ></ForgotPasswordWindow>
       <div className="calendar">
         <div className="header-wrap">
           <h1>Productivify</h1>

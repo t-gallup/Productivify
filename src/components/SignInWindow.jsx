@@ -24,8 +24,7 @@ function SignInWindow(props) {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        console.log(userCredentials);
-        readUserData(auth.currentUser.uid, (error, taskLists) => {
+        readUserData(userCredentials.user.uid, (error, taskLists) => {
           if (error) {
             alert("Error reading data: " + error.message);
           } else {
@@ -36,17 +35,21 @@ function SignInWindow(props) {
       .catch((error) => {
         console.log(error);
       });
-      if (!auth.currentUser.emailVerified) {
-        signOut(auth);
-        alert("Please verify your email before signing in.")
-      } else {
-        props.setSignInWindow(false);
-      }
-    
+    if (!auth.currentUser.emailVerified) {
+      signOut(auth);
+      alert("Please verify your email before signing in.");
+    } else {
+      props.setSignInWindow(false);
+    }
   };
   const handleSignUp = () => {
     props.setSignInWindow(false);
     props.setSignUpWindow(true);
+  };
+
+  const handleForgotPassword = () => {
+    props.setSignInWindow(false);
+    props.setForgotPasswordWindow(true);
   };
 
   const googleSignIn = () => {
@@ -54,19 +57,21 @@ function SignInWindow(props) {
     googleProvider.setCustomParameters({ prompt: "select_account" });
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        readUserData(result.user.uid, props.emptyTaskList, (error, taskLists) => {
-          if (error) {
-            alert("Error reading data: " + error.message);
-          } else {
-            props.setTaskLists(taskLists);
+        readUserData(
+          result.user.uid,
+          props.emptyTaskList,
+          (error, taskLists) => {
+            if (error) {
+              alert("Error reading data: " + error.message);
+            } else {
+              props.setTaskLists(taskLists);
+            }
           }
-        });
+        );
       })
       .catch((error) => {
         alert("Error sign in with Google " + error.message);
       });
-      
-    
   };
 
   return props.signInWindow ? (
@@ -99,6 +104,9 @@ function SignInWindow(props) {
           <button className="button" onClick={handleSignUp}>
             Sign Up with Email
           </button>
+          <button className="button" onClick={handleForgotPassword}>
+            Forgot Password
+          </button>
         </div>
       </form>
     </div>
@@ -112,7 +120,8 @@ SignInWindow.propTypes = {
   setSignInWindow: PropTypes.func,
   setSignUpWindow: PropTypes.func,
   setTaskLists: PropTypes.func,
-  emptyTaskList: PropTypes.object
+  emptyTaskList: PropTypes.object,
+  setForgotPasswordWindow: PropTypes.func,
 };
 
 export default SignInWindow;
