@@ -104,7 +104,7 @@ function SignUpWindow(props) {
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
           ></input>
-          <button type="submit" onClick={handleSignUp}>
+          <button type="submit">
             Sign Up
           </button>
         </div>

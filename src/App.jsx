@@ -36,8 +36,11 @@ function App() {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUser(user);
+    auth.onAuthStateChanged((newUser) => {
+      // if (user !== user) {
+      //   setSignInWindow(false);
+      // }
+      setUser(newUser);
       console.log(user);
     });
   });

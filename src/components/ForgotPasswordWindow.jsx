@@ -11,7 +11,8 @@ function SignUpWindow(props) {
     setEmail(event.target.value);
   };
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = (event) => {
+    event.preventDefault();
     sendPasswordResetEmail(auth, email)
       .then(alert("Reset password email sent."))
       .catch((error) => {
@@ -45,7 +46,7 @@ function SignUpWindow(props) {
             value={email}
             onChange={handleEmailChange}
           ></input>
-          <button type="submit" onClick={handleForgotPassword}>
+          <button type="submit">
             Reset Password
           </button>
         </div>

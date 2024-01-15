@@ -20,9 +20,9 @@ function SignInWindow(props) {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         readUserData(userCredentials.user.uid, (error, taskLists) => {
           if (error) {
@@ -52,10 +52,10 @@ function SignInWindow(props) {
     props.setForgotPasswordWindow(true);
   };
 
-  const googleSignIn = () => {
+  const googleSignIn = async () => {
     const googleProvider = new GoogleAuthProvider();
     googleProvider.setCustomParameters({ prompt: "select_account" });
-    signInWithPopup(auth, googleProvider)
+    await signInWithPopup(auth, googleProvider)
       .then((result) => {
         readUserData(
           result.user.uid,
@@ -72,6 +72,7 @@ function SignInWindow(props) {
       .catch((error) => {
         alert("Error sign in with Google " + error.message);
       });
+    props.setSignInWindow(false);
   };
 
   return props.signInWindow ? (
