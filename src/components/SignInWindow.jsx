@@ -28,7 +28,7 @@ function SignInWindow(props) {
           if (error) {
             alert("Error reading data: " + error.message);
           } else {
-            props.setTaskLists(taskLists);
+            props.setTaskLists({...taskLists});
           }
         });
       })
@@ -64,7 +64,7 @@ function SignInWindow(props) {
             if (error) {
               alert("Error reading data: " + error.message);
             } else {
-              props.setTaskLists(taskLists);
+              props.setTaskLists({...taskLists});
             }
           }
         );

@@ -1,7 +1,7 @@
 import "./App.css";
 import Box from "./components/Box";
 import NewTaskWindow from "./components/NewTaskWindow";
-import { useCallback, useState, useMemo, useEffect } from "react";
+import { useCallback, useState, useMemo, useEffect, updateState } from "react";
 import {
   SubtractMonth,
   AddMonth,
@@ -32,16 +32,14 @@ function App() {
   const [user, setUser] = useState(null);
   const handleSignOut = () => {
     signOut(auth);
-    setTaskLists(emptyTaskLists);
+    console.log(emptyTaskLists);
+    setTaskLists({...emptyTaskLists});
+    updateState({}), [];
   };
 
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
-      // if (user !== user) {
-      //   setSignInWindow(false);
-      // }
       setUser(newUser);
-      console.log(user);
     });
   });
   const firstDayOfMonth = new Date(
@@ -104,7 +102,7 @@ function App() {
       }
     });
     setEmptyTaskLists({ ...newTaskLists });
-    setTaskLists(newTaskLists);
+    setTaskLists({ ...newTaskLists });
   }, []);
 
   const handleAddTask = useCallback(
@@ -117,7 +115,7 @@ function App() {
         newTaskLists[key].push(taskDescription);
       }
 
-      setTaskLists(newTaskLists);
+      setTaskLists({ ...newTaskLists });
       writeUserData(auth.currentUser.uid, taskLists);
       setOpenWindow(false);
     },
@@ -135,7 +133,7 @@ function App() {
         const delIndex = newTaskLists[key].indexOf(taskDescription);
         newTaskLists[key].splice(delIndex, 1);
       }
-      setTaskLists(newTaskLists);
+      setTaskLists({ ...newTaskLists });
       writeUserData(auth.currentUser.uid, taskLists);
       setOpenEditWindow(false);
     },
@@ -163,7 +161,7 @@ function App() {
         newTaskLists[oldKey].splice(delIndex, 1);
         newTaskLists[newKey].push(newDescription);
       }
-      setTaskLists(newTaskLists);
+      setTaskLists({ ...newTaskLists });
       writeUserData(auth.currentUser.uid, taskLists);
       setOpenEditWindow(false);
     },

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 
 function handleEditButtonClick(description, day, setEditDay, setEditDescription, setOpenEditWindow) {
-  console.log("Test: ", day, description);
   setEditDay(day);
   setEditDescription(description)
   setOpenEditWindow(true);
