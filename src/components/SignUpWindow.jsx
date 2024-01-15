@@ -1,4 +1,4 @@
-import "./SignUpWindow.css"
+import "./SignUpWindow.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useState } from "react";
@@ -9,7 +9,11 @@ function SignUpWindow(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
+  const handleDisplayNameChange = (event) => {
+    setDisplayName(event.target.value);
+  };
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -19,29 +23,25 @@ function SignUpWindow(props) {
   const handlePasswordConfirmChange = (event) => {
     setPasswordConfirm(event.target.value);
   };
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredentials) => {
-  //       console.log(userCredentials);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   const handleSignUp = (event) => {
     event.preventDefault();
-    
+
     if (password !== passwordConfirm) {
       alert("Passwords don't match");
     } else {
+      const actionCodeSettings = {
+        url: "http://localhost:5173/",
+        handleCodeInApp: false,
+      };
       const userCredentials = createUserWithEmailAndPassword(auth, email, password);
       userCredentials.then((userCredential) => {
         writeUserData(userCredential.user.uid, props.taskLists);
+        // userCredential.user.sendVerificationEmail(actionCodeSettings);
+        auth.currentUser.sendEmailVerification(actionCodeSettings);
         props.setSignUpWindow(false);
         props.setSignInWindow(true);
-        alert('User created successfully!');
+        alert('User created successfully! Please verify email before signing in.');
       })
       .catch((error) => {
         console.log(userCredentials);
@@ -59,8 +59,7 @@ function SignUpWindow(props) {
         }
       })
     }
-  }
-
+  };
 
   return props.signUpWindow ? (
     <div className="window-wrapper">
@@ -83,6 +82,12 @@ function SignUpWindow(props) {
             X
           </button>
           <input
+            type="text"
+            placeholder="Name"
+            value={displayName}
+            onChange={handleDisplayNameChange}
+          ></input>
+          <input
             type="email"
             placeholder="Email"
             value={email}
@@ -100,9 +105,11 @@ function SignUpWindow(props) {
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
           ></input>
-          <button type="submit" onClick={handleSignUp}>Sign Up</button>
+          <button type="submit" onClick={handleSignUp}>
+            Sign Up
+          </button>
         </div>
-        
+
         {/* <button className="button" onClick={googleSignIn}>
               <i className="fab fa-google"></i>Sign In with Google
             </button> */}
@@ -117,6 +124,6 @@ SignUpWindow.propTypes = {
   signUpWindow: PropTypes.bool,
   setSignUpWindow: PropTypes.func,
   setSignInWindow: PropTypes.func,
-  taskLists: PropTypes.any
+  taskLists: PropTypes.any,
 };
 export default SignUpWindow;

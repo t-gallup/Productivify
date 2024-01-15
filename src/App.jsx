@@ -14,7 +14,7 @@ import SignUpWindow from "./components/SignUpWindow";
 import { auth } from "./firebase.js";
 import { signOut } from "firebase/auth";
 // import { getDatabase } from "firebase/database";
-import { writeUserData, readUserData } from "./functions/DataBaseFunctions";
+import { writeUserData } from "./functions/DataBaseFunctions";
 
 function App() {
   const [emptyList] = useState({});
@@ -37,9 +37,9 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
+      console.log(user);
     });
   });
-  console.log(user);
   const firstDayOfMonth = new Date(
     displayDay.getFullYear(),
     displayDay.getMonth(),
@@ -115,13 +115,6 @@ function App() {
 
       setTaskLists(newTaskLists);
       writeUserData(auth.currentUser.uid, taskLists);
-      readUserData(auth.currentUser.uid, (error, taskLists) => {
-        if (error) {
-          alert("Error reading data: " + error.message);
-        } else {
-          console.log(taskLists);
-        }
-      });
       setOpenWindow(false);
     },
     [taskLists, setOpenWindow]
@@ -140,13 +133,6 @@ function App() {
       }
       setTaskLists(newTaskLists);
       writeUserData(auth.currentUser.uid, taskLists);
-      readUserData(auth.currentUser.uid, (error, taskLists) => {
-        if (error) {
-          alert("Error reading data: " + error.message);
-        } else {
-          console.log(taskLists);
-        }
-      });
       setOpenEditWindow(false);
     },
     [taskLists, setOpenEditWindow]
@@ -154,7 +140,6 @@ function App() {
 
   const handleEditTask = useCallback(
     (oldDay, newDay, oldDescription, newDescription) => {
-      console.log("Test: ", oldDay, newDay, oldDescription, newDescription);
       const oldKey = `${oldDay.substring(0, 4)}-${oldDay
         .substring(5, 7)
         .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
@@ -176,13 +161,6 @@ function App() {
       }
       setTaskLists(newTaskLists);
       writeUserData(auth.currentUser.uid, taskLists);
-      readUserData(auth.currentUser.uid, (error, taskLists) => {
-        if (error) {
-          alert("Error reading data: " + error.message);
-        } else {
-          console.log(taskLists);
-        }
-      });
       setOpenEditWindow(false);
     },
     [taskLists, setOpenEditWindow]
@@ -199,6 +177,7 @@ function App() {
         setSignInWindow={setSignInWindow}
         setSignUpWindow={setSignUpWindow}
         setTaskLists={setTaskLists}
+        emptyTaskLists={emptyTaskLists}
       ></SignInWindow>
       <SignUpWindow
         signUpWindow={signUpWindow}

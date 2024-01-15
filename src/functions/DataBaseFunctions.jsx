@@ -8,11 +8,11 @@ export function writeUserData(userId, taskList) {
     });
 }
 
-export function readUserData(userId, callback) {
+export function readUserData(userId, emptyTaskList, callback, ) {
     const db = getDatabase();
 
     const unsubscribe = onValue(ref(db, '/users/' + userId), (snapshot) => {
-        const task_list = (snapshot.val() && snapshot.val().task_list) || 'Anonymous';
+        const task_list = (snapshot.val() && snapshot.val().task_list) || emptyTaskList;
         callback(null, task_list);
     }, {
         onlyOnce: true

@@ -9,6 +9,7 @@ import {
 import { auth } from "../firebase";
 import { GoogleButton } from "react-google-button";
 import { readUserData } from "../functions/DataBaseFunctions";
+import { signOut } from "firebase/auth";
 
 function SignInWindow(props) {
   const [email, setEmail] = useState("");
@@ -24,18 +25,24 @@ function SignInWindow(props) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         console.log(userCredentials);
+        readUserData(auth.currentUser.uid, (error, taskLists) => {
+          if (error) {
+            alert("Error reading data: " + error.message);
+          } else {
+            props.setTaskLists(taskLists);
+          }
+        });
       })
       .catch((error) => {
         console.log(error);
       });
-      readUserData(auth.currentUser.uid, (error, taskLists) => {
-        if (error) {
-          alert("Error reading data: " + error.message);
-        } else {
-          props.setTaskLists(taskLists);
-        }
-      });
-    props.setSignInWindow(false);
+      if (!auth.currentUser.emailVerified) {
+        signOut(auth);
+        alert("Please verify your email before signing in.")
+      } else {
+        props.setSignInWindow(false);
+      }
+    
   };
   const handleSignUp = () => {
     props.setSignInWindow(false);
@@ -47,7 +54,7 @@ function SignInWindow(props) {
     googleProvider.setCustomParameters({ prompt: "select_account" });
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        readUserData(result.user.uid, (error, taskLists) => {
+        readUserData(result.user.uid, props.emptyTaskList, (error, taskLists) => {
           if (error) {
             alert("Error reading data: " + error.message);
           } else {
@@ -104,9 +111,8 @@ SignInWindow.propTypes = {
   signInWindow: PropTypes.bool,
   setSignInWindow: PropTypes.func,
   setSignUpWindow: PropTypes.func,
-  user: PropTypes.any,
-  setUser: PropTypes.func,
   setTaskLists: PropTypes.func,
+  emptyTaskList: PropTypes.object
 };
 
 export default SignInWindow;
