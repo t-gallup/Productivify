@@ -105,18 +105,23 @@ function App() {
 
   const handleAddTask = useCallback(
     (completionDay, taskDescription) => {
-      console.log(completionDay);
       const newTaskLists = { ...taskLists };
       const key = `${completionDay.substring(0, 4)}-${completionDay
         .substring(5, 7)
         .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-      console.log(key);
       if (newTaskLists[key] !== undefined) {
         newTaskLists[key].push(taskDescription);
       }
 
       setTaskLists(newTaskLists);
       writeUserData(auth.currentUser.uid, taskLists);
+      readUserData(auth.currentUser.uid, (error, taskLists) => {
+        if (error) {
+          alert("Error reading data: " + error.message);
+        } else {
+          console.log(taskLists);
+        }
+      });
       setOpenWindow(false);
     },
     [taskLists, setOpenWindow]
@@ -134,6 +139,14 @@ function App() {
         newTaskLists[key].splice(delIndex, 1);
       }
       setTaskLists(newTaskLists);
+      writeUserData(auth.currentUser.uid, taskLists);
+      readUserData(auth.currentUser.uid, (error, taskLists) => {
+        if (error) {
+          alert("Error reading data: " + error.message);
+        } else {
+          console.log(taskLists);
+        }
+      });
       setOpenEditWindow(false);
     },
     [taskLists, setOpenEditWindow]
@@ -162,6 +175,14 @@ function App() {
         newTaskLists[newKey].push(newDescription);
       }
       setTaskLists(newTaskLists);
+      writeUserData(auth.currentUser.uid, taskLists);
+      readUserData(auth.currentUser.uid, (error, taskLists) => {
+        if (error) {
+          alert("Error reading data: " + error.message);
+        } else {
+          console.log(taskLists);
+        }
+      });
       setOpenEditWindow(false);
     },
     [taskLists, setOpenEditWindow]
@@ -204,8 +225,15 @@ function App() {
       ></EditWindow>
       <div className="calendar">
         <div className="header-wrap">
-          <h1>Task Tracker</h1>
-          <button className="task-button" onClick={() => setOpenWindow(true)}>
+          <h1>Productivify</h1>
+          <button
+            className="task-button"
+            onClick={() => {
+              user?.email
+                ? setOpenWindow(true)
+                : alert("Sign in to start adding tasks!");
+            }}
+          >
             Add Task
           </button>
           {user?.email ? (

@@ -7,6 +7,12 @@
     background-color: black;
     text-align: center;
 }
+
+.back-button {
+    position: fixed;
+    top: 15%;
+    left: 15%;
+}
   
 .close-button {
     position: fixed;
@@ -15,7 +21,7 @@
 }
   
 .submit-button {
-    margin-top: 8%;
+    margin-top: 5%;
     height: 10vh;
     width: 15vw;
 }

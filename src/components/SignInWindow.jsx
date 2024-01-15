@@ -28,12 +28,12 @@ function SignInWindow(props) {
       .catch((error) => {
         console.log(error);
       });
-    readUserData(auth.currentUser.uid)
-      .then((task_list) => {
-        props.setTaskLists(task_list);
-      })
-      .catch((error) => {
-        console.error("Error Reading User Data:", error);
+      readUserData(auth.currentUser.uid, (error, taskLists) => {
+        if (error) {
+          alert("Error reading data: " + error.message);
+        } else {
+          props.setTaskLists(taskLists);
+        }
       });
     props.setSignInWindow(false);
   };
@@ -43,22 +43,23 @@ function SignInWindow(props) {
   };
 
   const googleSignIn = () => {
-    try {
-      const googleProvider = new GoogleAuthProvider();
-      googleProvider.setCustomParameters({ prompt: "select_account" });
-      signInWithPopup(auth, googleProvider);
-      // readUserData(auth.currentUser.uid)
-      //   .then((task_list) => {
-      //     console.log(task_list);
-      //     props.setTaskLists(task_list);
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error Reading User Data:", error);
-      //   });
-    } catch (error) {
-      alert("Error sign in with Google ", error);
-    }
-    props.setSignInWindow(false);
+    const googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: "select_account" });
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        readUserData(result.user.uid, (error, taskLists) => {
+          if (error) {
+            alert("Error reading data: " + error.message);
+          } else {
+            props.setTaskLists(taskLists);
+          }
+        });
+      })
+      .catch((error) => {
+        alert("Error sign in with Google " + error.message);
+      });
+      
+    
   };
 
   return props.signInWindow ? (

@@ -8,19 +8,17 @@ export function writeUserData(userId, taskList) {
     });
 }
 
-export function readUserData(userId) {
+export function readUserData(userId, callback) {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
-        const unsubscribe = onValue(ref(db, '/users/' + userId), (snapshot) => {
-            const task_list = (snapshot.val() && snapshot.val().task_list) || 'Anonymous';
-            unsubscribe(); // Stop listening to further changes after the initial value is obtained
-            resolve(task_list);
-        }, {
-            onlyOnce: true
-        });
 
-        unsubscribe(error => {
-            reject(error);
-        });
+    const unsubscribe = onValue(ref(db, '/users/' + userId), (snapshot) => {
+        const task_list = (snapshot.val() && snapshot.val().task_list) || 'Anonymous';
+        callback(null, task_list);
+    }, {
+        onlyOnce: true
+    });
+
+    unsubscribe(error => {
+        callback(error);
     });
 }
