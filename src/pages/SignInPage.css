@@ -1,10 +1,4 @@
-.window-wrapper {
-    position: fixed;
-    top: 10%;
-    left: 10%;
-    width: 80%;
-    height: 80%;
-    background-color: black;
+h1 {
     text-align: center;
 }
   

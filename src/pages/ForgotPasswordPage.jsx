@@ -1,10 +1,10 @@
-import "./ForgotPasswordWindow.css"
+import "./ForgotPasswordPage.css"
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
-function SignUpWindow(props) {
+function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
 
   const handleEmailChange = (event) => {
@@ -19,26 +19,18 @@ function SignUpWindow(props) {
         alert("Error sending reset password email: " + error.message);
       });
   };
+  const navigate = useNavigate();
 
-  return props.forgotPasswordWindow ? (
-    <div className="window-wrapper">
+  return (
+    <div>
       <form onSubmit={handleForgotPassword}>
         <h1>Forgot Password</h1>
         <div className="email-wrapper">
           <button
             className="back-button"
-            onClick={() => {
-              props.setForgotPasswordWindow(false);
-              props.setSignInWindow(true);
-            }}
+            onClick={() => navigate('/sign-in')}
           >
-            &#10094;
-          </button>
-          <button
-            className="close-button"
-            onClick={() => props.setForgotPasswordWindow(false)}
-          >
-            X
+            &#x25c0;
           </button>
           <input
             type="email"
@@ -52,14 +44,7 @@ function SignUpWindow(props) {
         </div>
       </form>
     </div>
-  ) : (
-    ""
-  );
+  )
 }
 
-SignUpWindow.propTypes = {
-  forgotPasswordWindow: PropTypes.bool,
-  setForgotPasswordWindow: PropTypes.func,
-  setSignInWindow: PropTypes.func,
-};
-export default SignUpWindow;
+export default ForgotPasswordPage;

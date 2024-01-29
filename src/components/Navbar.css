@@ -1,0 +1,27 @@
+.navbar {
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    background-color: #2F4F4F;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+  
+  .navbar-link {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 15px;
+    font-weight: bold;
+  }
+
+  .name {
+    text-align: left;
+    padding: 5vh 5vw;
+    padding-right: 30vw;
+  }

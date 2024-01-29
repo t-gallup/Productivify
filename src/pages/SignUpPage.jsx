@@ -1,11 +1,16 @@
-import "./SignUpWindow.css";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import "./SignUpPage.css";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { writeUserData } from "../functions/DataBaseFunctions";
+import { useNavigate } from "react-router-dom";
 //TODO: Add label tags to inputs
-function SignUpWindow(props) {
+function SignUpPage(props) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -31,54 +36,53 @@ function SignUpWindow(props) {
       alert("Passwords don't match");
     } else {
       const actionCodeSettings = {
-        url: "https://productivify.net"
-      }
-      const userCredentials = createUserWithEmailAndPassword(auth, email, password);
-      userCredentials.then((userCredential) => {
-        writeUserData(userCredential.user.uid, props.taskLists);
-        sendEmailVerification(userCredential.user, actionCodeSettings);
-        // auth.currentUser.sendEmailVerification(actionCodeSettings);
-        props.setSignUpWindow(false);
-        props.setSignInWindow(true);
-        alert('User created successfully! Please verify email before signing in.');
-      })
-      .catch((error) => {
-        console.log(userCredentials);
-        const errorCode = error.code
-        switch (errorCode) {
-          case 'auth/weak-password':
-            alert('Password should be at least 6 characters.');
-            break;
-          case 'auth/email-already-in-use':
-            alert('Email address is already in use.');
-            break;
-          default:
-            alert('Error creating user account. Please try again later.');
-            console.error(error.message);
-        }
-      })
+        url: "https://productivify.net",
+      };
+      const userCredentials = createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      userCredentials
+        .then((userCredential) => {
+          writeUserData(userCredential.user.uid, props.taskLists);
+          sendEmailVerification(userCredential.user, actionCodeSettings);
+          // auth.currentUser.sendEmailVerification(actionCodeSettings);
+          navigate('/sign-in');
+          alert(
+            "User created successfully! Please verify email before signing in."
+          );
+        })
+        .catch((error) => {
+          console.log(userCredentials);
+          const errorCode = error.code;
+          switch (errorCode) {
+            case "auth/weak-password":
+              alert("Password should be at least 6 characters.");
+              break;
+            case "auth/email-already-in-use":
+              alert("Email address is already in use.");
+              break;
+            default:
+              alert("Error creating user account. Please try again later.");
+              console.error(error.message);
+          }
+        });
     }
   };
 
-  return props.signUpWindow ? (
-    <div className="window-wrapper">
+  return (
+    <div>
       <form onSubmit={handleSignUp}>
         <h1>Create Account</h1>
         <div className="email-wrapper">
           <button
             className="back-button"
             onClick={() => {
-              props.setSignUpWindow(false);
-              props.setSignInWindow(true);
+              navigate("/sign-in");
             }}
           >
-            &#10094;
-          </button>
-          <button
-            className="close-button"
-            onClick={() => props.setSignUpWindow(false)}
-          >
-            X
+            &#x25c0;
           </button>
           <input
             type="text"
@@ -104,21 +108,14 @@ function SignUpWindow(props) {
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
           ></input>
-          <button type="submit">
-            Sign Up
-          </button>
+          <button type="submit">Sign Up</button>
         </div>
       </form>
     </div>
-  ) : (
-    ""
   );
 }
 
-SignUpWindow.propTypes = {
-  signUpWindow: PropTypes.bool,
-  setSignUpWindow: PropTypes.func,
-  setSignInWindow: PropTypes.func,
+SignUpPage.propTypes = {
   taskLists: PropTypes.any,
 };
-export default SignUpWindow;
+export default SignUpPage;

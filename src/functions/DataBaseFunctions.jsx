@@ -1,5 +1,4 @@
 import { getDatabase, ref, onValue, set } from "firebase/database";
-// import { auth } from "../firebase.js";
 
 export function writeUserData(userId, taskList) {
     const db = getDatabase();
@@ -11,14 +10,15 @@ export function writeUserData(userId, taskList) {
 export function readUserData(userId, emptyTaskList, callback, ) {
     const db = getDatabase();
 
-    const unsubscribe = onValue(ref(db, '/users/' + userId), (snapshot) => {
+    onValue(ref(db, '/users/' + userId), (snapshot) => {
         const task_list = (snapshot.val() && snapshot.val().task_list) || emptyTaskList;
         callback(null, task_list);
+        console.log(task_list);
     }, {
         onlyOnce: true
     });
 
-    unsubscribe(error => {
-        callback(error);
-    });
+    // unsubscribe(error => {
+    //     callback(error);
+    // });
 }

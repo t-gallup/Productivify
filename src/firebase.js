@@ -5,7 +5,7 @@ import "firebase/auth"
 
 const firebaseConfig = {
     apiKey: "AIzaSyAPYqSGxbDUpthda9XlHN0DIR687RAhnt8",
-    authDomain: "productivity-website-a9d5b.firebaseapp.com",
+    authDomain: "productivity-website-a9d5b.firebaseapp.app",
     projectId: "productivity-website-a9d5b",
     storageBucket: "productivity-website-a9d5b.appspot.com",
     messagingSenderId: "1057721005501",

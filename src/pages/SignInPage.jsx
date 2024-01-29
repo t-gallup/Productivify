@@ -1,4 +1,4 @@
-import "./SignInWindow.css";
+import "./SignInPage.css";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import {
@@ -10,8 +10,10 @@ import { auth } from "../firebase";
 import { GoogleButton } from "react-google-button";
 import { readUserData } from "../functions/DataBaseFunctions";
 import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
-function SignInWindow(props) {
+function SignInPage(props) {
+    const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleEmailChange = (event) => {
@@ -22,35 +24,32 @@ function SignInWindow(props) {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    var user = "";
+    console.log("test");
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         readUserData(userCredentials.user.uid, (error, taskLists) => {
           if (error) {
             alert("Error reading data: " + error.message);
           } else {
+            console.log("Task Lists", taskLists);
             props.setTaskLists({...taskLists});
+            user = userCredentials;
           }
         });
       })
       .catch((error) => {
-        console.log(error);
+        alert("Error signing in: " + error.message);
       });
+    console.log("User", user);
     if (!auth.currentUser.emailVerified) {
-      signOut(auth);
+      await signOut(auth);
       alert("Please verify your email before signing in.");
     } else {
-      props.setSignInWindow(false);
+      navigate('/');
     }
   };
-  const handleSignUp = () => {
-    props.setSignInWindow(false);
-    props.setSignUpWindow(true);
-  };
 
-  const handleForgotPassword = () => {
-    props.setSignInWindow(false);
-    props.setForgotPasswordWindow(true);
-  };
 
   const googleSignIn = async () => {
     const googleProvider = new GoogleAuthProvider();
@@ -72,19 +71,20 @@ function SignInWindow(props) {
       .catch((error) => {
         alert("Error sign in with Google " + error.message);
       });
-    props.setSignInWindow(false);
+    navigate('/');
   };
 
-  return props.signInWindow ? (
-    <div className="window-wrapper">
-      <form onSubmit={handleSubmit}>
-        <h1>Sign In</h1>
-        <button
-          className="close-button"
-          onClick={() => props.setSignInWindow(false)}
+  return <>
+     <div className="window">
+      <button
+          className="back-button"
+          onClick={() => navigate('/')}
         >
-          X
+            &#x25c0;
         </button>
+        <form onSubmit={() => handleSubmit}>
+        
+        <h1>Sign In</h1>
         <div className="email-wrapper">
           <input
             type="email"
@@ -102,27 +102,22 @@ function SignInWindow(props) {
         </div>
         <div className="sign-in-buttons">
           <GoogleButton onClick={googleSignIn} />
-          <button className="button" onClick={handleSignUp}>
+          <button className="button" onClick={() => navigate('/sign-up')}>
             Sign Up with Email
           </button>
-          <button className="button" onClick={handleForgotPassword}>
+          <button className="button" onClick={() => navigate('/forgot-password')}>
             Forgot Password
           </button>
         </div>
       </form>
     </div>
-  ) : (
-    ""
-  );
+  </>
+    
 }
 
-SignInWindow.propTypes = {
-  signInWindow: PropTypes.bool,
-  setSignInWindow: PropTypes.func,
-  setSignUpWindow: PropTypes.func,
+SignInPage.propTypes = {
   setTaskLists: PropTypes.func,
   emptyTaskList: PropTypes.object,
-  setForgotPasswordWindow: PropTypes.func,
 };
 
-export default SignInWindow;
+export default SignInPage;
