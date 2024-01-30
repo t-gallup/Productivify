@@ -43,24 +43,16 @@ function SignInPage(props) {
   const googleSignIn = async () => {
     const googleProvider = new GoogleAuthProvider();
     googleProvider.setCustomParameters({ prompt: "select_account" });
-    await signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        readUserData(
-          result.user.uid,
-          props.emptyTaskLists,
-          (error, taskLists) => {
-            if (error) {
-              alert("Error reading data: " + error.message);
-            } else {
-              props.setTaskLists({...taskLists});
-            }
-          }
-        );
-      })
-      .catch((error) => {
-        alert("Error sign in with Google " + error.message);
-      });
-    navigate('/');
+    try {
+      const userCredentials = await signInWithPopup(auth, googleProvider);
+      const taskLists = await readUserData(userCredentials.user.uid, props.emptyTaskLists);
+      props.setTaskLists({...taskLists });
+      navigate('/');
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+    
+    
   };
 
   return <>
