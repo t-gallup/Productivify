@@ -27,9 +27,9 @@ function CalendarPage(props) {
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut(auth);
-    console.log(props.emptyTaskLists);
+    // console.log(props.emptyTaskLists);
     props.setTaskLists({ ...props.emptyTaskLists });
-    console.log(props.taskLists);
+    // console.log(props.taskLists);
     navigate("/");
   };
 
@@ -79,8 +79,7 @@ function CalendarPage(props) {
     }),
     [febDays]
   );
-
-  useEffect(() => {
+  if (Object.keys(props.taskLists).length == 0) {
     const newTaskLists = { ...props.taskLists };
     const years = Array.from({ length: 500 }, (_, index) => index + 1900);
     years.forEach((year) => {
@@ -99,7 +98,7 @@ function CalendarPage(props) {
     });
     props.setEmptyTaskLists({ ...newTaskLists });
     props.setTaskLists({ ...newTaskLists });
-  }, []);
+  }
 
   const handleAddTask = useCallback(
     (completionDay, taskDescription) => {

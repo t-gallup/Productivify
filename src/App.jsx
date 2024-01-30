@@ -33,9 +33,15 @@ function App() {
           <Route
             exact
             path="/sign-in"
-            element={<SignInPage setTaskLists={setTaskLists} />}
+            element={
+              <SignInPage
+                setTaskLists={setTaskLists}
+                emptyTaskLists={emptyTaskLists}
+                taskLists={taskLists}
+              />
+            }
           />
-          <Route exact path="/sign-up" element={<SignUpPage />} />
+          <Route exact path="/sign-up" element={<SignUpPage taskLists={taskLists}/>} />
           <Route
             exact
             path="/forgot-password"

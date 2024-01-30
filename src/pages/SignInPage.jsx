@@ -1,5 +1,5 @@
 import "./SignInPage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   signInWithEmailAndPassword,
@@ -13,7 +13,7 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 function SignInPage(props) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleEmailChange = (event) => {
@@ -24,29 +24,18 @@ function SignInPage(props) {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var user = "";
-    console.log("test");
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        readUserData(userCredentials.user.uid, (error, taskLists) => {
-          if (error) {
-            alert("Error reading data: " + error.message);
-          } else {
-            console.log("Task Lists", taskLists);
-            props.setTaskLists({...taskLists});
-            user = userCredentials;
-          }
-        });
-      })
-      .catch((error) => {
-        alert("Error signing in: " + error.message);
-      });
-    console.log("User", user);
-    if (!auth.currentUser.emailVerified) {
-      await signOut(auth);
-      alert("Please verify your email before signing in.");
-    } else {
-      navigate('/');
+    try {
+        const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+        const taskLists = await readUserData(userCredentials.user.uid, props.emptyTaskLists);
+        props.setTaskLists({...taskLists });
+        if (!auth.currentUser.emailVerified) {
+            await signOut(auth);
+            alert("Please verify your email before signing in.");
+        } else {
+            navigate('/');
+        }
+    } catch (error) {
+        alert("Error: " + error.message);
     }
   };
 
@@ -58,7 +47,7 @@ function SignInPage(props) {
       .then((result) => {
         readUserData(
           result.user.uid,
-          props.emptyTaskList,
+          props.emptyTaskLists,
           (error, taskLists) => {
             if (error) {
               alert("Error reading data: " + error.message);
@@ -81,8 +70,8 @@ function SignInPage(props) {
           onClick={() => navigate('/')}
         >
             &#x25c0;
-        </button>
-        <form onSubmit={() => handleSubmit}>
+      </button>
+      <form onSubmit={handleSubmit}>
         
         <h1>Sign In</h1>
         <div className="email-wrapper">
@@ -117,7 +106,8 @@ function SignInPage(props) {
 
 SignInPage.propTypes = {
   setTaskLists: PropTypes.func,
-  emptyTaskList: PropTypes.object,
+  emptyTaskLists: PropTypes.object,
+  taskLists: PropTypes.object
 };
 
 export default SignInPage;
