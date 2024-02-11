@@ -8,10 +8,12 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 import { useState } from "react";
 
+
 function App() {
   const [emptyTaskLists, setEmptyTaskLists] = useState({});
   const [taskLists, setTaskLists] = useState({});
   const [user, setUser] = useState(null);
+
   return (
     <>
       <BrowserRouter>
@@ -47,8 +49,8 @@ function App() {
             path="/forgot-password"
             element={<ForgotPasswordPage />}
           />
-          <Route exact path="/to-do" element={<ToDoPage />} />
-          <Route exact path="/stats" element={<StatsPage />} />
+          <Route exact path="/to-do" element={<ToDoPage user={user} setTaskLists={setTaskLists} emptyTaskLists={emptyTaskLists} />} />
+          <Route exact path="/stats" element={<StatsPage user={user} setTaskLists={setTaskLists} emptyTaskLists={emptyTaskLists}  />} />
         </Routes>
       </BrowserRouter>
     </>

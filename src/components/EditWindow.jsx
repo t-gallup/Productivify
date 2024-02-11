@@ -1,24 +1,29 @@
 import "./EditWindow.css";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import { handleEditTask, handleDeleteTask } from "../functions/TaskFunctions";
 
 function EditWindow(props) {
   const oldDay = props.editDay + "";
-  const oldDescription = props.editDescription + "";
-  // console.log("Old: ", oldDay, oldDescription);
-
+  const oldDescription = props.editDescription[0] + "";
+  const oldTime = Number(props.editDescription[1]);
+  console.log("TTTT", oldDescription, oldTime);
   const [newDay, setNewDay] = useState(oldDay);
   const [newDescription, setNewDescription] = useState(oldDescription);
-  // console.log("New: ", newDay, newDescription);
+  const [newTime, setNewTime] = useState(oldTime);
   const handleEditDayChange = (event) => {
     setNewDay(event.target.value);
   };
   const handleEditDescriptionChange = (event) => {
     setNewDescription(event.target.value);
   };
+  const handleEditTimeChange = (event) => {
+    setNewTime(event.target.value);
+  };
   useEffect(() => {
     setNewDay(props.editDay);
-    setNewDescription(props.editDescription);
+    setNewDescription(props.editDescription[0]);
+    setNewTime(props.editDescription[1]);
   }, [props.editDay, props.editDescription]);
   return props.openEditWindow ? (
     <div className="window-wrapper">
@@ -31,27 +36,24 @@ function EditWindow(props) {
       </button>
       <div className="task-attributes">
         <h2>Completion Day</h2>
-        <input
-          type="date"
-          value={newDay}
-          onChange={handleEditDayChange}
-        />
+        <input type="date" value={newDay} onChange={handleEditDayChange} />
         <h2>Task Description</h2>
         <input
           type="text"
           value={newDescription}
           onChange={handleEditDescriptionChange}
         />
+        <h2>Completion Time</h2>
+        <input
+          type="number"
+          value={newTime}
+          onChange={handleEditTimeChange}
+        />
       </div>
       <button
         className="edit-button"
         onClick={() =>
-          props.handleEditTask(
-            oldDay,
-            newDay,
-            oldDescription,
-            newDescription
-          )
+          handleEditTask(oldDay, newDay, oldDescription, newDescription, oldTime, newTime, props.taskLists, props.setTaskLists, props.setOpenEditWindow)
         }
       >
         Submit Edits
@@ -60,7 +62,7 @@ function EditWindow(props) {
         className="delete-button"
         // onClick={() => submitTask(completionDay, taskDescription, props.taskList, props.setOpenWindow)}
         onClick={() =>
-          props.handleDeleteTask(props.editDay, props.editDescription)
+          handleDeleteTask(props.editDay, props.editDescription, props.taskLists, props.setTaskLists, props.setOpenEditWindow)
         }
       >
         Delete Task
@@ -72,13 +74,12 @@ function EditWindow(props) {
 }
 
 EditWindow.propTypes = {
-  handleDeleteTask: PropTypes.func,
   openEditWindow: PropTypes.bool,
   setOpenEditWindow: PropTypes.func,
   taskLists: PropTypes.object,
-  handleEditTask: PropTypes.func,
+  setTaskLists: PropTypes.func,
   editDay: PropTypes.string,
-  editDescription: PropTypes.string,
+  editDescription: PropTypes.array,
   setEditDay: PropTypes.func,
   setEditDescription: PropTypes.func,
 };

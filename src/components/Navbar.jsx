@@ -1,9 +1,18 @@
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
 
 function Navbar(props) {
   const navigate = useNavigate();
+  const handleSignOut = async () => {
+    await signOut(auth);
+    props.setTaskLists({ ...props.emptyTaskLists });
+    navigate("/");
+  };
+
   return (
     <div className="navbar big">
       <a className="name navbar-link" onClick={() => navigate("/")}>
@@ -21,7 +30,7 @@ function Navbar(props) {
         Statistics
       </a>
       {props.user?.email ? (
-        <a className="navbar-link hov" onClick={props.handleSignOut}>
+        <a className="navbar-link hov" onClick={handleSignOut}>
           Sign Out
         </a>
       ) : (
@@ -35,7 +44,9 @@ function Navbar(props) {
 
 Navbar.propTypes = {
     user: PropTypes.object,
-    handleSignOut: PropTypes.func
+    handleSignOut: PropTypes.func,
+    setTaskLists: PropTypes.func,
+    emptyTaskLists: PropTypes.object
 }
 
 export default Navbar;

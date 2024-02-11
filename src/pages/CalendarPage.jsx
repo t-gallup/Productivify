@@ -2,8 +2,7 @@ import "./CalendarPage.css";
 import Box from "../components/Box";
 import PropTypes from "prop-types";
 import NewTaskWindow from "../components/NewTaskWindow";
-import { useCallback, useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
 import {
   SubtractMonth,
   AddMonth,
@@ -12,8 +11,6 @@ import {
 } from "../functions/DateChanges";
 import EditWindow from "../components/EditWindow";
 import { auth } from "../firebase.js";
-import { signOut } from "firebase/auth";
-import { writeUserData } from "../functions/DataBaseFunctions";
 import Navbar from "../components/Navbar.jsx";
 
 function CalendarPage(props) {
@@ -24,14 +21,7 @@ function CalendarPage(props) {
   const [displayDay, setDisplayDay] = useState(currentDay);
   const [editDescription, setEditDescription] = useState("");
   const [editDay, setEditDay] = useState("");
-  const navigate = useNavigate();
-  const handleSignOut = async () => {
-    await signOut(auth);
-    // console.log(props.emptyTaskLists);
-    props.setTaskLists({ ...props.emptyTaskLists });
-    // console.log(props.taskLists);
-    navigate("/");
-  };
+  const [editTime, setEditTime] = useState(0);
 
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
@@ -100,69 +90,6 @@ function CalendarPage(props) {
     props.setTaskLists({ ...newTaskLists });
   }
 
-  const handleAddTask = useCallback(
-    (completionDay, taskDescription) => {
-      const newTaskLists = { ...props.taskLists };
-      const key = `${completionDay.substring(0, 4)}-${completionDay
-        .substring(5, 7)
-        .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-      if (newTaskLists[key] !== undefined) {
-        newTaskLists[key].push(taskDescription);
-      }
-
-      props.setTaskLists({ ...newTaskLists });
-      writeUserData(auth.currentUser.uid, props.taskLists);
-      setOpenWindow(false);
-    },
-    [setOpenWindow, props]
-  );
-
-  const handleDeleteTask = useCallback(
-    (completionDay, taskDescription) => {
-      const newTaskLists = { ...props.taskLists };
-      const key = `${completionDay.substring(0, 4)}-${completionDay
-        .substring(5, 7)
-        .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-
-      if (newTaskLists[key] !== undefined) {
-        const delIndex = newTaskLists[key].indexOf(taskDescription);
-        newTaskLists[key].splice(delIndex, 1);
-      }
-      props.setTaskLists({ ...newTaskLists });
-      writeUserData(auth.currentUser.uid, props.taskLists);
-      setOpenEditWindow(false);
-    },
-    [setOpenEditWindow, props]
-  );
-
-  const handleEditTask = useCallback(
-    (oldDay, newDay, oldDescription, newDescription) => {
-      const oldKey = `${oldDay.substring(0, 4)}-${oldDay
-        .substring(5, 7)
-        .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
-      const newKey = `${newDay.substring(0, 4)}-${newDay
-        .substring(5, 7)
-        .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
-      const newTaskLists = { ...props.taskLists };
-      if (
-        newTaskLists[oldKey] !== undefined &&
-        oldDescription !== newDescription
-      ) {
-        const editIndex = newTaskLists[oldKey].indexOf(oldDescription);
-        newTaskLists[oldKey][editIndex] = newDescription;
-      }
-      if (oldKey !== newKey) {
-        const delIndex = newTaskLists[oldKey].indexOf(newDescription);
-        newTaskLists[oldKey].splice(delIndex, 1);
-        newTaskLists[newKey].push(newDescription);
-      }
-      props.setTaskLists({ ...newTaskLists });
-      writeUserData(auth.currentUser.uid, props.taskLists);
-      setOpenEditWindow(false);
-    },
-    [setOpenEditWindow, props]
-  );
-
   const weekdays = useMemo(
     () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     []
@@ -173,21 +100,22 @@ function CalendarPage(props) {
       <NewTaskWindow
         openWindow={openWindow}
         setOpenWindow={setOpenWindow}
-        taskList={props.taskLists}
-        handleAddTask={handleAddTask}
+        taskLists={props.taskLists}
+        setTaskLists={props.setTaskLists}
       ></NewTaskWindow>
       <EditWindow
         openEditWindow={openEditWindow}
         setOpenEditWindow={setOpenEditWindow}
-        taskList={props.taskLists}
-        handleDeleteTask={handleDeleteTask}
-        handleEditTask={handleEditTask}
+        taskLists={props.taskLists}
+        setTaskLists={props.setTaskLists}
         editDescription={editDescription}
         setEditDescription={setEditDescription}
         editDay={editDay}
         setEditDay={setEditDay}
+        editTime={editTime}
+        setEditTime={setEditTime}
       ></EditWindow>
-      <Navbar user={props.user} handleSignOut={handleSignOut}></Navbar>
+      <Navbar user={props.user} setTaskLists={props.setTaskLists} emptyTaskLists={props.emptyTaskLists}></Navbar>
 
       <div className="calendar">
         <div className="header-wrap">
@@ -269,6 +197,7 @@ function CalendarPage(props) {
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
+                setEditTime={setEditTime}
               />
             );
           })}
@@ -289,6 +218,7 @@ function CalendarPage(props) {
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
+                setEditTime={setEditTime}
               />
             );
           })}
@@ -309,6 +239,7 @@ function CalendarPage(props) {
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
+                setEditTime={setEditTime}
               />
             );
           })}
@@ -325,6 +256,7 @@ CalendarPage.propTypes = {
   setEmptyTaskLists: PropTypes.func,
   user: PropTypes.object,
   setUser: PropTypes.func,
+  handleSignOut: PropTypes.func,
 };
 
 export default CalendarPage;

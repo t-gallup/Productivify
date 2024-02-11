@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
 import "./NewTaskWindow.css";
 import PropTypes from "prop-types";
+import { handleAddTask } from "../functions/TaskFunctions";
 
 function NewTaskWindow(props) {
   const [completionDay, setCompletionDay] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
+  const [completionTime, setCompletionTime] = useState(0);
   const submitButtonRef = useRef(null);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -13,6 +15,9 @@ function NewTaskWindow(props) {
     }
     if (name === "taskDescription") {
       setTaskDescription(value);
+    }
+    if (name === "completionTime") {
+      setCompletionTime(value);
     }
   };
 
@@ -26,9 +31,10 @@ function NewTaskWindow(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const dateValue = event.target.elements.date.value;
-    props.handleAddTask(dateValue, taskDescription);
+    handleAddTask(dateValue, taskDescription, completionTime, props.taskLists, props.setTaskLists, props.setOpenWindow)
     setCompletionDay("");
     setTaskDescription("");
+    setCompletionTime(0);
   };
 
   return props.openWindow ? (
@@ -58,7 +64,16 @@ function NewTaskWindow(props) {
             onChange={handleInputChange}
             onKeyDown={handleEnterPress}
           />
+          <h2>Completion Time</h2>
+          <input
+            type="number"
+            name="completionTime"
+            value={completionTime}
+            onChange={handleInputChange}
+            onKeyDown={handleEnterPress}
+          />
         </div>
+        
         <button type="submit" className="submit-button" ref={submitButtonRef}>
           Submit
         </button>
@@ -72,8 +87,8 @@ function NewTaskWindow(props) {
 NewTaskWindow.propTypes = {
   openWindow: PropTypes.bool,
   setOpenWindow: PropTypes.func,
-  taskList: PropTypes.object,
-  handleAddTask: PropTypes.func,
+  taskLists: PropTypes.object,
+  setTaskLists: PropTypes.func,
 };
 
 export default NewTaskWindow;

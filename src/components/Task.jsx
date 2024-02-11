@@ -4,15 +4,17 @@ import PropTypes from "prop-types";
 
 function handleEditButtonClick(description, day, setEditDay, setEditDescription, setOpenEditWindow) {
   setEditDay(day);
-  setEditDescription(description)
+  setEditDescription(description);
+  // setEditTime(time);
   setOpenEditWindow(true);
 }
-function Task({ description, day, setEditDescription, setEditDay, setOpenEditWindow }) {
+function Task(props) {
   return (
     <>
       <div className="task-box">
-        <button className="ind-task-button" onClick={() => handleEditButtonClick(description, day, setEditDay, setEditDescription, setOpenEditWindow)}>
-          <p className="task-description"> {description}</p>
+        <button className="ind-task-button" onClick={() => handleEditButtonClick(props.description, props.day, props.setEditDay, props.setEditDescription, props.setOpenEditWindow)}>
+          <p className="task-description"> {props.description[0]}</p>
+          <p className="task-time">{props.description[1]} hours</p>
         </button>
       </div>
     </>
@@ -20,10 +22,11 @@ function Task({ description, day, setEditDescription, setEditDay, setOpenEditWin
 }
 
 Task.propTypes = {
-  description: PropTypes.string,
+  description: PropTypes.array,
   day: PropTypes.string,
   setEditDescription: PropTypes.func,
   setEditDay: PropTypes.func,
+  setEditTime: PropTypes.func,
   setOpenEditWindow: PropTypes.func,
 
 };

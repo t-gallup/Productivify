@@ -1,6 +1,6 @@
 .window-wrapper {
   position: fixed;
-  top: 10%;
+  top: 20%;
   left: 10%;
   width: 80%;
   height: 80%;
@@ -10,8 +10,8 @@
 
 .close-button {
   position: fixed;
-  top: 15%;
-  left: 85%;
+  top: 25%;
+  left: 83%;
 }
 
 .submit-button {

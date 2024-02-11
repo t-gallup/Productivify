@@ -8,20 +8,23 @@ function taskMapping(
   setEditDay,
   setEditDescription,
   setOpenEditWindow,
+  setEditTime
 ) {
   if (currList == undefined) {
     return;
   }
   return (
     <>
-      {currList.map((task, index) => (
+      {currList.map((task, time, index) => (
         <Task
           key={key + index}
           day={key}
           description={task}
+          time={time}
           setEditDescription={setEditDescription}
           setEditDay={setEditDay}
           setOpenEditWindow={setOpenEditWindow}
+          setEditTime={setEditTime}
         />
       ))}
     </>
@@ -35,6 +38,7 @@ function Box({
   setEditDay,
   setEditDescription,
   setOpenEditWindow,
+  setEditTime
 }) {
   const key = `${year}-${month.toString().padStart(2, "0")}-${day
     .toString()
@@ -50,6 +54,7 @@ function Box({
             setEditDay,
             setEditDescription,
             setOpenEditWindow,
+            setEditTime
           )}
         </div>
       </div>
@@ -61,10 +66,11 @@ Box.propTypes = {
   day: PropTypes.any,
   month: PropTypes.any,
   year: PropTypes.any,
-  taskList: PropTypes.any,
+  taskList: PropTypes.object,
   setOpenEditWindow: PropTypes.func,
   setEditDay: PropTypes.func,
   setEditDescription: PropTypes.func,
+  setEditTime: PropTypes.func
 };
 
 export default Box;
