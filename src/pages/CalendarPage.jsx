@@ -12,6 +12,10 @@ import {
 import EditWindow from "../components/EditWindow";
 import { auth } from "../firebase.js";
 import Navbar from "../components/Navbar.jsx";
+import {
+  createNumDaysPerMonth,
+  createNewTaskLists,
+} from "../functions/InitializationFunctions.jsx";
 
 function CalendarPage(props) {
   const [emptyList] = useState({});
@@ -52,42 +56,12 @@ function CalendarPage(props) {
   const [febDays, setFebDays] = useState(
     displayDay.getFullYear() % 4 == 0 ? 29 : 28
   );
-  const numDaysPerMonth = useMemo(
-    () => ({
-      0: 31,
-      1: febDays,
-      2: 31,
-      3: 30,
-      4: 31,
-      5: 30,
-      6: 31,
-      7: 31,
-      8: 30,
-      9: 31,
-      10: 30,
-      11: 31,
-    }),
-    [febDays]
-  );
+  const numDaysPerMonth = createNumDaysPerMonth(febDays);
   if (Object.keys(props.taskLists).length == 0) {
-    const newTaskLists = { ...props.taskLists };
-    const years = Array.from({ length: 500 }, (_, index) => index + 1900);
-    years.forEach((year) => {
-      for (let month = 1; month <= 12; month++) {
-        var currNumDays = numDaysPerMonth[month - 1];
-        if (year % 4 == 0 && month == 2) {
-          currNumDays = 29;
-        }
-        for (let day = 1; day <= currNumDays; day++) {
-          const key = `${year}-${month.toString().padStart(2, "0")}-${day
-            .toString()
-            .padStart(2, "0")}`;
-          newTaskLists[key] = [];
-        }
-      }
-    });
+    const newTaskLists = createNewTaskLists(props.taskLists, numDaysPerMonth);
     props.setEmptyTaskLists({ ...newTaskLists });
     props.setTaskLists({ ...newTaskLists });
+    console.log("Set Up Calendar Page");
   }
 
   const weekdays = useMemo(
@@ -102,6 +76,9 @@ function CalendarPage(props) {
         setOpenWindow={setOpenWindow}
         taskLists={props.taskLists}
         setTaskLists={props.setTaskLists}
+        toDoList={props.toDoList}
+        setToDoList={props.setToDoList}
+        isToDo={false}
       ></NewTaskWindow>
       <EditWindow
         openEditWindow={openEditWindow}
@@ -112,10 +89,16 @@ function CalendarPage(props) {
         setEditDescription={setEditDescription}
         editDay={editDay}
         setEditDay={setEditDay}
-        editTime={editTime}
-        setEditTime={setEditTime}
+        toDoList={props.toDoList}
+        setToDoList={props.setToDoList}
+        isToDo={false}
       ></EditWindow>
-      <Navbar user={props.user} setTaskLists={props.setTaskLists} emptyTaskLists={props.emptyTaskLists}></Navbar>
+      <Navbar
+        user={props.user}
+        setTaskLists={props.setTaskLists}
+        emptyTaskLists={props.emptyTaskLists}
+        setToDoList={props.setToDoList}
+      ></Navbar>
 
       <div className="calendar">
         <div className="header-wrap">
@@ -257,6 +240,8 @@ CalendarPage.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
   handleSignOut: PropTypes.func,
+  toDoList: PropTypes.object,
+  setToDoList: PropTypes.func,
 };
 
 export default CalendarPage;

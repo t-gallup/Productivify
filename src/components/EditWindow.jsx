@@ -7,7 +7,6 @@ function EditWindow(props) {
   const oldDay = props.editDay + "";
   const oldDescription = props.editDescription[0] + "";
   const oldTime = Number(props.editDescription[1]);
-  console.log("TTTT", oldDescription, oldTime);
   const [newDay, setNewDay] = useState(oldDay);
   const [newDescription, setNewDescription] = useState(oldDescription);
   const [newTime, setNewTime] = useState(oldTime);
@@ -44,16 +43,25 @@ function EditWindow(props) {
           onChange={handleEditDescriptionChange}
         />
         <h2>Completion Time</h2>
-        <input
-          type="number"
-          value={newTime}
-          onChange={handleEditTimeChange}
-        />
+        <input type="number" value={newTime} onChange={handleEditTimeChange} />
       </div>
       <button
         className="edit-button"
         onClick={() =>
-          handleEditTask(oldDay, newDay, oldDescription, newDescription, oldTime, newTime, props.taskLists, props.setTaskLists, props.setOpenEditWindow)
+          handleEditTask(
+            oldDay,
+            newDay,
+            oldDescription,
+            newDescription,
+            oldTime,
+            newTime,
+            props.taskLists,
+            props.setTaskLists,
+            props.setOpenEditWindow,
+            props.toDoList,
+            props.setToDoList,
+            props.isToDo
+          )
         }
       >
         Submit Edits
@@ -62,7 +70,16 @@ function EditWindow(props) {
         className="delete-button"
         // onClick={() => submitTask(completionDay, taskDescription, props.taskList, props.setOpenWindow)}
         onClick={() =>
-          handleDeleteTask(props.editDay, props.editDescription, props.taskLists, props.setTaskLists, props.setOpenEditWindow)
+          handleDeleteTask(
+            props.editDay,
+            props.editDescription,
+            props.taskLists,
+            props.setTaskLists,
+            props.setOpenEditWindow,
+            props.toDoList,
+            props.setToDoList,
+            props.isToDo
+          )
         }
       >
         Delete Task
@@ -82,6 +99,9 @@ EditWindow.propTypes = {
   editDescription: PropTypes.array,
   setEditDay: PropTypes.func,
   setEditDescription: PropTypes.func,
+  toDoList: PropTypes.object,
+  setToDoList: PropTypes.func,
+  isToDo: PropTypes.bool,
 };
 
 export default EditWindow;

@@ -1,11 +1,12 @@
 .window-wrapper {
     position: fixed;
-    top: 20%;
+    top: 17%;
     left: 10%;
     width: 80%;
     height: 80%;
     background-color: black;
     text-align: center;
+    z-index: 10;
 }
 
 .delete-button {

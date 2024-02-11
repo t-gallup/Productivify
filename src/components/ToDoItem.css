@@ -1,0 +1,33 @@
+.to-do-box {
+    margin-bottom: 5%
+}
+
+.to-do-button {
+    width: 80%;
+}
+
+.to-do-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.checkbox-wrapper {
+    width: 30%;
+    align-items: center;
+}
+
+.button-text {
+    width: 70%;
+}
+
+/* .task-checkbox {
+    position: fixed;
+    right: 45%;
+    top: 25%;
+} */

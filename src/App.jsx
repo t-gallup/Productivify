@@ -5,14 +5,27 @@ import SignUpPage from "./pages/SignUpPage";
 import ToDoPage from "./pages/ToDoPage";
 import StatsPage from "./pages/StatsPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import {
+  createNewTaskLists,
+  createNumDaysPerMonth,
+} from "./functions/InitializationFunctions";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 
 function App() {
+  
   const [emptyTaskLists, setEmptyTaskLists] = useState({});
   const [taskLists, setTaskLists] = useState({});
+  const [toDoList, setToDoList] = useState({});
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const numDaysPerMonth = createNumDaysPerMonth(29);
+    const newTaskLists = createNewTaskLists(numDaysPerMonth);
+    setEmptyTaskLists({ ...newTaskLists });
+    setTaskLists({ ...newTaskLists });
+    setToDoList({ ...newTaskLists });
+  }, []);
 
   return (
     <>
@@ -29,6 +42,8 @@ function App() {
                 setEmptyTaskLists={setEmptyTaskLists}
                 user={user}
                 setUser={setUser}
+                toDoList={toDoList}
+                setToDoList={setToDoList}
               />
             }
           />
@@ -43,14 +58,43 @@ function App() {
               />
             }
           />
-          <Route exact path="/sign-up" element={<SignUpPage taskLists={taskLists}/>} />
+          <Route
+            exact
+            path="/sign-up"
+            element={<SignUpPage taskLists={taskLists} />}
+          />
           <Route
             exact
             path="/forgot-password"
             element={<ForgotPasswordPage />}
           />
-          <Route exact path="/to-do" element={<ToDoPage user={user} setTaskLists={setTaskLists} emptyTaskLists={emptyTaskLists} />} />
-          <Route exact path="/stats" element={<StatsPage user={user} setTaskLists={setTaskLists} emptyTaskLists={emptyTaskLists}  />} />
+          <Route
+            exact
+            path="/to-do"
+            element={
+              <ToDoPage
+                user={user}
+                setTaskLists={setTaskLists}
+                emptyTaskLists={emptyTaskLists}
+                setEmptyTaskLists={setEmptyTaskLists}
+                taskLists={taskLists}
+                toDoList={toDoList}
+                setToDoList={setToDoList}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/stats"
+            element={
+              <StatsPage
+                user={user}
+                setTaskLists={setTaskLists}
+                emptyTaskLists={emptyTaskLists}
+                setToDoList={setToDoList}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

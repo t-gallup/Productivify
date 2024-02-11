@@ -9,7 +9,10 @@ function Navbar(props) {
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut(auth);
+    console.log(props.emptyTaskLists);
     props.setTaskLists({ ...props.emptyTaskLists });
+    props.setToDoList({...props.emptyTaskLists})
+
     navigate("/");
   };
 
@@ -44,9 +47,9 @@ function Navbar(props) {
 
 Navbar.propTypes = {
     user: PropTypes.object,
-    handleSignOut: PropTypes.func,
     setTaskLists: PropTypes.func,
-    emptyTaskLists: PropTypes.object
+    emptyTaskLists: PropTypes.object,
+    setToDoList: PropTypes.func,
 }
 
 export default Navbar;

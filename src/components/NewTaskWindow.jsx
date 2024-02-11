@@ -31,54 +31,108 @@ function NewTaskWindow(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const dateValue = event.target.elements.date.value;
-    handleAddTask(dateValue, taskDescription, completionTime, props.taskLists, props.setTaskLists, props.setOpenWindow)
+    handleAddTask(
+      dateValue,
+      taskDescription,
+      completionTime,
+      props.taskLists,
+      props.setTaskLists,
+      props.setOpenWindow,
+      props.toDoList,
+      props.setToDoList,
+      props.isToDo
+    );
     setCompletionDay("");
     setTaskDescription("");
     setCompletionTime(0);
   };
 
   return props.openWindow ? (
-    <div className="window-wrapper">
-      <form onSubmit={handleSubmit}>
-        <h1>Add a New Task</h1>
-        <button
-          className="close-button"
-          onClick={() => props.setOpenWindow(false)}
-        >
-          X
-        </button>
-        <div className="task-attributes">
-          <h2>Completion Day</h2>
-          <input
-            type="date"
-            name="date"
-            value={completionDay}
-            onChange={handleInputChange}
-            onKeyDown={handleEnterPress}
-          />
-          <h2>Task Description</h2>
-          <input
-            type="text"
-            name="taskDescription"
-            value={taskDescription}
-            onChange={handleInputChange}
-            onKeyDown={handleEnterPress}
-          />
-          <h2>Completion Time</h2>
-          <input
-            type="number"
-            name="completionTime"
-            value={completionTime}
-            onChange={handleInputChange}
-            onKeyDown={handleEnterPress}
-          />
-        </div>
-        
-        <button type="submit" className="submit-button" ref={submitButtonRef}>
-          Submit
-        </button>
-      </form>
-    </div>
+    props.isToDo ? (
+      <div className="window-wrapper">
+        <form onSubmit={handleSubmit}>
+          <h1>Add a New To Do Item</h1>
+          <button
+            className="close-button"
+            onClick={() => props.setOpenWindow(false)}
+          >
+            X
+          </button>
+          <div className="task-attributes">
+            <h2>Desired Completion Day</h2>
+            <input
+              type="date"
+              name="date"
+              value={completionDay}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+            <h2>Task Description</h2>
+            <input
+              type="text"
+              name="taskDescription"
+              value={taskDescription}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+            <h2>Estimated Completion Time</h2>
+            <input
+              type="number"
+              name="completionTime"
+              value={completionTime}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+          </div>
+
+          <button type="submit" className="submit-button" ref={submitButtonRef}>
+            Submit
+          </button>
+        </form>
+      </div>
+    ) : (
+      <div className="window-wrapper">
+        <form onSubmit={handleSubmit}>
+          <h1>Add a New Task</h1>
+          <button
+            className="close-button"
+            onClick={() => props.setOpenWindow(false)}
+          >
+            X
+          </button>
+          <div className="task-attributes">
+            <h2>Completion Day</h2>
+            <input
+              type="date"
+              name="date"
+              value={completionDay}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+            <h2>Task Description</h2>
+            <input
+              type="text"
+              name="taskDescription"
+              value={taskDescription}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+            <h2>Completion Time</h2>
+            <input
+              type="number"
+              name="completionTime"
+              value={completionTime}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+          </div>
+
+          <button type="submit" className="submit-button" ref={submitButtonRef}>
+            Submit
+          </button>
+        </form>
+      </div>
+    )
   ) : (
     ""
   );
@@ -89,6 +143,9 @@ NewTaskWindow.propTypes = {
   setOpenWindow: PropTypes.func,
   taskLists: PropTypes.object,
   setTaskLists: PropTypes.func,
+  toDoList: PropTypes.object,
+  setToDoList: PropTypes.func,
+  isToDo: PropTypes.bool,
 };
 
 export default NewTaskWindow;

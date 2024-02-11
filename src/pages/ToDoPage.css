@@ -1,0 +1,17 @@
+.to-do-header-wrap {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 20%;
+}
+
+.to-do-items {
+    width: 80%;
+    position: fixed;
+    top: 40%;
+    display: flex;
+    flex-direction: column;
+    flex: 4%;
+}
