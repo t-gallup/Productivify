@@ -15,12 +15,11 @@ function taskMapping(
   }
   return (
     <>
-      {currList.map((task, time, index) => (
+      {currList.map((task, index) => (
         <Task
-          key={key + index}
+          key={index}
           day={key}
           description={task}
-          time={time}
           setEditDescription={setEditDescription}
           setEditDay={setEditDay}
           setOpenEditWindow={setOpenEditWindow}

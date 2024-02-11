@@ -20,7 +20,6 @@ export function handleAddTask(
     if (newToDoList[key] !== undefined) {
       newToDoList[key].push([taskDescription, completionTime]);
     }
-    console.log(newToDoList[key]);
     setToDoList({ ...newToDoList });
   } else {
     const newTaskLists = { ...taskLists };
@@ -52,25 +51,19 @@ export function handleEditTask(
   setToDoList,
   isToDo
 ) {
+  const oldKey = `${oldDay.substring(0, 4)}-${oldDay
+    .substring(5, 7)
+    .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
+  const newKey = `${newDay.substring(0, 4)}-${newDay
+    .substring(5, 7)
+    .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
-    const oldKey = `${oldDay.substring(0, 4)}-${oldDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
-    const newKey = `${newDay.substring(0, 4)}-${newDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
     const newToDoList = { ...toDoList };
     const delIndex = newToDoList[oldKey].indexOf([oldDescription, oldTime]);
     newToDoList[oldKey].splice(delIndex, 1);
     newToDoList[newKey].push([newDescription, newTime]);
     setToDoList({ ...newToDoList });
   } else {
-    const oldKey = `${oldDay.substring(0, 4)}-${oldDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${oldDay.substring(8, 10).padStart(2, "0")}`;
-    const newKey = `${newDay.substring(0, 4)}-${newDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
     const newTaskLists = { ...taskLists };
     const delIndex = newTaskLists[oldKey].indexOf([oldDescription, oldTime]);
     newTaskLists[oldKey].splice(delIndex, 1);
@@ -92,26 +85,24 @@ export function handleDeleteTask(
   setToDoList,
   isToDo,
 ) {
+  const key = `${completionDay.substring(0, 4)}-${completionDay
+    .substring(5, 7)
+    .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
     const newToDoList = { ...toDoList };
-    const key = `${completionDay.substring(0, 4)}-${completionDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-
     if (newToDoList[key] !== undefined) {
       const delIndex = newToDoList[key].indexOf(taskDescription);
+      console.log(delIndex, newToDoList[key]);
       newToDoList[key].splice(delIndex, 1);
     }
     setToDoList({ ...newToDoList });
   } else {
     const newTaskLists = { ...taskLists };
-    const key = `${completionDay.substring(0, 4)}-${completionDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-
     if (newTaskLists[key] !== undefined) {
       const delIndex = newTaskLists[key].indexOf(taskDescription);
+      console.log(delIndex, newTaskLists[key]);
       newTaskLists[key].splice(delIndex, 1);
+      console.log(newTaskLists[key]);
     }
     setTaskLists({ ...newTaskLists });
   }

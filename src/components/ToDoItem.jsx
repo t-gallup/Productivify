@@ -38,8 +38,9 @@ function ToDoItem(props) {
       props.setToDoList,
       true
     );
-    console.log(props.toDoList);
   };
+  const newDate = props.day.substring(5);
+  console.log(newDate);
   return (
     <>
       <div className="to-do-box">
@@ -60,6 +61,7 @@ function ToDoItem(props) {
               className="task-checkbox"
               onChange={handleCheckBoxClick}
             ></CheckBox>
+            <p className="task-date"> {newDate} </p>
             <p className="task-description"> {props.description[0]}</p>
             <p className="task-time"> {props.description[1]} hours</p>
           </div>

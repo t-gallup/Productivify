@@ -12,7 +12,6 @@ function Navbar(props) {
     console.log(props.emptyTaskLists);
     props.setTaskLists({ ...props.emptyTaskLists });
     props.setToDoList({...props.emptyTaskLists})
-
     navigate("/");
   };
 

@@ -69,24 +69,35 @@ function ToDoPage(props) {
         </button>
       </div>
       <div className="to-do-items">
-        {Object.entries(props.toDoList).map(([day, tasks]) =>
-        tasks.map((description, index) => (
-          <ToDoItem
-            key={index}
-            day={day}
-            description={description}
-            setEditDescription={setEditDescription}
-            setEditDay={setEditDay}
-            setOpenEditWindow={setOpenEditWindow}
-            taskLists={props.taskLists}
-            setTaskLists={props.setTaskLists}
-            setOpenWindow={setOpenWindow}
-            toDoList={props.toDoList}
-            setToDoList={props.setToDoList}
-          />
-        ))
-      )}
+        <div className="column-names">
+          <div className="filler"></div>
+          <p className="date-col">Due Date</p>
+          <p className="description-col">Task Description</p>
+          <p className="time-col">Estimated Completion Time</p>
+        </div>
+        <div className="to-do-grid">
+            {Object.entries(props.toDoList).map(([day, tasks]) =>
+            tasks.map((description, index) => (
+              <div className="to-do-row" key={index}>
+                <ToDoItem
+                  key={index}
+                  day={day}
+                  description={description}
+                  setEditDescription={setEditDescription}
+                  setEditDay={setEditDay}
+                  setOpenEditWindow={setOpenEditWindow}
+                  taskLists={props.taskLists}
+                  setTaskLists={props.setTaskLists}
+                  setOpenWindow={setOpenWindow}
+                  toDoList={props.toDoList}
+                  setToDoList={props.setToDoList}
+                />
+              </div>
+            ))
+          )}
+        </div>
       </div>
+        
       
     </>
   );

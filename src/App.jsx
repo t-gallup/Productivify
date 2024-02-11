@@ -25,6 +25,7 @@ function App() {
     setEmptyTaskLists({ ...newTaskLists });
     setTaskLists({ ...newTaskLists });
     setToDoList({ ...newTaskLists });
+    console.log("Set up App");
   }, []);
 
   return (
