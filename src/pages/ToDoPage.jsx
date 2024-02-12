@@ -5,10 +5,10 @@ import { useState } from "react";
 import NewTaskWindow from "../components/NewTaskWindow";
 import ToDoItem from "../components/ToDoItem";
 
-import {
-  createNumDaysPerMonth,
-  createNewTaskLists,
-} from "../functions/InitializationFunctions";
+// import {
+//   createNumDaysPerMonth,
+//   createNewTaskLists,
+// } from "../functions/InitializationFunctions";
 import EditWindow from "../components/EditWindow";
 
 function ToDoPage(props) {
@@ -16,15 +16,15 @@ function ToDoPage(props) {
   const [editDescription, setEditDescription] = useState([]);
   const [editDay, setEditDay] = useState("");
   const [openEditWindow, setOpenEditWindow] = useState(false);
-  const [currentDay] = useState(new Date(Date.now()));
+  // const [currentDay] = useState(new Date(Date.now()));
 
-  if (Object.keys(props.toDoList).length == 0) {
-    const febDays = currentDay.getFullYear() % 4 == 0 ? 29 : 28;
-    const numDaysPerMonth = createNumDaysPerMonth(febDays);
-    const newTaskLists = createNewTaskLists(props.taskLists, numDaysPerMonth);
-    props.setToDoList({ ...newTaskLists });
-    console.log("Finished set up");
-  }
+  // if (Object.keys(props.toDoList).length == 0) {
+  //   const febDays = currentDay.getFullYear() % 4 == 0 ? 29 : 28;
+  //   const numDaysPerMonth = createNumDaysPerMonth(febDays);
+  //   const newTaskLists = createNewTaskLists(props.taskLists, numDaysPerMonth);
+  //   props.setToDoList({ ...newTaskLists });
+  //   console.log("Finished set up");
+  // }
   return (
     <>
       <Navbar
@@ -71,14 +71,13 @@ function ToDoPage(props) {
       <div className="to-do-items">
         <div className="column-names">
           <div className="filler"></div>
-          <p className="date-col">Due Date</p>
-          <p className="description-col">Task Description</p>
-          <p className="time-col">Estimated Completion Time</p>
+          <p>Due Date</p>
+          <p>Task Description</p>
+          <p>Estimated Completion Time</p>
         </div>
         <div className="to-do-grid">
             {Object.entries(props.toDoList).map(([day, tasks]) =>
             tasks.map((description, index) => (
-              <div className="to-do-row" key={index}>
                 <ToDoItem
                   key={index}
                   day={day}
@@ -92,7 +91,6 @@ function ToDoPage(props) {
                   toDoList={props.toDoList}
                   setToDoList={props.setToDoList}
                 />
-              </div>
             ))
           )}
         </div>

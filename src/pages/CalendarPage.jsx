@@ -57,12 +57,6 @@ function CalendarPage(props) {
     displayDay.getFullYear() % 4 == 0 ? 29 : 28
   );
   const numDaysPerMonth = createNumDaysPerMonth(febDays);
-  // if (Object.keys(props.taskLists).length == 0) {
-  //   const newTaskLists = createNewTaskLists(props.taskLists, numDaysPerMonth);
-  //   // props.setEmptyTaskLists({ ...newTaskLists });
-  //   props.setTaskLists({ ...newTaskLists });
-  //   console.log("Set Up Calendar Page");
-  // }
 
   const weekdays = useMemo(
     () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
