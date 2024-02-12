@@ -11,8 +11,8 @@ export function writeUserData(userId, taskList, toDoList) {
 export function readUserData(userId, emptyTaskList) {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    var task_list = emptyTaskList;
-    var to_do_list = emptyTaskList;
+    var task_list = structuredClone(emptyTaskList);
+    var to_do_list = structuredClone(emptyTaskList);
     const unsubscribe = onValue(
       ref(db, "/users/" + userId),
       (snapshot) => {

@@ -22,9 +22,9 @@ function App() {
   useEffect(() => {
     const numDaysPerMonth = createNumDaysPerMonth(29);
     const newTaskLists = createNewTaskLists(numDaysPerMonth);
-    setEmptyTaskLists({ ...newTaskLists });
-    setTaskLists({ ...newTaskLists });
-    setToDoList({ ...newTaskLists });
+    setEmptyTaskLists(newTaskLists);
+    setTaskLists(structuredClone(newTaskLists));
+    setToDoList(structuredClone(newTaskLists));
     console.log("Set up App");
   }, []);
 
@@ -40,7 +40,6 @@ function App() {
                 taskLists={taskLists}
                 setTaskLists={setTaskLists}
                 emptyTaskLists={emptyTaskLists}
-                setEmptyTaskLists={setEmptyTaskLists}
                 user={user}
                 setUser={setUser}
                 toDoList={toDoList}
@@ -77,7 +76,6 @@ function App() {
                 user={user}
                 setTaskLists={setTaskLists}
                 emptyTaskLists={emptyTaskLists}
-                setEmptyTaskLists={setEmptyTaskLists}
                 taskLists={taskLists}
                 toDoList={toDoList}
                 setToDoList={setToDoList}

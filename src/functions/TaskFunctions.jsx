@@ -13,7 +13,7 @@ export function handleAddTask(
   isToDo
 ) {
   if (isToDo) {
-    const newToDoList = { ...toDoList };
+    const newToDoList = structuredClone(toDoList);
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
       .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
@@ -22,7 +22,7 @@ export function handleAddTask(
     }
     setToDoList({ ...newToDoList });
   } else {
-    const newTaskLists = { ...taskLists };
+    const newTaskLists = structuredClone(taskLists);
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
       .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
@@ -58,13 +58,13 @@ export function handleEditTask(
     .substring(5, 7)
     .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
-    const newToDoList = { ...toDoList };
+    const newToDoList = structuredClone(toDoList);
     const delIndex = newToDoList[oldKey].indexOf([oldDescription, oldTime]);
     newToDoList[oldKey].splice(delIndex, 1);
     newToDoList[newKey].push([newDescription, newTime]);
     setToDoList({ ...newToDoList });
   } else {
-    const newTaskLists = { ...taskLists };
+    const newTaskLists = structuredClone(taskLists);
     const delIndex = newTaskLists[oldKey].indexOf([oldDescription, oldTime]);
     newTaskLists[oldKey].splice(delIndex, 1);
     newTaskLists[newKey].push([newDescription, newTime]);
@@ -89,20 +89,17 @@ export function handleDeleteTask(
     .substring(5, 7)
     .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
-    const newToDoList = { ...toDoList };
+    const newToDoList = structuredClone(toDoList);
     if (newToDoList[key] !== undefined) {
       const delIndex = newToDoList[key].indexOf(taskDescription);
-      console.log(delIndex, newToDoList[key]);
       newToDoList[key].splice(delIndex, 1);
     }
     setToDoList({ ...newToDoList });
   } else {
-    const newTaskLists = { ...taskLists };
+    const newTaskLists = structuredClone(taskLists);
     if (newTaskLists[key] !== undefined) {
       const delIndex = newTaskLists[key].indexOf(taskDescription);
-      console.log(delIndex, newTaskLists[key]);
       newTaskLists[key].splice(delIndex, 1);
-      console.log(newTaskLists[key]);
     }
     setTaskLists({ ...newTaskLists });
   }

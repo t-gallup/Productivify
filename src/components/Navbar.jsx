@@ -10,8 +10,8 @@ function Navbar(props) {
   const handleSignOut = async () => {
     await signOut(auth);
     console.log(props.emptyTaskLists);
-    props.setTaskLists({ ...props.emptyTaskLists });
-    props.setToDoList({...props.emptyTaskLists})
+    props.setTaskLists(structuredClone(props.emptyTaskLists));
+    props.setToDoList(structuredClone(props.emptyTaskLists))
     navigate("/");
   };
 

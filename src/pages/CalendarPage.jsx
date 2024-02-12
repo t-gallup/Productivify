@@ -230,7 +230,6 @@ CalendarPage.propTypes = {
   taskLists: PropTypes.object,
   setTaskLists: PropTypes.func,
   emptyTaskLists: PropTypes.object,
-  setEmptyTaskLists: PropTypes.func,
   user: PropTypes.object,
   setUser: PropTypes.func,
   handleSignOut: PropTypes.func,

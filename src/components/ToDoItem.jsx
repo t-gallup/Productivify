@@ -40,7 +40,6 @@ function ToDoItem(props) {
     );
   };
   const newDate = props.day.substring(5);
-  console.log(newDate);
   return (
     <>
       <div className="to-do-box">
