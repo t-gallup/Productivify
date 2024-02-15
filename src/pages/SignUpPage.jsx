@@ -54,7 +54,6 @@ function SignUpPage(props) {
           );
         })
         .catch((error) => {
-          console.log(userCredentials);
           const errorCode = error.code;
           switch (errorCode) {
             case "auth/weak-password":

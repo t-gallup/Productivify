@@ -21,11 +21,9 @@ function App() {
 
   useEffect(() => {
     const numDaysPerMonth = createNumDaysPerMonth(29);
-    const newTaskLists = createNewTaskLists(numDaysPerMonth);
-    setEmptyTaskLists(newTaskLists);
-    setTaskLists(structuredClone(newTaskLists));
-    setToDoList(structuredClone(newTaskLists));
-    console.log("Set up App");
+    setEmptyTaskLists(createNewTaskLists(numDaysPerMonth));
+    setTaskLists(createNewTaskLists(numDaysPerMonth));
+    setToDoList(createNewTaskLists(numDaysPerMonth));
   }, []);
 
   return (

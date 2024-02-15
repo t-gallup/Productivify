@@ -29,6 +29,7 @@ export function handleAddTask(
     if (newTaskLists[key] !== undefined) {
       newTaskLists[key].push([taskDescription, completionTime]);
     }
+    
     setTaskLists({ ...newTaskLists });
   }
 

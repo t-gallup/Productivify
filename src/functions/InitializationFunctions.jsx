@@ -19,7 +19,7 @@ export function createNumDaysPerMonth(febDays) {
 
 export function createNewTaskLists(numDaysPerMonth) {
     const newTaskLists = {};
-    const years = Array.from({ length: 200 }, (_, index) => index + 2000);
+    const years = Array.from({ length: 100 }, (_, index) => index + 2000);
     years.forEach((year) => {
       for (let month = 1; month <= 12; month++) {
         var currNumDays = numDaysPerMonth[month - 1];
