@@ -27,7 +27,7 @@ function SignInPage(props) {
     try {
         const userCredentials = await signInWithEmailAndPassword(auth, email, password);
         const taskLists = await readUserData(userCredentials.user.uid, props.emptyTaskLists);
-        props.setTaskLists({...taskLists });
+        props.setTaskLists(taskLists);
         if (!auth.currentUser.emailVerified) {
             await signOut(auth);
             alert("Please verify your email before signing in.");
@@ -46,7 +46,7 @@ function SignInPage(props) {
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
       const taskLists = await readUserData(userCredentials.user.uid, props.emptyTaskLists);
-      props.setTaskLists({...taskLists });
+      props.setTaskLists(taskLists);
       navigate('/');
     } catch (error) {
         alert("Error: " + error.message);

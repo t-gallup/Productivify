@@ -1,5 +1,9 @@
 import { writeUserData } from "./DataBaseFunctions.jsx";
 import { auth } from "../firebase.js";
+import {
+  createNewTaskLists,
+  createNumDaysPerMonth,
+} from "./InitializationFunctions.jsx";
 
 export function handleAddTask(
   completionDay,
@@ -13,29 +17,31 @@ export function handleAddTask(
   isToDo
 ) {
   if (isToDo) {
-    const newToDoList = structuredClone(toDoList);
+    var newToDoList = structuredClone(toDoList);
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
       .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-    if (newToDoList[key] !== undefined) {
-      newToDoList[key].push([taskDescription, completionTime]);
+    if (newToDoList[key] === undefined) {
+      const numDaysPerMonth = createNumDaysPerMonth(29);
+      newToDoList = createNewTaskLists(numDaysPerMonth);
     }
+    newToDoList[key].push([taskDescription, completionTime]);
     setToDoList({ ...newToDoList });
   } else {
-    const newTaskLists = structuredClone(taskLists);
+    var newTaskLists = structuredClone(taskLists);
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
       .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-    if (newTaskLists[key] !== undefined) {
-      newTaskLists[key].push([taskDescription, completionTime]);
+    if (newTaskLists[key] === undefined) {
+      const numDaysPerMonth = createNumDaysPerMonth(29);
+      newTaskLists = createNewTaskLists(numDaysPerMonth);
     }
-    
+    newTaskLists[key].push([taskDescription, completionTime]);
     setTaskLists({ ...newTaskLists });
   }
 
   writeUserData(auth.currentUser.uid, taskLists, toDoList);
   setOpenWindow(false);
-  
 }
 
 export function handleEditTask(
@@ -73,7 +79,6 @@ export function handleEditTask(
   }
   writeUserData(auth.currentUser.uid, taskLists, toDoList);
   setOpenEditWindow(false);
-  
 }
 
 export function handleDeleteTask(
@@ -84,7 +89,7 @@ export function handleDeleteTask(
   setOpenEditWindow,
   toDoList,
   setToDoList,
-  isToDo,
+  isToDo
 ) {
   const key = `${completionDay.substring(0, 4)}-${completionDay
     .substring(5, 7)

@@ -1,10 +1,4 @@
 .task-box {
-    /* background-color: black; */
-    /* height: fit-content; */
-    width: 90%;
-    /* justify-content: center;
-    display: flex; */
-    /* flex-direction: row; */
     word-wrap: break-word;
     overflow: auto;
 }
@@ -15,7 +9,6 @@
 }
 
 .ind-task-button {
-    /* padding: 0; */
     margin-bottom: 5%;
 }
 
