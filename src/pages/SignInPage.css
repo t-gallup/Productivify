@@ -18,7 +18,6 @@ h1 {
 
 .sign-in-buttons {
     display: flex;
-    /* width: 30%; */
     flex-direction: column;
     align-items: center;
     justify-content: center;
