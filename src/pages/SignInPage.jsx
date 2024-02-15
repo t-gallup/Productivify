@@ -44,13 +44,11 @@ function SignInPage(props) {
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
-        console.log("Prior List:", taskLists)
         for (var key in taskLists) {
-          console.log("Contents:", taskLists[key]);
-          emptyList[key].push(taskLists[key][0]);
-          console.log("Pushed Key: ", emptyList[key]);
+          for (var item of taskLists[key]) {
+            emptyList[key].push(item);
+          }
         }
-        // console.log("New List: ", emptyList)
         props.setTaskLists(emptyList);
       }
       const toDoList = await readUserToDo(
@@ -64,7 +62,9 @@ function SignInPage(props) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
         for (var toDoKey in toDoList) {
-          emptyList[toDoKey].push(toDoList[toDoKey][0]);
+          for (var toDoItem of toDoList[toDoKey]) {
+            emptyList[toDoKey].push(toDoItem);
+          }
         }
         props.setToDoList(emptyList);
       }
@@ -95,7 +95,9 @@ function SignInPage(props) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
         for (var key in taskLists) {
-          emptyList[key].push(taskLists[key][0]);
+          for (var item of taskLists[key]) {
+            emptyList[key].push(item);
+          }
         }
         props.setTaskLists(emptyList);
       }
@@ -110,7 +112,9 @@ function SignInPage(props) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
         for (var toDoKey in toDoList) {
-          emptyList[toDoKey].push(toDoList[toDoKey][0]);
+          for (var toDoItem of toDoList[toDoKey]) {
+            emptyList[toDoKey].push(toDoItem);
+          }
         }
         props.setToDoList(emptyList);
       }
