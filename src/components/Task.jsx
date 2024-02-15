@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 function handleEditButtonClick(description, day, setEditDay, setEditDescription, setOpenEditWindow) {
   setEditDay(day);
   setEditDescription(description);
-  // setEditTime(time);
   setOpenEditWindow(true);
 }
 function Task(props) {

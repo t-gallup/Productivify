@@ -52,7 +52,7 @@ function App() {
               <SignInPage
                 setTaskLists={setTaskLists}
                 emptyTaskLists={emptyTaskLists}
-                taskLists={taskLists}
+                setToDoList={setToDoList}
               />
             }
           />

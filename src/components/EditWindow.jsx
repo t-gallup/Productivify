@@ -68,7 +68,6 @@ function EditWindow(props) {
       </button>
       <button
         className="delete-button"
-        // onClick={() => submitTask(completionDay, taskDescription, props.taskList, props.setOpenWindow)}
         onClick={() =>
           handleDeleteTask(
             props.editDay,

@@ -47,7 +47,6 @@ function SignUpPage(props) {
         .then((userCredential) => {
           writeUserData(userCredential.user.uid, props.taskLists);
           sendEmailVerification(userCredential.user, actionCodeSettings);
-          // auth.currentUser.sendEmailVerification(actionCodeSettings);
           navigate('/sign-in');
           alert(
             "User created successfully! Please verify email before signing in."

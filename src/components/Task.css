@@ -1,6 +1,8 @@
 .task-box {
     word-wrap: break-word;
     overflow: auto;
+    width: 90%;
+    text-align: center;
 }
 
 .task-description {

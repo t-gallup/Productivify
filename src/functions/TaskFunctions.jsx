@@ -21,12 +21,16 @@ export function handleAddTask(
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
       .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
+    // console.log(newToDoList);
     if (newToDoList[key] === undefined) {
       const numDaysPerMonth = createNumDaysPerMonth(29);
       newToDoList = createNewTaskLists(numDaysPerMonth);
+      // newToDoList[key] = [[taskDescription, completionTime]]
     }
     newToDoList[key].push([taskDescription, completionTime]);
-    setToDoList({ ...newToDoList });
+    console.log(newToDoList);
+    writeUserData(auth.currentUser.uid, taskLists, newToDoList);
+    setToDoList(newToDoList);
   } else {
     var newTaskLists = structuredClone(taskLists);
     const key = `${completionDay.substring(0, 4)}-${completionDay
@@ -37,10 +41,9 @@ export function handleAddTask(
       newTaskLists = createNewTaskLists(numDaysPerMonth);
     }
     newTaskLists[key].push([taskDescription, completionTime]);
-    setTaskLists({ ...newTaskLists });
+    writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
+    setTaskLists(newTaskLists);
   }
-
-  writeUserData(auth.currentUser.uid, taskLists, toDoList);
   setOpenWindow(false);
 }
 
@@ -69,15 +72,16 @@ export function handleEditTask(
     const delIndex = newToDoList[oldKey].indexOf([oldDescription, oldTime]);
     newToDoList[oldKey].splice(delIndex, 1);
     newToDoList[newKey].push([newDescription, newTime]);
-    setToDoList({ ...newToDoList });
+    writeUserData(auth.currentUser.uid, taskLists, newToDoList);
+    setToDoList(newToDoList);
   } else {
     const newTaskLists = structuredClone(taskLists);
     const delIndex = newTaskLists[oldKey].indexOf([oldDescription, oldTime]);
     newTaskLists[oldKey].splice(delIndex, 1);
     newTaskLists[newKey].push([newDescription, newTime]);
-    setTaskLists({ ...newTaskLists });
+    writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
+    setTaskLists(newTaskLists);
   }
-  writeUserData(auth.currentUser.uid, taskLists, toDoList);
   setOpenEditWindow(false);
 }
 
@@ -100,15 +104,16 @@ export function handleDeleteTask(
       const delIndex = newToDoList[key].indexOf(taskDescription);
       newToDoList[key].splice(delIndex, 1);
     }
-    setToDoList({ ...newToDoList });
+    writeUserData(auth.currentUser.uid, taskLists, newToDoList);
+    setToDoList(newToDoList);
   } else {
     const newTaskLists = structuredClone(taskLists);
     if (newTaskLists[key] !== undefined) {
       const delIndex = newTaskLists[key].indexOf(taskDescription);
       newTaskLists[key].splice(delIndex, 1);
     }
-    setTaskLists({ ...newTaskLists });
+    writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
+    setTaskLists(newTaskLists);
   }
-  writeUserData(auth.currentUser.uid, taskLists, toDoList);
   setOpenEditWindow(false);
 }
