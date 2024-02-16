@@ -13,7 +13,7 @@ function Task(props) {
       <div className="task-box">
         <button className="ind-task-button" onClick={() => handleEditButtonClick(props.description, props.day, props.setEditDay, props.setEditDescription, props.setOpenEditWindow)}>
           <p className="task-description"> {props.description[0]}</p>
-          <p className="task-time">{props.description[1]} hours</p>
+          <p className="task-time">{props.description[1]} {props.description[1] === "1" ? "hour" : "hours"}</p>
         </button>
       </div>
     </>

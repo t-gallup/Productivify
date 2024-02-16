@@ -62,7 +62,7 @@ function ToDoItem(props) {
             ></CheckBox>
             <p className="task-date"> {newDate} </p>
             <p className="task-description"> {props.description[0]}</p>
-            <p className="task-time"> {props.description[1]} hours</p>
+            <p className="task-time"> {props.description[1]} {props.description[1] === "1" ? "hour" : "hours"}</p>
           </div>
         </button>
       </div>
