@@ -21,14 +21,11 @@ export function handleAddTask(
     const key = `${completionDay.substring(0, 4)}-${completionDay
       .substring(5, 7)
       .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
-    // console.log(newToDoList);
     if (newToDoList[key] === undefined) {
       const numDaysPerMonth = createNumDaysPerMonth(29);
       newToDoList = createNewTaskLists(numDaysPerMonth);
-      // newToDoList[key] = [[taskDescription, completionTime]]
     }
     newToDoList[key].push([taskDescription, completionTime]);
-    console.log(newToDoList);
     writeUserData(auth.currentUser.uid, taskLists, newToDoList);
     setToDoList(newToDoList);
   } else {
@@ -69,16 +66,24 @@ export function handleEditTask(
     .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
     const newToDoList = structuredClone(toDoList);
-    const delIndex = newToDoList[oldKey].indexOf([oldDescription, oldTime]);
-    newToDoList[oldKey].splice(delIndex, 1);
-    newToDoList[newKey].push([newDescription, newTime]);
+    const delIndex = newToDoList[oldKey].findIndex(innerArray => innerArray[0] === String(oldDescription) && innerArray[1] === String(oldTime));
+    if (oldKey === newKey) {
+      newToDoList[oldKey].splice(delIndex, 1, [newDescription, newTime]);
+    } else {
+      newToDoList[oldKey].splice(delIndex, 1)
+      newToDoList[newKey].push([newDescription, newTime]);
+    }
     writeUserData(auth.currentUser.uid, taskLists, newToDoList);
     setToDoList(newToDoList);
   } else {
     const newTaskLists = structuredClone(taskLists);
-    const delIndex = newTaskLists[oldKey].indexOf([oldDescription, oldTime]);
-    newTaskLists[oldKey].splice(delIndex, 1);
-    newTaskLists[newKey].push([newDescription, newTime]);
+    const delIndex = newTaskLists[oldKey].findIndex(innerArray => innerArray[0] === String(oldDescription) && innerArray[1] === String(oldTime));
+    if (oldKey === newKey) {
+      newTaskLists[oldKey].splice(delIndex, 1, [newDescription, newTime]);
+    } else {
+      newTaskLists[oldKey].splice(delIndex, 1)
+      newTaskLists[newKey].push([newDescription, newTime]);
+    }
     writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
     setTaskLists(newTaskLists);
   }
@@ -101,7 +106,7 @@ export function handleDeleteTask(
   if (isToDo) {
     const newToDoList = structuredClone(toDoList);
     if (newToDoList[key] !== undefined) {
-      const delIndex = newToDoList[key].indexOf(taskDescription);
+      const delIndex = newToDoList[key].findIndex(innerArray => innerArray[0] === String(taskDescription[0]) && innerArray[1] === String(taskDescription[1]));
       newToDoList[key].splice(delIndex, 1);
     }
     writeUserData(auth.currentUser.uid, taskLists, newToDoList);
@@ -109,7 +114,7 @@ export function handleDeleteTask(
   } else {
     const newTaskLists = structuredClone(taskLists);
     if (newTaskLists[key] !== undefined) {
-      const delIndex = newTaskLists[key].indexOf(taskDescription);
+      const delIndex = newTaskLists[key].findIndex(innerArray => innerArray[0] === String(taskDescription[0]) && innerArray[1] === String(taskDescription[1]));
       newTaskLists[key].splice(delIndex, 1);
     }
     writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
