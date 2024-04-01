@@ -21,8 +21,8 @@ function ToDoItem(props) {
       props.day,
       props.description[0],
       props.description[1],
-      props.taskLists,
-      props.setTaskLists,
+      props.taskList,
+      props.setTaskList,
       props.setOpenWindow,
       props.toDoList,
       props.setToDoList,
@@ -31,8 +31,8 @@ function ToDoItem(props) {
     handleDeleteTask(
       props.day,
       props.description,
-      props.taskLists,
-      props.setTaskLists,
+      props.taskList,
+      props.setTaskList,
       props.setOpenEditWindow,
       props.toDoList,
       props.setToDoList,
@@ -62,7 +62,11 @@ function ToDoItem(props) {
             ></CheckBox>
             <p className="task-date"> {newDate} </p>
             <p className="task-description"> {props.description[0]}</p>
-            <p className="task-time"> {props.description[1]} {props.description[1] === "1" ? "hour" : "hours"}</p>
+            <p className="task-time">
+              {" "}
+              {props.description[1]}{" "}
+              {props.description[1] === "1" ? "hour" : "hours"}
+            </p>
           </div>
         </button>
       </div>
@@ -76,8 +80,8 @@ ToDoItem.propTypes = {
   setEditDescription: PropTypes.func,
   setEditDay: PropTypes.func,
   setOpenEditWindow: PropTypes.func,
-  taskLists: PropTypes.object,
-  setTaskLists: PropTypes.func,
+  taskList: PropTypes.object,
+  setTaskList: PropTypes.func,
   setOpenWindow: PropTypes.func,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,

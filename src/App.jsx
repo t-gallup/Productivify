@@ -6,35 +6,35 @@ import ToDoPage from "./pages/ToDoPage";
 import StatsPage from "./pages/StatsPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import {
-  createNewTaskLists,
+  createNewTaskList,
   createNumDaysPerMonth,
 } from "./functions/InitializationFunctions";
 
 import { useState, useEffect } from "react";
 
 function App() {
-  const [emptyTaskLists, setEmptyTaskLists] = useState({});
-  const [taskLists, setTaskLists] = useState({});
+  const [emptyTaskList, setEmptyTaskList] = useState({});
+  const [taskList, setTaskList] = useState({});
   const [toDoList, setToDoList] = useState({});
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedTaskLists = JSON.parse(localStorage.getItem("userTaskList"));
+    const storedTaskList = JSON.parse(localStorage.getItem("userTaskList"));
     const storedToDoList = JSON.parse(localStorage.getItem("userToDo"));
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (storedTaskLists && storedToDoList && storedUser) {
-      setTaskLists(storedTaskLists);
+    if (storedTaskList && storedToDoList && storedUser) {
+      setTaskList(storedTaskList);
       setToDoList(storedToDoList);
       setUser(storedUser);
     } else {
       const numDaysPerMonth = createNumDaysPerMonth(29);
-      const newTaskLists = createNewTaskLists(numDaysPerMonth);
-      setEmptyTaskLists(newTaskLists);
-      setTaskLists(newTaskLists);
-      setToDoList(newTaskLists);
-      localStorage.setItem("userTaskList", JSON.stringify(newTaskLists));
-      localStorage.setItem("userToDo", JSON.stringify(newTaskLists));
+      const newTaskList = createNewTaskList(numDaysPerMonth);
+      setEmptyTaskList(newTaskList);
+      setTaskList(newTaskList);
+      setToDoList(newTaskList);
+      localStorage.setItem("userTaskList", JSON.stringify(newTaskList));
+      localStorage.setItem("userToDo", JSON.stringify(newTaskList));
     }
   }, []);
 
@@ -47,9 +47,9 @@ function App() {
             path="/"
             element={
               <CalendarPage
-                taskLists={taskLists}
-                setTaskLists={setTaskLists}
-                emptyTaskLists={emptyTaskLists}
+                taskList={taskList}
+                setTaskList={setTaskList}
+                emptyTaskList={emptyTaskList}
                 user={user}
                 setUser={setUser}
                 toDoList={toDoList}
@@ -62,8 +62,8 @@ function App() {
             path="/sign-in"
             element={
               <SignInPage
-                setTaskLists={setTaskLists}
-                emptyTaskLists={emptyTaskLists}
+                setTaskList={setTaskList}
+                emptyTaskList={emptyTaskList}
                 setToDoList={setToDoList}
               />
             }
@@ -71,7 +71,7 @@ function App() {
           <Route
             exact
             path="/sign-up"
-            element={<SignUpPage taskLists={taskLists} />}
+            element={<SignUpPage taskList={taskList} />}
           />
           <Route
             exact
@@ -85,9 +85,9 @@ function App() {
               <ToDoPage
                 user={user}
                 setUser={setUser}
-                setTaskLists={setTaskLists}
-                emptyTaskLists={emptyTaskLists}
-                taskLists={taskLists}
+                setTaskList={setTaskList}
+                emptyTaskList={emptyTaskList}
+                taskList={taskList}
                 toDoList={toDoList}
                 setToDoList={setToDoList}
               />
@@ -100,8 +100,8 @@ function App() {
               <StatsPage
                 user={user}
                 setUser={setUser}
-                setTaskLists={setTaskLists}
-                emptyTaskLists={emptyTaskLists}
+                setTaskList={setTaskList}
+                emptyTaskList={emptyTaskList}
                 setToDoList={setToDoList}
               />
             }
