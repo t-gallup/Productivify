@@ -14,7 +14,6 @@ import { auth } from "../firebase.js";
 import Navbar from "../components/Navbar.jsx";
 import {
   createNumDaysPerMonth,
-  createNewTaskList,
 } from "../functions/InitializationFunctions.jsx";
 
 function CalendarPage(props) {
