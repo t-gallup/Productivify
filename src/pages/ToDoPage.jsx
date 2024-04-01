@@ -7,7 +7,7 @@ import ToDoItem from "../components/ToDoItem";
 
 // import {
 //   createNumDaysPerMonth,
-//   createNewTaskLists,
+//   createNewTaskList,
 // } from "../functions/InitializationFunctions";
 import EditWindow from "../components/EditWindow";
 
@@ -21,8 +21,8 @@ function ToDoPage(props) {
   // if (Object.keys(props.toDoList).length == 0) {
   //   const febDays = currentDay.getFullYear() % 4 == 0 ? 29 : 28;
   //   const numDaysPerMonth = createNumDaysPerMonth(febDays);
-  //   const newTaskLists = createNewTaskLists(props.taskLists, numDaysPerMonth);
-  //   props.setToDoList({ ...newTaskLists });
+  //   const newTaskList = createNewTaskList(props.taskList, numDaysPerMonth);
+  //   props.setToDoList({ ...newTaskList });
   //   console.log("Finished set up");
   // }
   return (
@@ -30,15 +30,15 @@ function ToDoPage(props) {
       <Navbar
         user={props.user}
         setUser={props.setUser}
-        setTaskLists={props.setTaskLists}
-        emptyTaskLists={props.emptyTaskLists}
+        setTaskList={props.setTaskList}
+        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
       ></Navbar>
       <NewTaskWindow
         openWindow={openWindow}
         setOpenWindow={setOpenWindow}
-        taskLists={props.taskLists}
-        setTaskLists={props.setTaskLists}
+        taskList={props.taskList}
+        setTaskList={props.setTaskList}
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={true}
@@ -46,8 +46,8 @@ function ToDoPage(props) {
       <EditWindow
         openEditWindow={openEditWindow}
         setOpenEditWindow={setOpenEditWindow}
-        taskLists={props.taskLists}
-        setTaskLists={props.setTaskLists}
+        taskList={props.taskList}
+        setTaskList={props.setTaskList}
         editDescription={editDescription}
         setEditDescription={setEditDescription}
         editDay={editDay}
@@ -77,27 +77,25 @@ function ToDoPage(props) {
           <p>Estimated Completion Time</p>
         </div>
         <div className="to-do-grid">
-            {Object.entries(props.toDoList).map(([day, tasks]) =>
+          {Object.entries(props.toDoList).map(([day, tasks]) =>
             tasks.map((description, index) => (
-                <ToDoItem
-                  key={index}
-                  day={day}
-                  description={description}
-                  setEditDescription={setEditDescription}
-                  setEditDay={setEditDay}
-                  setOpenEditWindow={setOpenEditWindow}
-                  taskLists={props.taskLists}
-                  setTaskLists={props.setTaskLists}
-                  setOpenWindow={setOpenWindow}
-                  toDoList={props.toDoList}
-                  setToDoList={props.setToDoList}
-                />
+              <ToDoItem
+                key={index}
+                day={day}
+                description={description}
+                setEditDescription={setEditDescription}
+                setEditDay={setEditDay}
+                setOpenEditWindow={setOpenEditWindow}
+                taskList={props.taskList}
+                setTaskList={props.setTaskList}
+                setOpenWindow={setOpenWindow}
+                toDoList={props.toDoList}
+                setToDoList={props.setToDoList}
+              />
             ))
           )}
         </div>
       </div>
-        
-      
     </>
   );
 }
@@ -105,9 +103,9 @@ function ToDoPage(props) {
 ToDoPage.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
-  setTaskLists: PropTypes.func,
-  emptyTaskLists: PropTypes.object,
-  taskLists: PropTypes.object,
+  setTaskList: PropTypes.func,
+  emptyTaskList: PropTypes.object,
+  taskList: PropTypes.object,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
 };

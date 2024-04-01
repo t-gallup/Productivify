@@ -12,7 +12,7 @@ import { readUserTaskList, readUserToDo } from "../functions/DataBaseFunctions";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import {
-  createNewTaskLists,
+  createNewTaskList,
   createNumDaysPerMonth,
 } from "../functions/InitializationFunctions";
 
@@ -34,45 +34,45 @@ function SignInPage(props) {
         email,
         password
       );
-      const taskLists = await readUserTaskList(
+      const taskList = await readUserTaskList(
         userCredentials.user.uid,
-        props.emptyTaskLists
+        props.emptyTaskList
       );
-      if (taskLists === undefined) {
+      if (taskList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        let taskList = createNewTaskLists(numDaysPerMonth)
-        props.setTaskLists(taskList);
-        localStorage.setItem('userTaskList', JSON.stringify(taskList));
+        let taskList = createNewTaskList(numDaysPerMonth);
+        props.setTaskList(taskList);
+        localStorage.setItem("userTaskList", JSON.stringify(taskList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskLists(numDaysPerMonth);
-        for (var key in taskLists) {
-          for (var item of taskLists[key]) {
+        const emptyList = createNewTaskList(numDaysPerMonth);
+        for (var key in taskList) {
+          for (var item of taskList[key]) {
             emptyList[key].push(item);
           }
         }
-        props.setTaskLists(emptyList);
-        localStorage.setItem('userTaskList', JSON.stringify(taskLists));
+        props.setTaskList(emptyList);
+        localStorage.setItem("userTaskList", JSON.stringify(taskList));
       }
       let toDoList = await readUserToDo(
         userCredentials.user.uid,
-        props.emptyTaskLists
+        props.emptyTaskList
       );
       if (toDoList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        toDoList = createNewTaskLists(numDaysPerMonth)
+        toDoList = createNewTaskList(numDaysPerMonth);
         props.setToDoList(toDoList);
-        localStorage.setItem('userToDo', JSON.stringify(toDoList));
+        localStorage.setItem("userToDo", JSON.stringify(toDoList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskLists(numDaysPerMonth);
+        const emptyList = createNewTaskList(numDaysPerMonth);
         for (var toDoKey in toDoList) {
           for (var toDoItem of toDoList[toDoKey]) {
             emptyList[toDoKey].push(toDoItem);
           }
         }
         props.setToDoList(emptyList);
-        localStorage.setItem('userToDo', JSON.stringify(emptyList));
+        localStorage.setItem("userToDo", JSON.stringify(emptyList));
       }
       if (!auth.currentUser.emailVerified) {
         await signOut(auth);
@@ -90,45 +90,45 @@ function SignInPage(props) {
     googleProvider.setCustomParameters({ prompt: "select_account" });
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
-      let taskLists = await readUserTaskList(
+      let taskList = await readUserTaskList(
         userCredentials.user.uid,
-        props.emptyTaskLists
+        props.emptyTaskList
       );
-      if (taskLists === undefined) {
+      if (taskList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        taskLists = createNewTaskLists(numDaysPerMonth)
-        props.setTaskLists(taskLists);
-        localStorage.setItem('userTaskList', JSON.stringify(taskLists));
+        taskList = createNewTaskList(numDaysPerMonth);
+        props.setTaskList(taskList);
+        localStorage.setItem("userTaskList", JSON.stringify(taskList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskLists(numDaysPerMonth);
-        for (var key in taskLists) {
-          for (var item of taskLists[key]) {
+        const emptyList = createNewTaskList(numDaysPerMonth);
+        for (var key in taskList) {
+          for (var item of taskList[key]) {
             emptyList[key].push(item);
           }
         }
-        props.setTaskLists(emptyList);
-        localStorage.setItem('userTaskList', JSON.stringify(emptyList));
+        props.setTaskList(emptyList);
+        localStorage.setItem("userTaskList", JSON.stringify(emptyList));
       }
       let toDoList = await readUserToDo(
         userCredentials.user.uid,
-        props.emptyTaskLists
+        props.emptyTaskList
       );
       if (toDoList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        toDoList = createNewTaskLists(numDaysPerMonth)
+        toDoList = createNewTaskList(numDaysPerMonth);
         props.setToDoList(toDoList);
-        localStorage.setItem('userToDo', JSON.stringify(toDoList));
+        localStorage.setItem("userToDo", JSON.stringify(toDoList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskLists(numDaysPerMonth);
+        const emptyList = createNewTaskList(numDaysPerMonth);
         for (var toDoKey in toDoList) {
           for (var toDoItem of toDoList[toDoKey]) {
             emptyList[toDoKey].push(toDoItem);
           }
         }
         props.setToDoList(emptyList);
-        localStorage.setItem('userToDo', JSON.stringify(emptyList));
+        localStorage.setItem("userToDo", JSON.stringify(emptyList));
       }
       navigate("/");
     } catch (error) {
@@ -178,8 +178,8 @@ function SignInPage(props) {
 }
 
 SignInPage.propTypes = {
-  setTaskLists: PropTypes.func,
-  emptyTaskLists: PropTypes.object,
+  setTaskList: PropTypes.func,
+  emptyTaskList: PropTypes.object,
   setToDoList: PropTypes.func,
 };
 

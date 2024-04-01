@@ -1,5 +1,5 @@
 import { getDatabase, ref, onValue, set } from "firebase/database";
-// import { createNewTaskLists, createNumDaysPerMonth } from "./InitializationFunctions";
+// import { createNewTaskList, createNumDaysPerMonth } from "./InitializationFunctions";
 
 export function readUserTaskList(userId, emptyTaskList) {
   return new Promise((resolve, reject) => {
@@ -42,5 +42,5 @@ export function writeUserData(userId, taskList, toDoList) {
     to_do_list: toDoList,
   });
   // console.log(toDoList);
-  // console.log(readUserToDo(userId, createNewTaskLists(createNumDaysPerMonth(29))));
+  // console.log(readUserToDo(userId, createNewTaskList(createNumDaysPerMonth(29))));
 }

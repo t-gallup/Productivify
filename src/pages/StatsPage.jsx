@@ -8,8 +8,8 @@ function StatsPage(props) {
       <Navbar
         user={props.user}
         setUser={props.setUser}
-        setTaskLists={props.setTaskLists}
-        emptyTaskLists={props.emptyTaskLists}
+        setTaskList={props.setTaskList}
+        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
       ></Navbar>
       <h1>Productivity Statistics Coming Soon</h1>
@@ -20,8 +20,8 @@ function StatsPage(props) {
 StatsPage.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
-  setTaskLists: PropTypes.func,
-  emptyTaskLists: PropTypes.object,
+  setTaskList: PropTypes.func,
+  emptyTaskList: PropTypes.object,
   setToDoList: PropTypes.func,
 };
 export default StatsPage;

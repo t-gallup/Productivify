@@ -45,9 +45,9 @@ function SignUpPage(props) {
       );
       userCredentials
         .then((userCredential) => {
-          writeUserData(userCredential.user.uid, props.taskLists);
+          writeUserData(userCredential.user.uid, props.taskList);
           sendEmailVerification(userCredential.user, actionCodeSettings);
-          navigate('/sign-in');
+          navigate("/sign-in");
           alert(
             "User created successfully! Please verify email before signing in."
           );
@@ -114,6 +114,6 @@ function SignUpPage(props) {
 }
 
 SignUpPage.propTypes = {
-  taskLists: PropTypes.any,
+  taskList: PropTypes.any,
 };
 export default SignUpPage;

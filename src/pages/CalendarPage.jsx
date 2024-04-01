@@ -14,7 +14,7 @@ import { auth } from "../firebase.js";
 import Navbar from "../components/Navbar.jsx";
 import {
   createNumDaysPerMonth,
-  createNewTaskLists,
+  createNewTaskList,
 } from "../functions/InitializationFunctions.jsx";
 
 function CalendarPage(props) {
@@ -30,7 +30,7 @@ function CalendarPage(props) {
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
       props.setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
+      localStorage.setItem("user", JSON.stringify(newUser));
     });
   });
   const firstDayOfMonth = new Date(
@@ -69,8 +69,8 @@ function CalendarPage(props) {
       <NewTaskWindow
         openWindow={openWindow}
         setOpenWindow={setOpenWindow}
-        taskLists={props.taskLists}
-        setTaskLists={props.setTaskLists}
+        taskList={props.taskList}
+        setTaskList={props.setTaskList}
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={false}
@@ -78,8 +78,8 @@ function CalendarPage(props) {
       <EditWindow
         openEditWindow={openEditWindow}
         setOpenEditWindow={setOpenEditWindow}
-        taskLists={props.taskLists}
-        setTaskLists={props.setTaskLists}
+        taskList={props.taskList}
+        setTaskList={props.setTaskList}
         editDescription={editDescription}
         setEditDescription={setEditDescription}
         editDay={editDay}
@@ -91,8 +91,8 @@ function CalendarPage(props) {
       <Navbar
         user={props.user}
         setUser={props.setUser}
-        setTaskLists={props.setTaskLists}
-        emptyTaskLists={props.emptyTaskLists}
+        setTaskList={props.setTaskList}
+        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
       ></Navbar>
 
@@ -193,7 +193,7 @@ function CalendarPage(props) {
                 day={x}
                 month={displayDay.getMonth() + 1}
                 year={displayDay.getFullYear()}
-                taskList={props.taskLists}
+                taskList={props.taskList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
@@ -229,9 +229,9 @@ function CalendarPage(props) {
 }
 
 CalendarPage.propTypes = {
-  taskLists: PropTypes.object,
-  setTaskLists: PropTypes.func,
-  emptyTaskLists: PropTypes.object,
+  taskList: PropTypes.object,
+  setTaskList: PropTypes.func,
+  emptyTaskList: PropTypes.object,
   user: PropTypes.object,
   setUser: PropTypes.func,
   handleSignOut: PropTypes.func,

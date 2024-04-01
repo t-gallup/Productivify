@@ -4,17 +4,16 @@ import PropTypes from "prop-types";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
-
 function Navbar(props) {
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut(auth);
-    props.setTaskLists(structuredClone(props.emptyTaskLists));
-    props.setToDoList(structuredClone(props.emptyTaskLists));
-    props.setUser(null)
-    localStorage.setItem('userTaskList', JSON.stringify(props.emptyTaskLists));
-    localStorage.setItem('userToDo', JSON.stringify(props.emptyTaskLists));
-    localStorage.setItem('user', JSON.stringify(null));
+    props.setTaskList(structuredClone(props.emptyTaskList));
+    props.setToDoList(structuredClone(props.emptyTaskList));
+    props.setUser(null);
+    localStorage.setItem("userTaskList", JSON.stringify(props.emptyTaskList));
+    localStorage.setItem("userToDo", JSON.stringify(props.emptyTaskList));
+    localStorage.setItem("user", JSON.stringify(null));
     navigate("/");
   };
 
@@ -48,11 +47,11 @@ function Navbar(props) {
 }
 
 Navbar.propTypes = {
-    user: PropTypes.object,
-    setUser: PropTypes.func,
-    setTaskLists: PropTypes.func,
-    emptyTaskLists: PropTypes.object,
-    setToDoList: PropTypes.func,
-}
+  user: PropTypes.object,
+  setUser: PropTypes.func,
+  setTaskList: PropTypes.func,
+  emptyTaskList: PropTypes.object,
+  setToDoList: PropTypes.func,
+};
 
 export default Navbar;
