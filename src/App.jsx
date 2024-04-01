@@ -13,17 +13,29 @@ import {
 import { useState, useEffect } from "react";
 
 function App() {
-  
   const [emptyTaskLists, setEmptyTaskLists] = useState({});
   const [taskLists, setTaskLists] = useState({});
   const [toDoList, setToDoList] = useState({});
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const numDaysPerMonth = createNumDaysPerMonth(29);
-    setEmptyTaskLists(createNewTaskLists(numDaysPerMonth));
-    setTaskLists(createNewTaskLists(numDaysPerMonth));
-    setToDoList(createNewTaskLists(numDaysPerMonth));
+    const storedTaskLists = JSON.parse(localStorage.getItem("userTaskList"));
+    const storedToDoList = JSON.parse(localStorage.getItem("userToDo"));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (storedTaskLists && storedToDoList && storedUser) {
+      setTaskLists(storedTaskLists);
+      setToDoList(storedToDoList);
+      setUser(storedUser);
+    } else {
+      const numDaysPerMonth = createNumDaysPerMonth(29);
+      const newTaskLists = createNewTaskLists(numDaysPerMonth);
+      setEmptyTaskLists(newTaskLists);
+      setTaskLists(newTaskLists);
+      setToDoList(newTaskLists);
+      localStorage.setItem("userTaskList", JSON.stringify(newTaskLists));
+      localStorage.setItem("userToDo", JSON.stringify(newTaskLists));
+    }
   }, []);
 
   return (
@@ -72,6 +84,7 @@ function App() {
             element={
               <ToDoPage
                 user={user}
+                setUser={setUser}
                 setTaskLists={setTaskLists}
                 emptyTaskLists={emptyTaskLists}
                 taskLists={taskLists}
@@ -86,6 +99,7 @@ function App() {
             element={
               <StatsPage
                 user={user}
+                setUser={setUser}
                 setTaskLists={setTaskLists}
                 emptyTaskLists={emptyTaskLists}
                 setToDoList={setToDoList}

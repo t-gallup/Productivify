@@ -30,6 +30,7 @@ function CalendarPage(props) {
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
       props.setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser));
     });
   });
   const firstDayOfMonth = new Date(
@@ -89,6 +90,7 @@ function CalendarPage(props) {
       ></EditWindow>
       <Navbar
         user={props.user}
+        setUser={props.setUser}
         setTaskLists={props.setTaskLists}
         emptyTaskLists={props.emptyTaskLists}
         setToDoList={props.setToDoList}

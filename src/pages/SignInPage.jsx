@@ -40,7 +40,9 @@ function SignInPage(props) {
       );
       if (taskLists === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        props.setTaskLists(createNewTaskLists(numDaysPerMonth));
+        let taskList = createNewTaskLists(numDaysPerMonth)
+        props.setTaskLists(taskList);
+        localStorage.setItem('userTaskList', JSON.stringify(taskList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
@@ -50,14 +52,17 @@ function SignInPage(props) {
           }
         }
         props.setTaskLists(emptyList);
+        localStorage.setItem('userTaskList', JSON.stringify(taskLists));
       }
-      const toDoList = await readUserToDo(
+      let toDoList = await readUserToDo(
         userCredentials.user.uid,
         props.emptyTaskLists
       );
       if (toDoList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        props.setToDoList(createNewTaskLists(numDaysPerMonth));
+        toDoList = createNewTaskLists(numDaysPerMonth)
+        props.setToDoList(toDoList);
+        localStorage.setItem('userToDo', JSON.stringify(toDoList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
@@ -67,6 +72,7 @@ function SignInPage(props) {
           }
         }
         props.setToDoList(emptyList);
+        localStorage.setItem('userToDo', JSON.stringify(emptyList));
       }
       if (!auth.currentUser.emailVerified) {
         await signOut(auth);
@@ -84,13 +90,15 @@ function SignInPage(props) {
     googleProvider.setCustomParameters({ prompt: "select_account" });
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
-      const taskLists = await readUserTaskList(
+      let taskLists = await readUserTaskList(
         userCredentials.user.uid,
         props.emptyTaskLists
       );
       if (taskLists === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        props.setTaskLists(createNewTaskLists(numDaysPerMonth));
+        taskLists = createNewTaskLists(numDaysPerMonth)
+        props.setTaskLists(taskLists);
+        localStorage.setItem('userTaskList', JSON.stringify(taskLists));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
@@ -100,14 +108,17 @@ function SignInPage(props) {
           }
         }
         props.setTaskLists(emptyList);
+        localStorage.setItem('userTaskList', JSON.stringify(emptyList));
       }
-      const toDoList = await readUserToDo(
+      let toDoList = await readUserToDo(
         userCredentials.user.uid,
         props.emptyTaskLists
       );
       if (toDoList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        props.setToDoList(createNewTaskLists(numDaysPerMonth));
+        toDoList = createNewTaskLists(numDaysPerMonth)
+        props.setToDoList(toDoList);
+        localStorage.setItem('userToDo', JSON.stringify(toDoList));
       } else {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         const emptyList = createNewTaskLists(numDaysPerMonth);
@@ -117,6 +128,7 @@ function SignInPage(props) {
           }
         }
         props.setToDoList(emptyList);
+        localStorage.setItem('userToDo', JSON.stringify(emptyList));
       }
       navigate("/");
     } catch (error) {

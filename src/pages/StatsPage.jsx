@@ -7,6 +7,7 @@ function StatsPage(props) {
     <>
       <Navbar
         user={props.user}
+        setUser={props.setUser}
         setTaskLists={props.setTaskLists}
         emptyTaskLists={props.emptyTaskLists}
         setToDoList={props.setToDoList}
@@ -18,6 +19,7 @@ function StatsPage(props) {
 
 StatsPage.propTypes = {
   user: PropTypes.object,
+  setUser: PropTypes.func,
   setTaskLists: PropTypes.func,
   emptyTaskLists: PropTypes.object,
   setToDoList: PropTypes.func,

@@ -40,6 +40,7 @@ export function handleAddTask(
     newTaskLists[key].push([taskDescription, completionTime]);
     writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
     setTaskLists(newTaskLists);
+    localStorage.setItem('userTaskList', JSON.stringify(newTaskLists));
   }
   setOpenWindow(false);
 }
@@ -86,6 +87,7 @@ export function handleEditTask(
     }
     writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
     setTaskLists(newTaskLists);
+    localStorage.setItem('userTaskList', JSON.stringify(newTaskLists));
   }
   setOpenEditWindow(false);
 }
@@ -119,6 +121,7 @@ export function handleDeleteTask(
     }
     writeUserData(auth.currentUser.uid, newTaskLists, toDoList);
     setTaskLists(newTaskLists);
+    localStorage.setItem('userTaskList', JSON.stringify(newTaskLists));
   }
   setOpenEditWindow(false);
 }

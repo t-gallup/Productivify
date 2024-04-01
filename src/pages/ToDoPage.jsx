@@ -29,6 +29,7 @@ function ToDoPage(props) {
     <>
       <Navbar
         user={props.user}
+        setUser={props.setUser}
         setTaskLists={props.setTaskLists}
         emptyTaskLists={props.emptyTaskLists}
         setToDoList={props.setToDoList}
@@ -103,6 +104,7 @@ function ToDoPage(props) {
 
 ToDoPage.propTypes = {
   user: PropTypes.object,
+  setUser: PropTypes.func,
   setTaskLists: PropTypes.func,
   emptyTaskLists: PropTypes.object,
   taskLists: PropTypes.object,
