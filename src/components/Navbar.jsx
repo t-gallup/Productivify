@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useContext } from "react";
+import { ThemeContext } from "../ThemeProvider";
 
 function Navbar(props) {
+  const [{ theme, isDark }, changeTheme] = useContext(ThemeContext);
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut(auth);
@@ -22,6 +25,10 @@ function Navbar(props) {
       <a className="name navbar-link" onClick={() => navigate("/")}>
         <h2>Productivify</h2>
       </a>
+      {/* <a className="navbar-link hov" onClick={() => changeTheme()}>
+        {" "}
+        {isDark ? "Light" : "Dark"} Mode
+      </a> */}
       <a className="navbar-link hov" onClick={() => navigate("/")}>
         {" "}
         Calendar View

@@ -1,55 +1,55 @@
 #root {
-    margin: 0 auto;
-    width: 80%;
-    padding: 2rem;
-  }
-  
-  .boxes {
-    display: grid;
-    grid-template-columns: repeat(7,minmax(11.5vw, 1fr));
-    width: 70vw;
-    height: 70vw;
-  }
-  
-  .header-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .task-button, .sign-in-button {
-    width: 15vw;
-    height: 8vh;
-  }
-  
-  .calendar {
-    display: flex;
-    flex-direction: column;
-    align-content: flex-start;
-    padding-top: 15vh;
-  }
-  
-  
-  .month {
-    display: flex;
-    align-items: center;
-  }
-  
-  .month-item {
-    padding: 10px;
-    background-color: #1a1a1a;
-    height: 100%;
-    border-radius: 0;
-    font-weight: bold;
-    font-size: 20px;
-  }
-  
-  .month-text {
-    width: 15vw;
-    text-align: center;
-  }
-  
-  .weekdays {
-    display: flex;
-    justify-content: space-around;
-  }
+  margin: 0 auto;
+  width: 80%;
+  padding: 2rem;
+}
+
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(11.5vw, 1fr));
+  width: 70vw;
+  height: 70vw;
+}
+
+.header-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-button {
+  width: 15vw;
+  height: 8vh;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  padding-top: 15vh;
+}
+
+.month {
+  display: flex;
+  align-items: center;
+}
+
+.month-item {
+  padding: 10px;
+  background-color: #2F4F4F;
+  height: 100%;
+  border-radius: 0;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+}
+
+.month-text {
+  width: 15vw;
+  text-align: center;
+}
+
+.weekdays {
+  display: flex;
+  justify-content: space-around;
+}

@@ -12,7 +12,7 @@ function StatsPage(props) {
         emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
       ></Navbar>
-      <h1>Productivity Statistics Coming Soon</h1>
+      <h1 className="stats-header">Productivity Statistics Coming Soon</h1>
     </>
   );
 }

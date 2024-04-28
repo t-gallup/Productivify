@@ -95,7 +95,7 @@ EditWindow.propTypes = {
   taskList: PropTypes.object,
   setTaskList: PropTypes.func,
   editDay: PropTypes.string,
-  editDescription: PropTypes.array,
+  editDescription: PropTypes.any,
   setEditDay: PropTypes.func,
   setEditDescription: PropTypes.func,
   toDoList: PropTypes.object,

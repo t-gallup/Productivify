@@ -12,10 +12,12 @@
   position: fixed;
   top: 25%;
   left: 83%;
+  border: solid white !important;
 }
 
 .submit-button {
   margin-top: 5%;
   height: 10vh;
   width: 15vw;
+  border: solid white !important;
 }

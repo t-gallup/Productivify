@@ -1,22 +1,25 @@
 .window-wrapper {
-    position: fixed;
-    top: 17%;
-    left: 10%;
-    width: 80%;
-    height: 80%;
-    background-color: black;
-    text-align: center;
-    z-index: 10;
+  position: fixed;
+  top: 17%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-color: #2f4f4f;
+  text-align: center;
+  z-index: 10;
+  color: white;
 }
 
 .delete-button {
-    position: fixed;
-    top: 75%;
-    left: 70%
+  position: fixed;
+  top: 82%;
+  left: 70%;
+  border: solid white !important;
 }
 
 .edit-button {
-    position: fixed;
-    top: 75%;
-    left: 20%;
+  position: fixed;
+  top: 82%;
+  left: 20%;
+  border: solid white !important;
 }
