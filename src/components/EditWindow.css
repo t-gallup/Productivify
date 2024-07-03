@@ -23,3 +23,8 @@
   left: 20%;
   border: solid white !important;
 }
+
+input {
+  width: 50%;
+  text-align: center;
+}
