@@ -5,26 +5,16 @@ import { useState } from "react";
 import NewTaskWindow from "../components/NewTaskWindow";
 import ToDoItem from "../components/ToDoItem";
 
-// import {
-//   createNumDaysPerMonth,
-//   createNewTaskList,
-// } from "../functions/InitializationFunctions";
 import EditWindow from "../components/EditWindow";
+import { DateToKey } from "../functions/DateChanges";
 
 function ToDoPage(props) {
   const [openWindow, setOpenWindow] = useState(false);
   const [editDescription, setEditDescription] = useState([]);
   const [editDay, setEditDay] = useState("");
   const [openEditWindow, setOpenEditWindow] = useState(false);
-  // const [currentDay] = useState(new Date(Date.now()));
-
-  // if (Object.keys(props.toDoList).length == 0) {
-  //   const febDays = currentDay.getFullYear() % 4 == 0 ? 29 : 28;
-  //   const numDaysPerMonth = createNumDaysPerMonth(febDays);
-  //   const newTaskList = createNewTaskList(props.taskList, numDaysPerMonth);
-  //   props.setToDoList({ ...newTaskList });
-  //   console.log("Finished set up");
-  // }
+  const [windowDay, setWindowDay] = useState(DateToKey(new Date()));
+  
   return (
     <>
       <Navbar
@@ -42,6 +32,11 @@ function ToDoPage(props) {
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={true}
+        windowDay={windowDay}
+        setWindowDay={setWindowDay}
+        isHabit={false}
+        habitList={props.habitList}
+        setHabitList={props.setHabitList}
       ></NewTaskWindow>
       <EditWindow
         openEditWindow={openEditWindow}
@@ -55,6 +50,9 @@ function ToDoPage(props) {
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={true}
+        isHabit={false}
+        habitList={props.habitList}
+        setHabitList={props.setHabitList}
       ></EditWindow>
       <div className="to-do-header-wrap">
         <h1>To Do List</h1>
@@ -91,6 +89,7 @@ function ToDoPage(props) {
                 setOpenWindow={setOpenWindow}
                 toDoList={props.toDoList}
                 setToDoList={props.setToDoList}
+                habitList={props.habitList}
               />
             ))
           )}
@@ -108,6 +107,8 @@ ToDoPage.propTypes = {
   taskList: PropTypes.object,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
+  habitList: PropTypes.object,
+  setHabitList: PropTypes.func,
 };
 
 export default ToDoPage;

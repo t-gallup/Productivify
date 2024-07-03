@@ -2,6 +2,12 @@ import "./Box.css";
 import PropTypes from "prop-types";
 import Task from "./Task.jsx";
 
+
+function setDayOpenWindow(day, setOpenWindow, setWindowDay){
+  setOpenWindow(true);
+  setWindowDay(day);
+}
+
 function taskMapping(
   currList,
   key,
@@ -36,8 +42,11 @@ function Box({
   taskList,
   setEditDay,
   setEditDescription,
+  setOpenWindow,
   setOpenEditWindow,
-  setEditTime
+  setWindowDay,
+  setEditTime,
+  user
 }) {
   const key = `${year}-${month.toString().padStart(2, "0")}-${day
     .toString()
@@ -45,7 +54,15 @@ function Box({
   return (
     <>
       <div className="day-box">
-        <p className="day-num"> {day}</p>
+        {day && (<button
+          className="day-button"
+          onClick={() => {
+            user?.email
+              ? setDayOpenWindow(key, setOpenWindow, setWindowDay)
+              : alert("Sign in to start adding tasks!");
+          }}>
+          <p className="day-num"> {day}</p>
+        </button>)}
         <div className="box-tasks">
           {taskMapping(
             taskList[key],
@@ -66,10 +83,13 @@ Box.propTypes = {
   month: PropTypes.any,
   year: PropTypes.any,
   taskList: PropTypes.object,
+  setOpenWindow: PropTypes.func,
   setOpenEditWindow: PropTypes.func,
   setEditDay: PropTypes.func,
   setEditDescription: PropTypes.func,
-  setEditTime: PropTypes.func
+  setEditTime: PropTypes.func,
+  setWindowDay: PropTypes.func,
+  user: PropTypes.object
 };
 
 export default Box;

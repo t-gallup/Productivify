@@ -1,0 +1,39 @@
+.habit-items {
+    display: grid;
+    width: 100%;
+}
+  
+.habit-column-names {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    text-align: center;
+}
+
+.habit-header-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10%;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.habit-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.habit-grid-item {
+    border: 1px solid white;
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 0;
+}
+
+.month {
+    margin-bottom: 2vh;
+}

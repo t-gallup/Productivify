@@ -1,6 +1,9 @@
 .day-box {
+  display: flex;
+  flex-direction: column;
   border: solid;
   border-color: rgba(49, 49, 49, 0.2);
+  align-items: center;
 }
 
 .day-num {
@@ -15,4 +18,17 @@
   justify-content: center;
   align-items: center;
   
+}
+
+.day-button {
+  background-color: #242424 !important;
+  padding: 0;
+  /* height: 0; */
+  border: 0;
+  width: 0
+
+}
+
+.day-button:hover .day-num {
+  color: #2f4f4f;
 }

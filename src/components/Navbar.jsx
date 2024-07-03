@@ -36,7 +36,9 @@ function Navbar(props) {
       <a className="navbar-link hov" onClick={() => navigate("/to-do")}>
         To Do List
       </a>
-
+      <a className="navbar-link hov" onClick={() => navigate("/habit")}>
+        Habit Tracker
+      </a>
       <a className="navbar-link hov" onClick={() => navigate("/stats")}>
         Statistics
       </a>

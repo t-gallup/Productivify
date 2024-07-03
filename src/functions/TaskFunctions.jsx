@@ -1,9 +1,10 @@
-import { writeUserData } from "./DataBaseFunctions.jsx";
-import { auth } from "../firebase.js";
 import {
-  createNewTaskList,
-  createNumDaysPerMonth,
-} from "./InitializationFunctions.jsx";
+  writeUserTask,
+  writeUserToDo,
+  writeUserHabit,
+} from "./DatabaseFunctions.jsx";
+import { auth } from "../firebase.js";
+import { createNumDaysPerMonth } from "./InitializationFunctions.jsx";
 
 export function handleAddTask(
   completionDay,
@@ -14,7 +15,7 @@ export function handleAddTask(
   setOpenWindow,
   toDoList,
   setToDoList,
-  isToDo
+  isToDo,
 ) {
   if (isToDo) {
     var newToDoList = structuredClone(toDoList);
@@ -26,7 +27,7 @@ export function handleAddTask(
       newToDoList = createNewTaskList(numDaysPerMonth);
     }
     newToDoList[key].push([taskDescription, completionTime]);
-    writeUserData(auth.currentUser.uid, taskList, newToDoList);
+    writeUserToDo(auth.currentUser.uid, newToDoList);
     setToDoList(newToDoList);
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
@@ -39,7 +40,7 @@ export function handleAddTask(
       newTaskList = createNewTaskList(numDaysPerMonth);
     }
     newTaskList[key].push([taskDescription, completionTime]);
-    writeUserData(auth.currentUser.uid, newTaskList, toDoList);
+    writeUserTask(auth.currentUser.uid, newTaskList);
     setTaskList(newTaskList);
     localStorage.setItem("userTaskList", JSON.stringify(newTaskList));
   }
@@ -79,7 +80,7 @@ export function handleEditTask(
       newToDoList[oldKey].splice(delIndex, 1);
       newToDoList[newKey].push([newDescription, newTime]);
     }
-    writeUserData(auth.currentUser.uid, taskList, newToDoList);
+    writeUserToDo(auth.currentUser.uid, newToDoList);
     setToDoList(newToDoList);
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
@@ -95,7 +96,7 @@ export function handleEditTask(
       newTaskList[oldKey].splice(delIndex, 1);
       newTaskList[newKey].push([newDescription, newTime]);
     }
-    writeUserData(auth.currentUser.uid, newTaskList, toDoList);
+    writeUserTask(auth.currentUser.uid, newTaskList);
     setTaskList(newTaskList);
     localStorage.setItem("userTaskList", JSON.stringify(newTaskList));
   }
@@ -125,7 +126,7 @@ export function handleDeleteTask(
       );
       newToDoList[key].splice(delIndex, 1);
     }
-    writeUserData(auth.currentUser.uid, taskList, newToDoList);
+    writeUserToDo(auth.currentUser.uid, newToDoList);
     setToDoList(newToDoList);
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
@@ -138,9 +139,85 @@ export function handleDeleteTask(
       );
       newTaskList[key].splice(delIndex, 1);
     }
-    writeUserData(auth.currentUser.uid, newTaskList, toDoList);
+    writeUserTask(auth.currentUser.uid, newTaskList);
     setTaskList(newTaskList);
     localStorage.setItem("userTaskList", JSON.stringify(newTaskList));
   }
+  setOpenEditWindow(false);
+}
+
+export function handleAddHabit(
+  name,
+  time,
+  habitList,
+  setHabitList,
+  setOpenWindow
+) {
+  const numDaysPerMonth = createNumDaysPerMonth(29);
+  const createNewTaskList = () => {
+    const newTaskList = {};
+    const years = Array.from({ length: 100 }, (_, index) => index + 2000);
+    years.forEach((year) => {
+      for (let month = 1; month <= 12; month++) {
+        var currNumDays = numDaysPerMonth[month - 1];
+        if (year % 4 == 0 && month == 2) {
+          currNumDays = 29;
+        }
+        for (let day = 1; day <= currNumDays; day++) {
+          const key = `${year}-${month.toString().padStart(2, "0")}-${day
+            .toString()
+            .padStart(2, "0")}`;
+          newTaskList[key] = "";
+        }
+      }
+    });
+    return newTaskList;
+  };
+  const newTaskList = createNewTaskList();
+  const habitDict = {};
+  const newHabitList = structuredClone(habitList);
+  habitDict["Name"] = name;
+  habitDict["Time"] = time;
+  habitDict["Dates"] = newTaskList;
+  newHabitList[name] = habitDict;
+  writeUserHabit(auth.currentUser.uid, newHabitList);
+  setHabitList(newHabitList);
+  localStorage.setItem("userHabit", JSON.stringify(newHabitList));
+  setOpenWindow(false);
+}
+
+export function handleEditHabit(
+  oldDescription,
+  newDescription,
+  oldTime,
+  newTime,
+  setOpenEditWindow,
+  habitList,
+  setHabitList
+) {
+  const newHabitList = structuredClone(habitList);
+  if (oldDescription !== newDescription) {
+    newHabitList[newDescription] = newHabitList[oldDescription];
+    newHabitList[newDescription]['Name'] = newDescription;
+    delete newHabitList[oldDescription];
+  } 
+  newHabitList[newDescription]['Time'] = newTime;
+  writeUserHabit(auth.currentUser.uid, newHabitList);
+  setHabitList(newHabitList);
+  localStorage.setItem("userHabit", JSON.stringify(newHabitList));
+  setOpenEditWindow(false);
+}
+
+export function handleDeleteHabit(
+  name,
+  habitList,
+  setHabitList,
+  setOpenEditWindow
+) {
+  const newHabitList = structuredClone(habitList);
+  delete newHabitList[name];
+  writeUserHabit(auth.currentUser.uid, newHabitList);
+  setHabitList(newHabitList);
+  localStorage.setItem("userHabit", JSON.stringify(newHabitList));
   setOpenEditWindow(false);
 }

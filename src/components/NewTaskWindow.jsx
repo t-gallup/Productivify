@@ -1,17 +1,18 @@
 import { useState, useRef } from "react";
 import "./NewTaskWindow.css";
 import PropTypes from "prop-types";
-import { handleAddTask } from "../functions/TaskFunctions";
+import { handleAddTask, handleAddHabit } from "../functions/TaskFunctions";
+import { DateToKey } from "../functions/DateChanges";
 
 function NewTaskWindow(props) {
-  const [completionDay, setCompletionDay] = useState("");
+  // const [completionDay, setCompletionDay] = useState(props.windowDay);
   const [taskDescription, setTaskDescription] = useState("");
   const [completionTime, setCompletionTime] = useState(0);
   const submitButtonRef = useRef(null);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name === "date") {
-      setCompletionDay(value);
+      props.setWindowDay(value);
     }
     if (name === "taskDescription") {
       setTaskDescription(value);
@@ -30,19 +31,31 @@ function NewTaskWindow(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const dateValue = event.target.elements.date.value;
-    handleAddTask(
-      dateValue,
-      taskDescription,
-      completionTime,
-      props.taskList,
-      props.setTaskList,
-      props.setOpenWindow,
-      props.toDoList,
-      props.setToDoList,
-      props.isToDo
-    );
-    setCompletionDay("");
+    if (props.isHabit) {
+      handleAddHabit(
+        taskDescription,
+        completionTime,
+        props.habitList,
+        props.setHabitList,
+        props.setOpenWindow
+      );
+    } else {
+      const dateValue = event.target.elements.date.value;
+      handleAddTask(
+        dateValue,
+        taskDescription,
+        completionTime,
+        props.taskList,
+        props.setTaskList,
+        props.setOpenWindow,
+        props.toDoList,
+        props.setToDoList,
+        props.isToDo
+      );
+    }
+
+    props.setWindowDay(new Date());
+    // setCompletionDay("");
     setTaskDescription("");
     setCompletionTime(0);
   };
@@ -54,7 +67,11 @@ function NewTaskWindow(props) {
           <h1>Add a New To Do Item</h1>
           <button
             className="close-button"
-            onClick={() => props.setOpenWindow(false)}
+            onClick={() => {
+              props.setOpenWindow(false);
+              // props.setWindowDay(DateToKey(new Date()));
+              setCompletionDay("");
+            }}
           >
             X
           </button>
@@ -63,7 +80,7 @@ function NewTaskWindow(props) {
             <input
               type="date"
               name="date"
-              value={completionDay}
+              value={props.windowDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -90,13 +107,53 @@ function NewTaskWindow(props) {
           </button>
         </form>
       </div>
+    ) : props.isHabit ? (
+      <div className="window-wrapper">
+        <form onSubmit={handleSubmit}>
+          <h1>Add a New Habit</h1>
+          <button
+            className="close-button"
+            onClick={() => {
+              props.setOpenWindow(false);
+              props.setWindowDay(DateToKey(new Date()));
+            }}
+          >
+            X
+          </button>
+          <div className="task-attributes">
+            <h2>Habit Description</h2>
+            <input
+              type="text"
+              name="taskDescription"
+              value={taskDescription}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+            <h2>Habit Time per Day</h2>
+            <input
+              type="number"
+              name="completionTime"
+              value={completionTime}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+          </div>
+
+          <button type="submit" className="submit-button" ref={submitButtonRef}>
+            Submit
+          </button>
+        </form>
+      </div>
     ) : (
       <div className="window-wrapper">
         <form onSubmit={handleSubmit}>
           <h1>Add a New Task</h1>
           <button
             className="close-button"
-            onClick={() => props.setOpenWindow(false)}
+            onClick={() => {
+              props.setOpenWindow(false);
+              props.setWindowDay(DateToKey(new Date()));
+            }}
           >
             X
           </button>
@@ -105,7 +162,7 @@ function NewTaskWindow(props) {
             <input
               type="date"
               name="date"
-              value={completionDay}
+              value={props.windowDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -146,6 +203,11 @@ NewTaskWindow.propTypes = {
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
   isToDo: PropTypes.bool,
+  windowDay: PropTypes.instanceOf(Date),
+  setWindowDay: PropTypes.func,
+  isHabit: PropTypes.bool,
+  habitList: PropTypes.object,
+  setHabitList: PropTypes.func,
 };
 
 export default NewTaskWindow;

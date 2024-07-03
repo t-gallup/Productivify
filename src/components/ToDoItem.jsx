@@ -85,6 +85,7 @@ ToDoItem.propTypes = {
   setOpenWindow: PropTypes.func,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
+  habitList: PropTypes.object,
 };
 
 export default ToDoItem;

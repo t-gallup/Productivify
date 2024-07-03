@@ -4,6 +4,7 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ToDoPage from "./pages/ToDoPage";
 import StatsPage from "./pages/StatsPage";
+import HabitPage from "./pages/HabitPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import {
   createNewTaskList,
@@ -16,25 +17,32 @@ function App() {
   const [emptyTaskList, setEmptyTaskList] = useState({});
   const [taskList, setTaskList] = useState({});
   const [toDoList, setToDoList] = useState({});
+  const [habitList, setHabitList] = useState({});
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const storedTaskList = JSON.parse(localStorage.getItem("userTaskList"));
     const storedToDoList = JSON.parse(localStorage.getItem("userToDo"));
+    const storedHabitList = JSON.parse(localStorage.getItem("userHabit"));
     const storedUser = JSON.parse(localStorage.getItem("user"));
+    // const storedHabitList = {};
 
-    if (storedTaskList && storedToDoList && storedUser) {
+    if (storedTaskList && storedToDoList && storedHabitList && storedUser) {
       setTaskList(storedTaskList);
       setToDoList(storedToDoList);
+      setHabitList(storedHabitList);
       setUser(storedUser);
     } else {
       const numDaysPerMonth = createNumDaysPerMonth(29);
       const newTaskList = createNewTaskList(numDaysPerMonth);
+      const newHabitList = {};
       setEmptyTaskList(newTaskList);
       setTaskList(newTaskList);
       setToDoList(newTaskList);
+      setHabitList(newHabitList);
       localStorage.setItem("userTaskList", JSON.stringify(newTaskList));
       localStorage.setItem("userToDo", JSON.stringify(newTaskList));
+      localStorage.setItem("userHabit", JSON.stringify(newHabitList));
     }
   }, []);
 
@@ -54,6 +62,8 @@ function App() {
                 setUser={setUser}
                 toDoList={toDoList}
                 setToDoList={setToDoList}
+                habitList={habitList}
+                setHabitList={setHabitList}
               />
             }
           />
@@ -71,7 +81,13 @@ function App() {
           <Route
             exact
             path="/sign-up"
-            element={<SignUpPage taskList={taskList} />}
+            element={
+              <SignUpPage 
+                taskList={taskList} 
+                toDoList={toDoList}
+                habitList={habitList}
+              />
+            }
           />
           <Route
             exact
@@ -90,6 +106,25 @@ function App() {
                 taskList={taskList}
                 toDoList={toDoList}
                 setToDoList={setToDoList}
+                habitList={habitList}
+                setHabitList={setHabitList}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/habit"
+            element={
+              <HabitPage
+                user={user}
+                setUser={setUser}
+                setTaskList={setTaskList}
+                emptyTaskList={emptyTaskList}
+                taskList={taskList}
+                toDoList={toDoList}
+                setToDoList={setToDoList}
+                habitList={habitList}
+                setHabitList={setHabitList}
               />
             }
           />

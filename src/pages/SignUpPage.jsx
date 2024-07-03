@@ -6,7 +6,7 @@ import {
 import { auth } from "../firebase";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { writeUserData } from "../functions/DataBaseFunctions";
+import { writeUserTask, writeUserToDo, writeUserHabit } from "../functions/DatabaseFunctions";
 import { useNavigate } from "react-router-dom";
 //TODO: Add label tags to inputs
 function SignUpPage(props) {
@@ -45,7 +45,9 @@ function SignUpPage(props) {
       );
       userCredentials
         .then((userCredential) => {
-          writeUserData(userCredential.user.uid, props.taskList);
+          writeUserTask(userCredential.user.uid, props.taskList);
+          writeUserToDo(userCredential.user.uid, props.toDoList);
+          writeUserHabit(userCredential.user.uid, props.habitList);
           sendEmailVerification(userCredential.user, actionCodeSettings);
           navigate("/sign-in");
           alert(
@@ -114,6 +116,8 @@ function SignUpPage(props) {
 }
 
 SignUpPage.propTypes = {
-  taskList: PropTypes.any,
+  taskList: PropTypes.object,
+  toDoList: PropTypes.object,
+  habitList: PropTypes.object,
 };
 export default SignUpPage;

@@ -8,6 +8,7 @@ import {
   AddMonth,
   SubtractYear,
   AddYear,
+  DateToKey,
 } from "../functions/DateChanges";
 import EditWindow from "../components/EditWindow";
 import { auth } from "../firebase.js";
@@ -25,6 +26,7 @@ function CalendarPage(props) {
   const [editDescription, setEditDescription] = useState("");
   const [editDay, setEditDay] = useState("");
   const [editTime, setEditTime] = useState(0);
+  const [windowDay, setWindowDay] = useState(DateToKey(currentDay));
 
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
@@ -63,6 +65,7 @@ function CalendarPage(props) {
     []
   );
 
+
   return (
     <>
       <NewTaskWindow
@@ -73,6 +76,11 @@ function CalendarPage(props) {
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={false}
+        windowDay={windowDay}
+        setWindowDay={setWindowDay}
+        isHabit={false}
+        habitList={props.habitList}
+        setHabitList={props.setHabitList}
       ></NewTaskWindow>
       <EditWindow
         openEditWindow={openEditWindow}
@@ -86,6 +94,9 @@ function CalendarPage(props) {
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={false}
+        isHabit={false}
+        habitList={props.habitList}
+        setHabitList={props.setHabitList}
       ></EditWindow>
       <Navbar
         user={props.user}
@@ -175,7 +186,10 @@ function CalendarPage(props) {
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
+                setOpenWindow={setOpenWindow}
+                setWindowDay={setWindowDay}
                 setEditTime={setEditTime}
+                user={props.user}
               />
             );
           })}
@@ -196,7 +210,10 @@ function CalendarPage(props) {
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
+                setOpenWindow={setOpenWindow}
+                setWindowDay={setWindowDay}
                 setEditTime={setEditTime}
+                user={props.user}
               />
             );
           })}
@@ -217,7 +234,10 @@ function CalendarPage(props) {
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
+                setOpenWindow={setOpenWindow}
+                setWindowDay={setWindowDay}
                 setEditTime={setEditTime}
+                user={props.user}
               />
             );
           })}
@@ -236,6 +256,8 @@ CalendarPage.propTypes = {
   handleSignOut: PropTypes.func,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
+  habitList: PropTypes.object,
+  setHabitList: PropTypes.func,
 };
 
 export default CalendarPage;
