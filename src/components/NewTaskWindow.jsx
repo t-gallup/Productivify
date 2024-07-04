@@ -5,7 +5,6 @@ import { handleAddTask, handleAddHabit } from "../functions/TaskFunctions";
 import { DateToKey } from "../functions/DateChanges";
 
 function NewTaskWindow(props) {
-  // const [completionDay, setCompletionDay] = useState(props.windowDay);
   const [taskDescription, setTaskDescription] = useState("");
   const [completionTime, setCompletionTime] = useState(0);
   const submitButtonRef = useRef(null);
@@ -54,8 +53,7 @@ function NewTaskWindow(props) {
       );
     }
 
-    props.setWindowDay(new Date());
-    // setCompletionDay("");
+    props.setWindowDay(DateToKey(new Date()));
     setTaskDescription("");
     setCompletionTime(0);
   };
@@ -69,8 +67,7 @@ function NewTaskWindow(props) {
             className="close-button"
             onClick={() => {
               props.setOpenWindow(false);
-              // props.setWindowDay(DateToKey(new Date()));
-              setCompletionDay("");
+              props.setWindowDay(DateToKey(new Date()));
             }}
           >
             X

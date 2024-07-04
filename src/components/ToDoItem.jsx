@@ -2,6 +2,7 @@ import "./ToDoItem.css";
 import PropTypes from "prop-types";
 import CheckBox from "@mui/joy/Checkbox";
 import { handleAddTask, handleDeleteTask } from "../functions/TaskFunctions";
+import { useState } from "react";
 
 function handleEditButtonClick(
   description,
@@ -16,7 +17,7 @@ function handleEditButtonClick(
 }
 
 function ToDoItem(props) {
-  const handleCheckBoxClick = () => {
+  const handleCheckBoxClick = (setChecked) => {
     handleAddTask(
       props.day,
       props.description[0],
@@ -38,8 +39,11 @@ function ToDoItem(props) {
       props.setToDoList,
       true
     );
+    setChecked(false);
   };
   const newDate = props.day.substring(5);
+  const [checked, setChecked] = useState(false);
+
   return (
     <>
       <div className="to-do-box">
@@ -58,7 +62,8 @@ function ToDoItem(props) {
           <div className="button-wrapper">
             <CheckBox
               className="task-checkbox"
-              onChange={handleCheckBoxClick}
+              checked={checked}
+              onChange={() => handleCheckBoxClick(setChecked)}
             ></CheckBox>
             <p className="task-date"> {newDate} </p>
             <p className="task-description"> {props.description[0]}</p>
