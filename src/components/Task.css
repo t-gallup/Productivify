@@ -1,6 +1,5 @@
 .task-box {
-    word-wrap: break-word;
-    overflow: auto;
+    overflow: hidden;
     width: 90%;
     text-align: center;
 }
@@ -8,12 +7,21 @@
 .task-description {
     margin: 0;
     text-align: center;
-}
+    max-height: 55%;
+    white-space: nowrap;
+    overflow: hidden;
+}   
 
 .ind-task-button {
     margin-bottom: 5%;
+    width: 100%;
+    overflow: hidden;
 }
 
 li {
     list-style-type: none;
+}
+
+.task-time {
+    margin: 0;
 }
