@@ -78,7 +78,7 @@ export function handleEditTask(
       newToDoList[oldKey].splice(delIndex, 1, [newDescription, newTime]);
     } else {
       newToDoList[oldKey].splice(delIndex, 1);
-      newToDoList[newKey].push([newDescription, newTime]);
+      newToDoList[newKey] = [[newDescription, newTime]];
     }
     writeUserToDo(auth.currentUser.uid, newToDoList);
     setToDoList(newToDoList);
@@ -94,7 +94,7 @@ export function handleEditTask(
       newTaskList[oldKey].splice(delIndex, 1, [newDescription, newTime]);
     } else {
       newTaskList[oldKey].splice(delIndex, 1);
-      newTaskList[newKey].push([newDescription, newTime]);
+      newTaskList[newKey] = [[newDescription, newTime]];
     }
     writeUserTask(auth.currentUser.uid, newTaskList);
     setTaskList(newTaskList);
