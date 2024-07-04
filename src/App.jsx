@@ -10,7 +10,6 @@ import {
   createNewTaskList,
   createNumDaysPerMonth,
 } from "./functions/InitializationFunctions";
-
 import { useState, useEffect } from "react";
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
     const storedToDoList = JSON.parse(localStorage.getItem("userToDo"));
     const storedHabitList = JSON.parse(localStorage.getItem("userHabit"));
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    // const storedHabitList = {};
 
     if (storedTaskList && storedToDoList && storedHabitList && storedUser) {
       setTaskList(storedTaskList);
@@ -75,6 +73,7 @@ function App() {
                 setTaskList={setTaskList}
                 emptyTaskList={emptyTaskList}
                 setToDoList={setToDoList}
+                setHabitList={setHabitList}
               />
             }
           />

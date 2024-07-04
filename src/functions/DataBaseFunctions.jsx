@@ -42,7 +42,7 @@ export function readUserHabit(userId) {
     const unsubscribe = onValue(
       ref(db, "/users/" + userId),
       (snapshot) => {
-        to_do_list = snapshot.val() && snapshot.val().habit_list;
+        habit_list = snapshot.val() && snapshot.val().habit_list;
         resolve(habit_list);
       },
       {

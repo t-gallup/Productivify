@@ -45,23 +45,6 @@ function HabitPage(props) {
     10: "November",
     11: "December",
   });
-  console.log(displayDay);
-  console.log(displaySunday);
-  console.log(displaySunday.getFullYear())
-  // const [monday, setMonday] = useState(null);
-
-  // useEffect(() => {
-  //   const getMondayOfCurrentWeek = () => {
-  //     const currentDay = new Date();
-  //     const dayOfWeek = currentDay.getDay();
-  //     const diffToMonday = (dayOfWeek + 6) % 7;
-  //     const newMonday = new Date(currentDay);
-  //     newMonday.setDate(currentDay.getDate() - diffToMonday);
-  //     return newMonday;
-  //   };
-
-  //   setMonday(getMondayOfCurrentWeek());
-  // }, []);
 
   return (
     <>
@@ -186,7 +169,7 @@ function HabitPage(props) {
         <div className="habit-grid">
           {Object.entries(props.habitList).map(([name, details], index) => (
             <HabitItem
-              key={index}
+              key={name}
               habitName={name}
               setEditDescription={setEditDescription}
               setOpenEditWindow={setOpenEditWindow}

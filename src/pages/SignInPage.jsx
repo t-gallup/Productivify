@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { GoogleButton } from "react-google-button";
-import { readUserTaskList, readUserToDo } from "../functions/DatabaseFunctions";
+import { readUserTaskList, readUserToDo, readUserHabit } from "../functions/DatabaseFunctions";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import {
@@ -34,26 +34,17 @@ function SignInPage(props) {
         email,
         password
       );
-      const taskList = await readUserTaskList(
+      let taskList = await readUserTaskList(
         userCredentials.user.uid,
         props.emptyTaskList
       );
       if (taskList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
-        let taskList = createNewTaskList(numDaysPerMonth);
-        props.setTaskList(taskList);
-        localStorage.setItem("userTaskList", JSON.stringify(taskList));
-      } else {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskList(numDaysPerMonth);
-        for (var key in taskList) {
-          for (var item of taskList[key]) {
-            emptyList[key].push(item);
-          }
-        }
-        props.setTaskList(emptyList);
-        localStorage.setItem("userTaskList", JSON.stringify(taskList));
+        taskList = createNewTaskList(numDaysPerMonth);
       }
+      props.setTaskList(taskList);
+      localStorage.setItem("userTaskList", JSON.stringify(taskList));
+
       let toDoList = await readUserToDo(
         userCredentials.user.uid,
         props.emptyTaskList
@@ -61,19 +52,18 @@ function SignInPage(props) {
       if (toDoList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         toDoList = createNewTaskList(numDaysPerMonth);
-        props.setToDoList(toDoList);
-        localStorage.setItem("userToDo", JSON.stringify(toDoList));
-      } else {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskList(numDaysPerMonth);
-        for (var toDoKey in toDoList) {
-          for (var toDoItem of toDoList[toDoKey]) {
-            emptyList[toDoKey].push(toDoItem);
-          }
-        }
-        props.setToDoList(emptyList);
-        localStorage.setItem("userToDo", JSON.stringify(emptyList));
       }
+      props.setToDoList(toDoList);
+      localStorage.setItem("userToDo", JSON.stringify(toDoList));
+
+      let habitList = await readUserHabit(
+        userCredentials.user.uid
+      );
+      if (habitList === undefined) {
+        habitList = {};
+      }
+      props.setHabitList(habitList);
+      localStorage.setItem("userHabit", JSON.stringify(habitList));
       if (!auth.currentUser.emailVerified) {
         await signOut(auth);
         alert("Please verify your email before signing in.");
@@ -97,19 +87,10 @@ function SignInPage(props) {
       if (taskList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         taskList = createNewTaskList(numDaysPerMonth);
-        props.setTaskList(taskList);
-        localStorage.setItem("userTaskList", JSON.stringify(taskList));
-      } else {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskList(numDaysPerMonth);
-        for (var key in taskList) {
-          for (var item of taskList[key]) {
-            emptyList[key].push(item);
-          }
-        }
-        props.setTaskList(emptyList);
-        localStorage.setItem("userTaskList", JSON.stringify(emptyList));
       }
+      props.setTaskList(taskList);
+      localStorage.setItem("userTaskList", JSON.stringify(taskList));
+
       let toDoList = await readUserToDo(
         userCredentials.user.uid,
         props.emptyTaskList
@@ -117,19 +98,19 @@ function SignInPage(props) {
       if (toDoList === undefined) {
         const numDaysPerMonth = createNumDaysPerMonth(29);
         toDoList = createNewTaskList(numDaysPerMonth);
-        props.setToDoList(toDoList);
-        localStorage.setItem("userToDo", JSON.stringify(toDoList));
-      } else {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        const emptyList = createNewTaskList(numDaysPerMonth);
-        for (var toDoKey in toDoList) {
-          for (var toDoItem of toDoList[toDoKey]) {
-            emptyList[toDoKey].push(toDoItem);
-          }
-        }
-        props.setToDoList(emptyList);
-        localStorage.setItem("userToDo", JSON.stringify(emptyList));
       }
+      props.setToDoList(toDoList);
+      localStorage.setItem("userToDo", JSON.stringify(toDoList));
+      
+      let habitList = await readUserHabit(
+        userCredentials.user.uid
+      );
+      if (habitList === undefined) {
+        habitList = {};
+      }
+      props.setHabitList(habitList);
+      localStorage.setItem("userHabit", JSON.stringify(habitList));
+
       navigate("/");
     } catch (error) {
       alert("Error: " + error.message);
@@ -142,34 +123,40 @@ function SignInPage(props) {
         <button className="back-button" onClick={() => navigate("/")}>
           &#x25c0;
         </button>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="window">
           <h1>Sign In</h1>
-          <div className="email-wrapper">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={handleEmailChange}
-            ></input>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={handlePasswordChange}
-            ></input>
-            <button type="submit">Sign In</button>
-          </div>
-          <div className="sign-in-buttons">
-            <GoogleButton onClick={googleSignIn} />
-            <button className="button" onClick={() => navigate("/sign-up")}>
-              Sign Up with Email
-            </button>
-            <button
-              className="button"
-              onClick={() => navigate("/forgot-password")}
-            >
-              Forgot Password
-            </button>
+          <div className="content-wrapper">
+            <div className="sign-in-email-wrapper">
+              <h2 className="sign-in-headers">Email</h2>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={handleEmailChange}
+                className="sign-in-input"
+              ></input>
+              <h2 className="sign-in-headers">Password</h2>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                className="sign-in-input"
+              ></input>
+              <button className="sign-in-button" type="submit">Sign In</button>
+            </div>
+            <div className="sign-in-buttons">
+              <GoogleButton className="google-button" onClick={googleSignIn} />
+              <button className="button" onClick={() => navigate("/sign-up")}>
+                Sign Up with Email
+              </button>
+              <button
+                className="button"
+                onClick={() => navigate("/forgot-password")}
+              >
+                Forgot Password
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -181,6 +168,7 @@ SignInPage.propTypes = {
   setTaskList: PropTypes.func,
   emptyTaskList: PropTypes.object,
   setToDoList: PropTypes.func,
+  setHabitList: PropTypes.func,
 };
 
 export default SignInPage;

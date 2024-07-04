@@ -174,10 +174,10 @@ function CalendarPage(props) {
         </div>
 
         <div className="boxes">
-          {[...Array(firstDayOfMonth)].map((x) => {
+          {[...Array(firstDayOfMonth)].map((x, index) => {
             return (
               <Box
-                key={x}
+                key={`empty-start-${index}`}
                 className="box-child"
                 day=""
                 month=""
@@ -201,7 +201,7 @@ function CalendarPage(props) {
           ].map((x) => {
             return (
               <Box
-                key={x}
+                key={`day-${x}`}
                 className="box-child"
                 day={x}
                 month={displayDay.getMonth() + 1}
@@ -222,10 +222,10 @@ function CalendarPage(props) {
               7 -
                 ((firstDayOfMonth + numDaysPerMonth[displayDay.getMonth()]) % 7)
             ),
-          ].map((x) => {
+          ].map((x, index) => {
             return (
               <Box
-                key={x}
+                key={`empty-end-${index}`}
                 className="box-child"
                 day=""
                 month=""

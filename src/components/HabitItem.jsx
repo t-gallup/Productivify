@@ -94,7 +94,7 @@ function HabitItem(props) {
                   <div className="x-wrapper">
                     <p className="static-x">&#x2612;</p>
                     <button
-                      className="circle-x"
+                      className="circle-x red"
                       onClick={() => clearHabit(date)}
                     >
                       &#x24E7;

@@ -24,21 +24,23 @@ function ForgotPasswordPage() {
   return (
     <div>
       <form onSubmit={handleForgotPassword}>
+        <button
+          className="back-button"
+          onClick={() => navigate('/sign-in')}
+        >
+          &#x25c0;
+        </button>
         <h1>Forgot Password</h1>
         <div className="email-wrapper">
-          <button
-            className="back-button"
-            onClick={() => navigate('/sign-in')}
-          >
-            &#x25c0;
-          </button>
+          
+          <h2>Enter Email</h2>
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={handleEmailChange}
           ></input>
-          <button type="submit">
+          <button className="sign-submit-button" type="submit">
             Reset Password
           </button>
         </div>

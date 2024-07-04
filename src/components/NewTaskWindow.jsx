@@ -203,7 +203,7 @@ NewTaskWindow.propTypes = {
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
   isToDo: PropTypes.bool,
-  windowDay: PropTypes.instanceOf(Date),
+  windowDay: PropTypes.string,
   setWindowDay: PropTypes.func,
   isHabit: PropTypes.bool,
   habitList: PropTypes.object,

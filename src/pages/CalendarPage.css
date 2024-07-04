@@ -31,7 +31,10 @@
 
 .month {
   display: flex;
-  width: 100%;
+  width: 50%;
+  /* border: solid white; */
+  /* align-items: stretch;
+  justify-content: stretch; */
 }
 
 .month-item {
@@ -43,12 +46,14 @@
   color: white;
   border: 0;
   align-items: center;
+  border: solid white;
 }
 
 
 .month-text {
   text-align: center;
   margin: 0;
+  width: 60%;
 }
 
 .weekdays {

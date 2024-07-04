@@ -1,20 +1,30 @@
 
 .back-button {
     position: fixed;
-    top: 15%;
-    left: 15%;
+    top: 10%;
+    left: 7%;
 }
   
-.submit-button {
+.sign-submit-button {
     margin-top: 5%;
     height: 10vh;
-    width: 15vw;
+    width: 50%;
 }
 
-.email-wrapper {
+.sign-up-email-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 1vw;
+    justify-content: flex-start;
+    gap: 7vh;
+    height: 80%;
+}
+
+.sign-up-item-wrapper {
+    width: 100%;
+    text-align: center;
 }
   
+.sign-up-header {
+    margin: 0;
+}
