@@ -10,7 +10,7 @@ import {
   writeUserTask,
   writeUserToDo,
   writeUserHabit,
-} from "../functions/DatabaseFunctions";
+} from "../functions/DatabaseFunctions.js";
 import { useNavigate } from "react-router-dom";
 //TODO: Add label tags to inputs
 function SignUpPage(props) {

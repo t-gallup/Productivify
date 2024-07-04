@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { DateToKey } from "../functions/DateChanges";
 import { useState } from "react";
-import { writeUserHabit } from "../functions/DatabaseFunctions";
+import { writeUserHabit } from "../functions/DatabaseFunctions.js";
 import { auth } from "../firebase";
 
 function HabitItem(props) {
