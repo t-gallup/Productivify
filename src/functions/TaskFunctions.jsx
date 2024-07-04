@@ -4,7 +4,7 @@ import {
   writeUserHabit,
 } from "./DatabaseFunctions.jsx";
 import { auth } from "../firebase.js";
-import { createNumDaysPerMonth } from "./InitializationFunctions.jsx";
+import { createNumDaysPerMonth, createNewTaskList } from "./InitializationFunctions.jsx";
 
 export function handleAddTask(
   completionDay,
