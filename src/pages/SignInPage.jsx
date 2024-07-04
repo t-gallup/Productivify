@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { GoogleButton } from "react-google-button";
-import { readUserTaskList, readUserToDo, readUserHabit } from "../functions/DatabaseFunctions.js";
+import { readUserTaskList, readUserToDo, readUserHabit } from "../functions/DatabaseFunctions";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import {
