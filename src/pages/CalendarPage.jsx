@@ -97,13 +97,15 @@ function CalendarPage(props) {
         isHabit={false}
         habitList={props.habitList}
         setHabitList={props.setHabitList}
+        windowDay={windowDay}
+        setWindowDay={setWindowDay}
       ></EditWindow>
       <Navbar
         user={props.user}
         setUser={props.setUser}
         setTaskList={props.setTaskList}
-        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
+        setHabitList={props.setHabitList}
       ></Navbar>
 
       <div className="calendar">
@@ -250,7 +252,6 @@ function CalendarPage(props) {
 CalendarPage.propTypes = {
   taskList: PropTypes.object,
   setTaskList: PropTypes.func,
-  emptyTaskList: PropTypes.object,
   user: PropTypes.object,
   setUser: PropTypes.func,
   handleSignOut: PropTypes.func,

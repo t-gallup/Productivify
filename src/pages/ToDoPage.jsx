@@ -21,7 +21,6 @@ function ToDoPage(props) {
         user={props.user}
         setUser={props.setUser}
         setTaskList={props.setTaskList}
-        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
       ></Navbar>
       <NewTaskWindow
@@ -53,6 +52,8 @@ function ToDoPage(props) {
         isHabit={false}
         habitList={props.habitList}
         setHabitList={props.setHabitList}
+        windowDay={windowDay}
+        setWindowDay={setWindowDay}
       ></EditWindow>
       <div className="to-do-header-wrap">
         <h1>To Do List</h1>
@@ -103,7 +104,6 @@ ToDoPage.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
   setTaskList: PropTypes.func,
-  emptyTaskList: PropTypes.object,
   taskList: PropTypes.object,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,

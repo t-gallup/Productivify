@@ -6,14 +6,9 @@ import ToDoPage from "./pages/ToDoPage";
 import StatsPage from "./pages/StatsPage";
 import HabitPage from "./pages/HabitPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import {
-  createNewTaskList,
-  createNumDaysPerMonth,
-} from "./functions/InitializationFunctions";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [emptyTaskList, setEmptyTaskList] = useState({});
   const [taskList, setTaskList] = useState({});
   const [toDoList, setToDoList] = useState({});
   const [habitList, setHabitList] = useState({});
@@ -31,15 +26,14 @@ function App() {
       setHabitList(storedHabitList);
       setUser(storedUser);
     } else {
-      const numDaysPerMonth = createNumDaysPerMonth(29);
-      const newTaskList = createNewTaskList(numDaysPerMonth);
+      const newTaskList = {};
+      const newToDoList = {};
       const newHabitList = {};
-      setEmptyTaskList(newTaskList);
       setTaskList(newTaskList);
-      setToDoList(newTaskList);
+      setToDoList(newToDoList);
       setHabitList(newHabitList);
       localStorage.setItem("userTaskList", JSON.stringify(newTaskList));
-      localStorage.setItem("userToDo", JSON.stringify(newTaskList));
+      localStorage.setItem("userToDo", JSON.stringify(newToDoList));
       localStorage.setItem("userHabit", JSON.stringify(newHabitList));
     }
   }, []);
@@ -55,7 +49,6 @@ function App() {
               <CalendarPage
                 taskList={taskList}
                 setTaskList={setTaskList}
-                emptyTaskList={emptyTaskList}
                 user={user}
                 setUser={setUser}
                 toDoList={toDoList}
@@ -71,7 +64,6 @@ function App() {
             element={
               <SignInPage
                 setTaskList={setTaskList}
-                emptyTaskList={emptyTaskList}
                 setToDoList={setToDoList}
                 setHabitList={setHabitList}
               />
@@ -101,7 +93,6 @@ function App() {
                 user={user}
                 setUser={setUser}
                 setTaskList={setTaskList}
-                emptyTaskList={emptyTaskList}
                 taskList={taskList}
                 toDoList={toDoList}
                 setToDoList={setToDoList}
@@ -118,7 +109,6 @@ function App() {
                 user={user}
                 setUser={setUser}
                 setTaskList={setTaskList}
-                emptyTaskList={emptyTaskList}
                 taskList={taskList}
                 toDoList={toDoList}
                 setToDoList={setToDoList}
@@ -135,8 +125,8 @@ function App() {
                 user={user}
                 setUser={setUser}
                 setTaskList={setTaskList}
-                emptyTaskList={emptyTaskList}
                 setToDoList={setToDoList}
+                setHabitList={setHabitList}
               />
             }
           />

@@ -9,8 +9,8 @@ function StatsPage(props) {
         user={props.user}
         setUser={props.setUser}
         setTaskList={props.setTaskList}
-        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
+        setHabitList={props.setHabitList}
       ></Navbar>
       <h1 className="stats-header">Productivity Statistics Coming Soon</h1>
     </>
@@ -21,7 +21,7 @@ StatsPage.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
   setTaskList: PropTypes.func,
-  emptyTaskList: PropTypes.object,
   setToDoList: PropTypes.func,
+  setHabitList: PropTypes.func,
 };
 export default StatsPage;

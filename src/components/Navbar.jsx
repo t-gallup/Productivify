@@ -11,11 +11,14 @@ function Navbar(props) {
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut(auth);
-    props.setTaskList(structuredClone(props.emptyTaskList));
-    props.setToDoList(structuredClone(props.emptyTaskList));
+    const emptyDict = {};
+    props.setTaskList(structuredClone(emptyDict));
+    props.setToDoList(structuredClone(emptyDict));
+    props.setHabitList(structuredClone(emptyDict));
     props.setUser(null);
-    localStorage.setItem("userTaskList", JSON.stringify(props.emptyTaskList));
-    localStorage.setItem("userToDo", JSON.stringify(props.emptyTaskList));
+    localStorage.setItem("userTaskList", JSON.stringify(emptyDict));
+    localStorage.setItem("userToDo", JSON.stringify(emptyDict));
+    localStorage.setItem("userHabit", JSON.stringify(emptyDict));
     localStorage.setItem("user", JSON.stringify(null));
     navigate("/");
   };
@@ -59,8 +62,8 @@ Navbar.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
   setTaskList: PropTypes.func,
-  emptyTaskList: PropTypes.object,
   setToDoList: PropTypes.func,
+  setHabitList: PropTypes.func,
 };
 
 export default Navbar;

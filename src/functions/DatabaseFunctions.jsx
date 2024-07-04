@@ -1,9 +1,9 @@
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
 
-export function readUserTaskList(userId, emptyTaskList) {
+export function readUserTaskList(userId) {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    var task_list = structuredClone(emptyTaskList);
+    var task_list = {};
     const unsubscribe = onValue(
       ref(db, "/users/" + userId),
       (snapshot) => {
@@ -17,10 +17,10 @@ export function readUserTaskList(userId, emptyTaskList) {
   });
 }
 
-export function readUserToDo(userId, emptyTaskList) {
+export function readUserToDo(userId) {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    var to_do_list = structuredClone(emptyTaskList);
+    var to_do_list = {};
     const unsubscribe = onValue(
       ref(db, "/users/" + userId),
       (snapshot) => {
@@ -37,7 +37,6 @@ export function readUserToDo(userId, emptyTaskList) {
 export function readUserHabit(userId) {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    // var to_do_list = structuredClone(emptyTaskList);
     var habit_list = {}
     const unsubscribe = onValue(
       ref(db, "/users/" + userId),

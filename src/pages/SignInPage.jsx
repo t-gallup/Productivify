@@ -8,13 +8,13 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { GoogleButton } from "react-google-button";
-import { readUserTaskList, readUserToDo, readUserHabit } from "../functions/DatabaseFunctions";
+import {
+  readUserTaskList,
+  readUserToDo,
+  readUserHabit,
+} from "../functions/DatabaseFunctions";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import {
-  createNewTaskList,
-  createNumDaysPerMonth,
-} from "../functions/InitializationFunctions";
 
 function SignInPage(props) {
   const navigate = useNavigate();
@@ -34,31 +34,21 @@ function SignInPage(props) {
         email,
         password
       );
-      let taskList = await readUserTaskList(
-        userCredentials.user.uid,
-        props.emptyTaskList
-      );
+      let taskList = await readUserTaskList(userCredentials.user.uid);
       if (taskList === undefined) {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        taskList = createNewTaskList(numDaysPerMonth);
+        taskList = {};
       }
       props.setTaskList(taskList);
       localStorage.setItem("userTaskList", JSON.stringify(taskList));
 
-      let toDoList = await readUserToDo(
-        userCredentials.user.uid,
-        props.emptyTaskList
-      );
+      let toDoList = await readUserToDo(userCredentials.user.uid);
       if (toDoList === undefined) {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        toDoList = createNewTaskList(numDaysPerMonth);
+        toDoList = {};
       }
       props.setToDoList(toDoList);
       localStorage.setItem("userToDo", JSON.stringify(toDoList));
 
-      let habitList = await readUserHabit(
-        userCredentials.user.uid
-      );
+      let habitList = await readUserHabit(userCredentials.user.uid);
       if (habitList === undefined) {
         habitList = {};
       }
@@ -80,31 +70,21 @@ function SignInPage(props) {
     googleProvider.setCustomParameters({ prompt: "select_account" });
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
-      let taskList = await readUserTaskList(
-        userCredentials.user.uid,
-        props.emptyTaskList
-      );
+      let taskList = await readUserTaskList(userCredentials.user.uid);
       if (taskList === undefined) {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        taskList = createNewTaskList(numDaysPerMonth);
+        taskList = {};
       }
       props.setTaskList(taskList);
       localStorage.setItem("userTaskList", JSON.stringify(taskList));
 
-      let toDoList = await readUserToDo(
-        userCredentials.user.uid,
-        props.emptyTaskList
-      );
+      let toDoList = await readUserToDo(userCredentials.user.uid);
       if (toDoList === undefined) {
-        const numDaysPerMonth = createNumDaysPerMonth(29);
-        toDoList = createNewTaskList(numDaysPerMonth);
+        toDoList = {};
       }
       props.setToDoList(toDoList);
       localStorage.setItem("userToDo", JSON.stringify(toDoList));
-      
-      let habitList = await readUserHabit(
-        userCredentials.user.uid
-      );
+
+      let habitList = await readUserHabit(userCredentials.user.uid);
       if (habitList === undefined) {
         habitList = {};
       }
@@ -143,7 +123,9 @@ function SignInPage(props) {
                 onChange={handlePasswordChange}
                 className="sign-in-input"
               ></input>
-              <button className="sign-in-button" type="submit">Sign In</button>
+              <button className="sign-in-button" type="submit">
+                Sign In
+              </button>
             </div>
             <div className="sign-in-buttons">
               <GoogleButton className="google-button" onClick={googleSignIn} />
@@ -166,7 +148,6 @@ function SignInPage(props) {
 
 SignInPage.propTypes = {
   setTaskList: PropTypes.func,
-  emptyTaskList: PropTypes.object,
   setToDoList: PropTypes.func,
   setHabitList: PropTypes.func,
 };

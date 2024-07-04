@@ -7,6 +7,7 @@ import {
   handleEditHabit,
   handleDeleteHabit,
 } from "../functions/TaskFunctions";
+import { DateToKey } from "../functions/DateChanges";
 
 function EditWindow(props) {
   const oldDay = props.editDay + "";
@@ -37,7 +38,7 @@ function EditWindow(props) {
           className="close-button"
           onClick={() => {
             props.setOpenEditWindow(false);
-            setCompletionDay("");
+            props.setWindowDay(DateToKey(new Date()));
           }}
         >
           X
@@ -322,6 +323,8 @@ EditWindow.propTypes = {
   habitList: PropTypes.object,
   setHabitList: PropTypes.func,
   isHabit: PropTypes.bool,
+  windowDay: PropTypes.string,
+  setWindowDay: PropTypes.func,
 };
 
 export default EditWindow;

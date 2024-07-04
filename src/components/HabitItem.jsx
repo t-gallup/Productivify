@@ -2,7 +2,6 @@ import "./HabitItem.css";
 import PropTypes from "prop-types";
 
 import { DateToKey } from "../functions/DateChanges";
-import { useState } from "react";
 import { writeUserHabit } from "../functions/DatabaseFunctions";
 import { auth } from "../firebase";
 
@@ -31,7 +30,7 @@ function HabitItem(props) {
 
   function clearHabit(date) {
     const newHabitList = structuredClone(props.habitList);
-    newHabitList[props.habitName]["Dates"][date] = "";
+    delete newHabitList[props.habitName]["Dates"][date];
     writeUserHabit(auth.currentUser.uid, newHabitList);
     props.setHabitList(newHabitList);
     localStorage.setItem("userHabit", JSON.stringify(newHabitList));
@@ -60,7 +59,7 @@ function HabitItem(props) {
           </button>
           {dateKeys.map((date, index) => (
             <>
-              {datesDict[date] === "" && (
+              {!(date in datesDict) && (
                 <div className="habit-grid-box habit-grid-item">
                   <button
                     className="check"

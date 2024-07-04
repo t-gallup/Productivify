@@ -17,6 +17,7 @@ import {
 import EditWindow from "../components/EditWindow";
 
 function HabitPage(props) {
+  console.log(props.habitList);
   const [openWindow, setOpenWindow] = useState(false);
   const [editDescription, setEditDescription] = useState([]);
   const [editDay, setEditDay] = useState("");
@@ -52,8 +53,8 @@ function HabitPage(props) {
         user={props.user}
         setUser={props.setUser}
         setTaskList={props.setTaskList}
-        emptyTaskList={props.emptyTaskList}
         setToDoList={props.setToDoList}
+        setHabitList={props.setHabitList}
       ></Navbar>
       <NewTaskWindow
         openWindow={openWindow}
@@ -84,6 +85,8 @@ function HabitPage(props) {
         isHabit={true}
         habitList={props.habitList}
         setHabitList={props.setHabitList}
+        windowDay={windowDay}
+        setWindowDay={setWindowDay}
       ></EditWindow>
       <div className="habit-header-wrap">
         <h1>Habit Tracker</h1>
@@ -118,7 +121,6 @@ function HabitPage(props) {
           className="month-item"
           onClick={async () => {
             var newDate = await SubtractWeek({ displayDay, setDisplayDay, setFebDays });
-            // newDate = FindMonday(newDate);
             SetSunday(newDate, setDisplaySunday);
           }}
         >
@@ -133,7 +135,6 @@ function HabitPage(props) {
           className="month-item"
           onClick={async () => {
             var newDate = await AddWeek({ displayDay, setDisplayDay, setFebDays });
-            // newDate = FindMonday(newDate);
             SetSunday(newDate, setDisplaySunday);
           }}
         >
@@ -169,7 +170,7 @@ function HabitPage(props) {
         <div className="habit-grid">
           {Object.entries(props.habitList).map(([name, details], index) => (
             <HabitItem
-              key={name}
+              key={`${name}-${index}`}
               habitName={name}
               setEditDescription={setEditDescription}
               setOpenEditWindow={setOpenEditWindow}
@@ -188,7 +189,6 @@ HabitPage.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func,
   setTaskList: PropTypes.func,
-  emptyTaskList: PropTypes.object,
   taskList: PropTypes.object,
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
