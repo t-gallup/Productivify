@@ -5,6 +5,17 @@ import {
 } from "./DatabaseFunctions.jsx";
 import { auth } from "../firebase.js";
 
+export function sortDictByKeys(dict) {
+  const sortedKeys = Object.keys(dict).sort();
+  const sortedDict = {};
+
+  sortedKeys.forEach((key) => {
+    sortedDict[key] = dict[key];
+  });
+
+  return sortedDict;
+}
+
 export function handleAddTask(
   completionDay,
   taskDescription,
@@ -25,6 +36,7 @@ export function handleAddTask(
       newToDoList[key].push([taskDescription, completionTime]);
     } else {
       newToDoList[key] = [[taskDescription, completionTime]];
+      newToDoList = sortDictByKeys(newToDoList);
     }
     writeUserToDo(auth.currentUser.uid, newToDoList);
     setToDoList(newToDoList);
@@ -67,7 +79,7 @@ export function handleEditTask(
     .substring(5, 7)
     .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
-    const newToDoList = structuredClone(toDoList);
+    var newToDoList = structuredClone(toDoList);
     const delIndex = newToDoList[oldKey].findIndex(
       (innerArray) =>
         innerArray[0] === String(oldDescription) &&
@@ -81,6 +93,7 @@ export function handleEditTask(
         newToDoList[newKey].push([newDescription, newTime]);
       } else {
         newToDoList[newKey] = [[newDescription, newTime]];
+        newToDoList = sortDictByKeys(newToDoList);
       }
     }
     writeUserToDo(auth.currentUser.uid, newToDoList);
@@ -162,11 +175,12 @@ export function handleAddHabit(
 ) {
   const newTaskList = {};
   const habitDict = {};
-  const newHabitList = structuredClone(habitList);
+  var newHabitList = structuredClone(habitList);
   habitDict["Name"] = name;
   habitDict["Time"] = time;
   habitDict["Dates"] = newTaskList;
   newHabitList[name] = habitDict;
+  newHabitList = sortDictByKeys(newHabitList);
   writeUserHabit(auth.currentUser.uid, newHabitList);
   setHabitList(newHabitList);
   localStorage.setItem("userHabit", JSON.stringify(newHabitList));
@@ -182,11 +196,12 @@ export function handleEditHabit(
   habitList,
   setHabitList
 ) {
-  const newHabitList = structuredClone(habitList);
+  var newHabitList = structuredClone(habitList);
   if (oldDescription !== newDescription) {
     newHabitList[newDescription] = newHabitList[oldDescription];
     newHabitList[newDescription]["Name"] = newDescription;
     delete newHabitList[oldDescription];
+    newHabitList = sortDictByKeys(newHabitList);
   }
   newHabitList[newDescription]["Time"] = newTime;
   writeUserHabit(auth.currentUser.uid, newHabitList);
