@@ -3,6 +3,7 @@
     margin-bottom: 5%;
     width: 100%;
     /* overflow: hidden; */
+    padding-left: 0.5em;
 }
 
 .to-do-ind-task-button:hover {
