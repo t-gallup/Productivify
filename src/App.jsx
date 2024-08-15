@@ -36,6 +36,7 @@ function App() {
       localStorage.setItem("userToDo", JSON.stringify(newToDoList));
       localStorage.setItem("userHabit", JSON.stringify(newHabitList));
     }
+
   }, []);
 
   return (

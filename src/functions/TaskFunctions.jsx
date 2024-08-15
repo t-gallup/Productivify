@@ -4,6 +4,8 @@ import {
   writeUserHabit,
 } from "./DatabaseFunctions.jsx";
 import { auth } from "../firebase.js";
+// TODO: Change to datetokey
+// import { DateToKey } from "./DateChanges.jsx";
 
 export function sortDictByKeys(dict) {
   const sortedKeys = Object.keys(dict).sort();
@@ -223,3 +225,4 @@ export function handleDeleteHabit(
   localStorage.setItem("userHabit", JSON.stringify(newHabitList));
   setOpenEditWindow(false);
 }
+

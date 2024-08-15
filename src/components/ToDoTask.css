@@ -1,0 +1,27 @@
+.to-do-ind-task-button {
+    background-color: #9c1402 !important;
+    margin-bottom: 53%;
+    width: 100%;
+    /* overflow: hidden; */
+}
+
+.to-do-ind-task-button:hover {
+    background-color: #de1c02 !important;
+}
+
+.to-do-button-text {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.check-box-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 1vw;
+}
+
+.button-inner-text {
+    overflow: hidden;
+}

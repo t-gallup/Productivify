@@ -27,6 +27,7 @@ function CalendarPage(props) {
   const [editDay, setEditDay] = useState("");
   const [editTime, setEditTime] = useState(0);
   const [windowDay, setWindowDay] = useState(DateToKey(currentDay));
+  const [isToDo, setIsToDo] = useState(false);
 
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
@@ -93,7 +94,7 @@ function CalendarPage(props) {
         setEditDay={setEditDay}
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
-        isToDo={false}
+        isToDo={isToDo}
         isHabit={false}
         habitList={props.habitList}
         setHabitList={props.setHabitList}
@@ -185,12 +186,16 @@ function CalendarPage(props) {
                 month=""
                 year=""
                 taskList={emptyList}
+                toDoList={emptyList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
                 setOpenWindow={setOpenWindow}
                 setWindowDay={setWindowDay}
                 setEditTime={setEditTime}
+                setIsToDo={setIsToDo}
+                setTaskList={props.setTaskList}
+                setToDoList={props.setToDoList}
                 user={props.user}
               />
             );
@@ -209,12 +214,16 @@ function CalendarPage(props) {
                 month={displayDay.getMonth() + 1}
                 year={displayDay.getFullYear()}
                 taskList={props.taskList}
+                toDoList={props.toDoList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
                 setOpenWindow={setOpenWindow}
                 setWindowDay={setWindowDay}
                 setEditTime={setEditTime}
+                setIsToDo={setIsToDo}
+                setTaskList={props.setTaskList}
+                setToDoList={props.setToDoList}
                 user={props.user}
               />
             );
@@ -233,12 +242,16 @@ function CalendarPage(props) {
                 month=""
                 year=""
                 taskList={emptyList}
+                toDoList={emptyList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
                 setOpenWindow={setOpenWindow}
                 setWindowDay={setWindowDay}
                 setEditTime={setEditTime}
+                setIsToDo={setIsToDo}
+                setTaskList={props.setTaskList}
+                setToDoList={props.setToDoList}
                 user={props.user}
               />
             );
