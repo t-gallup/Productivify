@@ -7,6 +7,8 @@ import StatsPage from "./pages/StatsPage";
 import HabitPage from "./pages/HabitPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import { useState, useEffect } from "react";
+import { writeUserHabit } from "./functions/DatabaseFunctions";
+import { auth } from "./firebase";
 
 function App() {
   const [taskList, setTaskList] = useState({});
@@ -36,7 +38,9 @@ function App() {
       localStorage.setItem("userToDo", JSON.stringify(newToDoList));
       localStorage.setItem("userHabit", JSON.stringify(newHabitList));
     }
-
+    // const newHabitList = {};
+    // localStorage.setItem("userHabit", JSON.stringify(newHabitList));
+    // writeUserHabit(auth.currentUser.uid, newHabitList);
   }, []);
 
   return (

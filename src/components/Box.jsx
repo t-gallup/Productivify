@@ -1,7 +1,7 @@
 import "./Box.css";
 import PropTypes from "prop-types";
 import Task from "./Task.jsx";
-import ToDoTask from "./ToDoTask.jsx"
+import ToDoTask from "./ToDoTask.jsx";
 
 function setDayOpenWindow(day, setOpenWindow, setWindowDay) {
   setOpenWindow(true);
@@ -15,7 +15,7 @@ function taskMapping(
   setEditDescription,
   setOpenEditWindow,
   setEditTime,
-  setIsToDo,
+  setIsToDo
 ) {
   if (currList == undefined) {
     return;
@@ -77,12 +77,35 @@ function toDoMapping(
     </>
   );
 }
+
+function habitMapping(habitList, key) {
+  if (habitList == undefined) {
+    return;
+  }
+
+  return (
+    <>
+      {Object.entries(habitList)
+        .filter(
+          ([_, subDict]) =>
+            key in subDict["Dates"] && subDict["Dates"][key] === 1
+        )
+        .map(([habitName, subDict]) => (
+          <div key={habitName + "-" + key} className="habit-div">
+            <p className="habit-name">{habitName + " "}</p><p className="habit-time">{subDict["Time"]} {subDict["Time"] == 1 ? "hour" : "hours" }</p>
+          </div>
+        ))}
+    </>
+  );
+}
+
 function Box({
   day,
   month,
   year,
   taskList,
   toDoList,
+  habitList,
   setEditDay,
   setEditDescription,
   setOpenWindow,
@@ -137,6 +160,13 @@ function Box({
             setIsToDo
           )}
         </div>
+        <div className="habit-container">
+          {key === "-00-00" ? "" :
+          <div className="habit-list">
+            <p className="habit-title">Habits Completed</p>
+            {habitMapping(habitList, key)}
+          </div>}
+        </div>
       </div>
     </>
   );
@@ -148,6 +178,7 @@ Box.propTypes = {
   year: PropTypes.any,
   taskList: PropTypes.object,
   toDoList: PropTypes.object,
+  habitList: PropTypes.object,
   setOpenWindow: PropTypes.func,
   setOpenEditWindow: PropTypes.func,
   setEditDay: PropTypes.func,
@@ -157,6 +188,7 @@ Box.propTypes = {
   setIsToDo: PropTypes.func,
   setTaskList: PropTypes.func,
   setToDoList: PropTypes.func,
+  setHabitList: PropTypes.func,
   user: PropTypes.object,
 };
 

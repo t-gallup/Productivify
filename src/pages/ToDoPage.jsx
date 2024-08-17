@@ -22,6 +22,7 @@ function ToDoPage(props) {
         setUser={props.setUser}
         setTaskList={props.setTaskList}
         setToDoList={props.setToDoList}
+        setHabitList={props.setHabitList}
       ></Navbar>
       <NewTaskWindow
         openWindow={openWindow}

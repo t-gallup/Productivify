@@ -13,9 +13,7 @@ import {
 import EditWindow from "../components/EditWindow";
 import { auth } from "../firebase.js";
 import Navbar from "../components/Navbar.jsx";
-import {
-  createNumDaysPerMonth,
-} from "../functions/InitializationFunctions.jsx";
+import { createNumDaysPerMonth } from "../functions/InitializationFunctions.jsx";
 
 function CalendarPage(props) {
   const [emptyList] = useState({});
@@ -65,7 +63,6 @@ function CalendarPage(props) {
     () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     []
   );
-
 
   return (
     <>
@@ -169,10 +166,10 @@ function CalendarPage(props) {
         </div>
 
         <div className="weekdays">
-          {weekdays.map((day) => (
-            <>
-              <p className="weekday">{day}</p>
-            </>
+          {weekdays.map((day, index) => (
+              <p key={index} className="weekday">
+                {day}
+              </p>
           ))}
         </div>
 
@@ -187,6 +184,7 @@ function CalendarPage(props) {
                 year=""
                 taskList={emptyList}
                 toDoList={emptyList}
+                habitList={emptyList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
@@ -196,6 +194,7 @@ function CalendarPage(props) {
                 setIsToDo={setIsToDo}
                 setTaskList={props.setTaskList}
                 setToDoList={props.setToDoList}
+                setHabitList={props.setHabitList}
                 user={props.user}
               />
             );
@@ -215,6 +214,7 @@ function CalendarPage(props) {
                 year={displayDay.getFullYear()}
                 taskList={props.taskList}
                 toDoList={props.toDoList}
+                habitList={props.habitList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
@@ -224,6 +224,7 @@ function CalendarPage(props) {
                 setIsToDo={setIsToDo}
                 setTaskList={props.setTaskList}
                 setToDoList={props.setToDoList}
+                setHabitList={props.setHabitList}
                 user={props.user}
               />
             );
@@ -243,6 +244,7 @@ function CalendarPage(props) {
                 year=""
                 taskList={emptyList}
                 toDoList={emptyList}
+                habitList={emptyList}
                 setEditDay={setEditDay}
                 setEditDescription={setEditDescription}
                 setOpenEditWindow={setOpenEditWindow}
@@ -252,6 +254,7 @@ function CalendarPage(props) {
                 setIsToDo={setIsToDo}
                 setTaskList={props.setTaskList}
                 setToDoList={props.setToDoList}
+                setHabitList={props.setHabitList}
                 user={props.user}
               />
             );
