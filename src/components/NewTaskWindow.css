@@ -24,6 +24,10 @@
 
 .button-unselected {
   background-color: #242424 !important;
-  width: 10%;
+  margin-right: 0.5vh;
+}
+ 
+.button-selected {
+  margin-right: 0.5vh;
 }
 
