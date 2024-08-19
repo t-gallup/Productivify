@@ -136,7 +136,7 @@ function habitsMissed(habitList, key, setHabitList) {
       {Object.entries(habitList)
         .filter(
           ([_, subDict]) =>
-            subDict["Weekdays"][weekday] &&
+            subDict["Weekdays"] && subDict["Weekdays"][weekday] &&
             ((subDict["Dates"] && key in subDict["Dates"] && subDict["Dates"][key] !== 1) ||
               !(subDict["Dates"] && key in subDict["Dates"]))
         )
