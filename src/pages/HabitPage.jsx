@@ -31,7 +31,8 @@ function HabitPage(props) {
   const [febDays, setFebDays] = useState(
     displayDay.getFullYear() % 4 == 0 ? 29 : 28
   );
-
+  const daysOfWeek = ["Mon", "Tues", "Weds", "Thur", "Fri", "Sat", "Sun"];
+  console.log(displayDay + 1)
   return (
     <>
       <Navbar
@@ -144,13 +145,15 @@ function HabitPage(props) {
       <div className="habit-items">
         <div className="habit-column-names">
           <p className="bold-text habit-grid-item">Habit</p>
-          <p className="habit-grid-item">Mon</p>
-          <p className="habit-grid-item">Tues</p>
-          <p className="habit-grid-item">Weds</p>
-          <p className="habit-grid-item">Thur</p>
-          <p className="habit-grid-item">Fri</p>
-          <p className="habit-grid-item">Sat</p>
-          <p className="habit-grid-item">Sun</p>
+          {daysOfWeek.map((day, index) => {
+            const tempDate = new Date(displayDay);
+            tempDate.setDate(displayDay.getDate() + index);
+            return (
+              <p key={index} className="habit-grid-item">
+                {day} {tempDate.getMonth()+1 + "/" + tempDate.getDate()}
+              </p>
+            );
+          })}
         </div>
         <div className="habit-grid">
           {Object.entries(props.habitList).map(([name, details], index) => (

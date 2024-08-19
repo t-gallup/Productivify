@@ -7,6 +7,18 @@ import { DateToKey } from "../functions/DateChanges";
 function NewTaskWindow(props) {
   const [taskDescription, setTaskDescription] = useState("");
   const [completionTime, setCompletionTime] = useState(0);
+  const [selectMon, setSelectMon] = useState(true);
+  const [selectTues, setSelectTues] = useState(true);
+  const [selectWed, setSelectWed] = useState(true);
+  const [selectThurs, setSelectThurs] = useState(true);
+  const [selectFri, setSelectFri] = useState(true);
+  const [selectSat, setSelectSat] = useState(true);
+  const [selectSun, setSelectSun] = useState(true);
+
+  const changeDayVal = (day, setDay) => {
+    setDay(!day);
+  };
+
   const submitButtonRef = useRef(null);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -41,6 +53,7 @@ function NewTaskWindow(props) {
   };
 
   const handleSubmit = (event) => {
+    console.log("Test")
     event.preventDefault();
     if (props.isHabit) {
       handleAddHabit(
@@ -48,7 +61,16 @@ function NewTaskWindow(props) {
         completionTime,
         props.habitList,
         props.setHabitList,
-        props.setOpenWindow
+        props.setOpenWindow,
+        [
+          selectMon,
+          selectTues,
+          selectWed,
+          selectThurs,
+          selectFri,
+          selectSat,
+          selectSun,
+        ]
       );
     } else {
       const dateValue = event.target.elements.date.value;
@@ -95,15 +117,15 @@ function NewTaskWindow(props) {
               onKeyDown={handleEnterPress}
             />
             <div className="date-flex">
-            <h3 className="date-title">No Due Date</h3>
-            <input
-              className="date-box"
-              type="checkbox"
-              id="noDate"
-              name="noDate"
-              onChange={toggleDateInput}
-            ></input>
-          </div>
+              <h3 className="date-title">No Due Date</h3>
+              <input
+                className="date-box"
+                type="checkbox"
+                id="noDate"
+                name="noDate"
+                onChange={toggleDateInput}
+              ></input>
+            </div>
             <h2>Task Description</h2>
             <input
               type="text"
@@ -157,6 +179,70 @@ function NewTaskWindow(props) {
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
+            <h2>Habit Days</h2>
+            <button
+              type="button"
+              className={`${
+                selectMon ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectMon, setSelectMon)}
+            >
+              M
+            </button>
+            <button
+              type="button"
+              className={`${
+                selectTues ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectTues, setSelectTues)}
+            >
+              T
+            </button>
+            <button
+              type="button"
+              className={`${
+                selectWed ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectWed, setSelectWed)}
+            >
+              W
+            </button>
+            <button
+              type="button"
+              className={`${
+                selectThurs ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectThurs, setSelectThurs)}
+            >
+              Th
+            </button>
+            <button
+              type="button"
+              className={`${
+                selectFri ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectFri, setSelectFri)}
+            >
+              F
+            </button>
+            <button
+              type="button"
+              className={`${
+                selectSat ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectSat, setSelectSat)}
+            >
+              Sat
+            </button>
+            <button
+              type="button"
+              className={`${
+                selectSun ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectSun, setSelectSun)}
+            >
+              Sun
+            </button>
           </div>
 
           <button type="submit" className="submit-button" ref={submitButtonRef}>

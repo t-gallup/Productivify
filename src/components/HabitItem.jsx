@@ -15,6 +15,7 @@ function HabitItem(props) {
 
   const datesDict = props.habitList[props.habitName]["Dates"];
   const habitTime = props.habitList[props.habitName]["Time"];
+  const habitWeekdays = props.habitList[props.habitName]["Weekdays"];
 
   function updateHabit (date, isCheck) {
     const newHabitList = structuredClone(props.habitList);
@@ -59,7 +60,13 @@ function HabitItem(props) {
           </button>
           {dateKeys.map((date, index) => (
             <>
-              {!(date in datesDict) && (
+              {!(habitWeekdays[index]) && (
+                <div className="habit-grid-box habit-grid-item">
+                  <p className="non-day">-</p>
+                </div>
+                
+              )}
+              {(habitWeekdays[index]) && !(date in datesDict) && (
                 <div className="habit-grid-box habit-grid-item">
                   <button
                     className="check"

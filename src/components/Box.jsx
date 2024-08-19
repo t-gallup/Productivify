@@ -127,17 +127,17 @@ function habitsCompleted(habitList, key, setHabitList) {
 }
 
 function habitsMissed(habitList, key, setHabitList) {
+  const weekday = new Date(key + "T00:00:00").getDay()
   if (habitList == undefined) {
     return;
   }
-  console.log("test");
   return (
     <>
       {Object.entries(habitList)
         .filter(
           ([_, subDict]) =>
-            key in subDict["Dates"] && subDict["Dates"][key] !== 1 ||
-            !(key in subDict["Dates"])
+            subDict["Weekdays"][weekday] && (key in subDict["Dates"] && subDict["Dates"][key] !== 1 ||
+            !(key in subDict["Dates"]))
         )
         .map(([habitName, subDict]) => (
           <div key={habitName + "-" + key} className="habit-div">

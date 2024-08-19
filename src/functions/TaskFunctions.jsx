@@ -181,7 +181,8 @@ export function handleAddHabit(
   time,
   habitList,
   setHabitList,
-  setOpenWindow
+  setOpenWindow,
+  dayList
 ) {
   const newTaskList = {};
   const habitDict = {};
@@ -189,6 +190,7 @@ export function handleAddHabit(
   habitDict["Name"] = name;
   habitDict["Time"] = time;
   habitDict["Dates"] = newTaskList;
+  habitDict["Weekdays"] = dayList;
   newHabitList[name] = habitDict;
   newHabitList = sortDictByKeys(newHabitList);
   writeUserHabit(auth.currentUser.uid, newHabitList);
@@ -204,7 +206,8 @@ export function handleEditHabit(
   newTime,
   setOpenEditWindow,
   habitList,
-  setHabitList
+  setHabitList,
+  dayList
 ) {
   var newHabitList = structuredClone(habitList);
   if (oldDescription !== newDescription) {
@@ -214,6 +217,7 @@ export function handleEditHabit(
     newHabitList = sortDictByKeys(newHabitList);
   }
   newHabitList[newDescription]["Time"] = newTime;
+  newHabitList[newDescription]["Weekdays"] = dayList;
   writeUserHabit(auth.currentUser.uid, newHabitList);
   setHabitList(newHabitList);
   localStorage.setItem("userHabit", JSON.stringify(newHabitList));

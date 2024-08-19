@@ -21,3 +21,9 @@
   width: 15vw;
   border: solid white !important;
 }
+
+.button-unselected {
+  background-color: #242424 !important;
+  width: 10%;
+}
+

@@ -16,6 +16,32 @@ function EditWindow(props) {
   const [newDay, setNewDay] = useState(oldDay);
   const [newDescription, setNewDescription] = useState(oldDescription);
   const [newTime, setNewTime] = useState(oldTime);
+  const [selectMon, setSelectMon] = useState(true);
+  const [selectTues, setSelectTues] = useState(true);
+  const [selectWed, setSelectWed] = useState(true);
+  const [selectThurs, setSelectThurs] = useState(true);
+  const [selectFri, setSelectFri] = useState(true);
+  const [selectSat, setSelectSat] = useState(true);
+  const [selectSun, setSelectSun] = useState(true);
+  useEffect(() => {
+    if (props.isHabit) {
+      if (props.habitList[props.editDescription[0]] !== undefined) {
+        const weekdays = props.habitList[props.editDescription[0]]["Weekdays"]
+        setSelectMon(weekdays[0])
+        setSelectTues(weekdays[1])
+        setSelectWed(weekdays[2])
+        setSelectThurs(weekdays[3])
+        setSelectFri(weekdays[4])
+        setSelectSat(weekdays[5])
+        setSelectSun(weekdays[6])
+      }
+    }
+  }, [props.habitList[props.editDescription[0]]])
+  
+  const changeDayVal = (day, setDay) => {
+    setDay(!day);
+  };
+
   const handleEditDayChange = (event) => {
     setNewDay(event.target.value);
   };
@@ -159,6 +185,63 @@ function EditWindow(props) {
             value={newTime}
             onChange={handleEditTimeChange}
           />
+          <h2>Habit Days</h2>
+            <button
+              className={`${
+                selectMon ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectMon, setSelectMon)}
+            >
+              M
+            </button>
+            <button
+              className={`${
+                selectTues ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectTues, setSelectTues)}
+            >
+              T
+            </button>
+            <button
+              className={`${
+                selectWed ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectWed, setSelectWed)}
+            >
+              W
+            </button>
+            <button
+              className={`${
+                selectThurs ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectThurs, setSelectThurs)}
+            >
+              Th
+            </button>
+            <button
+              className={`${
+                selectFri ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectFri, setSelectFri)}
+            >
+              F
+            </button>
+            <button
+              className={`${
+                selectSat ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectSat, setSelectSat)}
+            >
+              Sat
+            </button>
+            <button
+              className={`${
+                selectSun ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectSun, setSelectSun)}
+            >
+              Sun
+            </button>
         </div>
 
         <button
@@ -171,7 +254,15 @@ function EditWindow(props) {
               newTime,
               props.setOpenEditWindow,
               props.habitList,
-              props.setHabitList
+              props.setHabitList,
+              [selectMon,
+                selectTues,
+                selectWed,
+                selectThurs,
+                selectFri,
+                selectSat,
+                selectSun
+              ]
             )
           }
         >
@@ -188,7 +279,7 @@ function EditWindow(props) {
             )
           }
         >
-          Delete Task
+          Delete Habit
         </button>
       </div>
     ) : (
