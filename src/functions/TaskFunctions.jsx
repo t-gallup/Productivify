@@ -29,14 +29,10 @@ export function handleAddTask(
   setToDoList,
   isToDo
 ) {
-  if (completionDay === "on-00-00") {
-    completionDay = new Date();
-  } else {
-    completionDay = new Date(completionDay + "T00:00:00");
-  }
+  var key = completionDay;
   if (isToDo) {
     var newToDoList = structuredClone(toDoList);
-    const key = DateToKey(completionDay);
+    // const key = DateToKey(completionDay);
     if (key in newToDoList) {
       newToDoList[key].push([taskDescription, completionTime]);
     } else {
@@ -48,7 +44,7 @@ export function handleAddTask(
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
     var newTaskList = structuredClone(taskList);
-    const key = DateToKey(completionDay);
+    // const key = DateToKey(completionDay);
     if (key in newTaskList) {
       newTaskList[key].push([taskDescription, completionTime]);
     } else {
@@ -136,13 +132,8 @@ export function handleDeleteTask(
   setToDoList,
   isToDo
 ) {
-  var key = "";
-  if (completionDay === "on-00-00") {
-    key = "on-00-00";
-  } else {
-    completionDay = new Date(completionDay);
-    key = DateToKey(completionDay);
-  }
+  console.log(completionDay)
+  var key = completionDay;
   if (isToDo) {
     const newToDoList = structuredClone(toDoList);
     if (newToDoList[key] !== undefined) {
@@ -158,6 +149,7 @@ export function handleDeleteTask(
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
     const newTaskList = structuredClone(taskList);
+    console.log(newTaskList[key])
     if (newTaskList[key] !== undefined) {
       const delIndex = newTaskList[key].findIndex(
         (innerArray) =>
