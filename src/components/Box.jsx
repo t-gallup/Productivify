@@ -102,20 +102,20 @@ function habitsCompleted(habitList, key, setHabitList) {
       {Object.entries(habitList)
         .filter(
           ([_, subDict]) =>
-            key in subDict["Dates"] && subDict["Dates"][key] === 1
+            subDict["Dates"] &&
+            key in subDict["Dates"] &&
+            subDict["Dates"][key] === 1
         )
         .map(([habitName, subDict]) => (
           <div key={habitName + "-" + key} className="habit-div">
             <button
               className="box-x"
-              onClick={() => updateHabit(
-                setHabitList,
-                habitList,
-                habitName,
-                key,
-                false
-              )}
-            >X</button>
+              onClick={() =>
+                updateHabit(setHabitList, habitList, habitName, key, false)
+              }
+            >
+              X
+            </button>
             <p className="habit-name">{habitName + " "}</p>
             {/* <p className="habit-time">
               {subDict["Time"]} {subDict["Time"] == 1 ? "hour" : "hours"}
@@ -127,7 +127,7 @@ function habitsCompleted(habitList, key, setHabitList) {
 }
 
 function habitsMissed(habitList, key, setHabitList) {
-  const weekday = new Date(key + "T00:00:00").getDay()
+  const weekday = new Date(key + "T00:00:00").getDay();
   if (habitList == undefined) {
     return;
   }
@@ -136,21 +136,18 @@ function habitsMissed(habitList, key, setHabitList) {
       {Object.entries(habitList)
         .filter(
           ([_, subDict]) =>
-            subDict["Weekdays"][weekday] && (key in subDict["Dates"] && subDict["Dates"][key] !== 1 ||
-            !(key in subDict["Dates"]))
+            subDict["Weekdays"][weekday] &&
+            ((subDict["Dates"] && key in subDict["Dates"] && subDict["Dates"][key] !== 1) ||
+              !(subDict["Dates"] && key in subDict["Dates"]))
         )
         .map(([habitName, subDict]) => (
           <div key={habitName + "-" + key} className="habit-div">
             <input
               type="checkbox"
               className="check-miss"
-              onClick={() => updateHabit(
-                setHabitList,
-                habitList,
-                habitName,
-                key,
-                true
-              )}
+              onClick={() =>
+                updateHabit(setHabitList, habitList, habitName, key, true)
+              }
             ></input>
             <p className="habit-name">{habitName + " "}</p>
             {/* <p className="habit-time">
@@ -232,12 +229,11 @@ function Box({
             <div className="habit-list">
               <p className="habit-title">Habits Missed</p>
               {habitsMissed(habitList, key, setHabitList)}
-              <hr className="complete"/>
+              <hr className="complete" />
               <p className="habit-title">Habits Completed</p>
               {habitsCompleted(habitList, key, setHabitList)}
-              
             </div>
-            )}
+          )}
         </div>
       </div>
     </>
