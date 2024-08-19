@@ -25,6 +25,19 @@ function EditWindow(props) {
   const handleEditTimeChange = (event) => {
     setNewTime(event.target.value);
   };
+  const toggleDateInput = (event) => {
+    const dateInput = document.getElementById("newDay");
+    const noDateInput = document.getElementById("noDate");
+    if (noDateInput.checked) {
+      dateInput.value = "";
+      dateInput.disabled = true;
+      setNewDay(event.target.value);
+    } else {
+      dateInput.value = DateToKey(new Date());
+      dateInput.disabled = false;
+      setNewDay(dateInput.value)
+    }
+  };
   useEffect(() => {
     setNewDay(props.editDay);
     setNewDescription(props.editDescription[0]);
@@ -47,10 +60,23 @@ function EditWindow(props) {
           <h2>Desired Completion Day</h2>
           <input
             type="date"
+            id="newDay"
             name="newDay"
             value={newDay}
             onChange={handleEditDayChange}
           />
+          <div className="date-flex">
+            <h3 className="date-title">No Due Date</h3>
+            <input
+              className="date-box"
+              type="checkbox"
+              id="noDate"
+              name="noDate"
+              onChange={toggleDateInput}
+              checked={newDay === "on-00-00" || newDay === "on"}
+            ></input>
+          </div>
+          
           <h2>Task Description</h2>
           <input
             type="text"
@@ -158,7 +184,7 @@ function EditWindow(props) {
               oldDescription,
               props.habitList,
               props.setHabitList,
-              props.setOpenEditWindow,
+              props.setOpenEditWindow
             )
           }
         >
@@ -242,70 +268,7 @@ function EditWindow(props) {
     )
   ) : (
     ""
-  ); //   <div className="window-wrapper">
-  //     <h1>Edit This Task</h1>
-  //     <button
-  //       className="close-button"
-  //       onClick={() => props.setOpenEditWindow(false)}
-  //     >
-  //       X
-  //     </button>
-  //     <div className="task-attributes">
-  //       <h2>Completion Day</h2>
-  //       <input type="date" value={newDay} onChange={handleEditDayChange} />
-  //       <h2>Task Description</h2>
-  //       <input
-  //         type="text"
-  //         value={newDescription}
-  //         onChange={handleEditDescriptionChange}
-  //       />
-  //       <h2>Completion Time</h2>
-  //       <input type="number" value={newTime} onChange={handleEditTimeChange} />
-  //     </div>
-  //     <button
-  //       className="edit-button"
-  //       onClick={() =>
-  //         handleEditTask(
-  //           oldDay,
-  //           newDay,
-  //           oldDescription,
-  //           newDescription,
-  //           oldTime,
-  //           newTime,
-  //           props.taskList,
-  //           props.setTaskList,
-  //           props.setOpenEditWindow,
-  //           props.toDoList,
-  //           props.setToDoList,
-  //           props.isToDo,
-  //           props.habitList
-  //         )
-  //       }
-  //     >
-  //       Submit Edits
-  //     </button>
-  //     <button
-  //       className="delete-button"
-  //       onClick={() =>
-  //         handleDeleteTask(
-  //           props.editDay,
-  //           props.editDescription,
-  //           props.taskList,
-  //           props.setTaskList,
-  //           props.setOpenEditWindow,
-  //           props.toDoList,
-  //           props.setToDoList,
-  //           props.isToDo,
-  //           props.habitList
-  //         )
-  //       }
-  //     >
-  //       Delete Task
-  //     </button>
-  //   </div>
-  // ) : (
-  //   ""
-  // );
+  );
 }
 
 EditWindow.propTypes = {

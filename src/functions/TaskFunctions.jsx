@@ -5,7 +5,7 @@ import {
 } from "./DatabaseFunctions.jsx";
 import { auth } from "../firebase.js";
 // TODO: Change to datetokey
-// import { DateToKey } from "./DateChanges.jsx";
+import { DateToKey } from "./DateChanges.jsx";
 
 export function sortDictByKeys(dict) {
   const sortedKeys = Object.keys(dict).sort();
@@ -29,11 +29,17 @@ export function handleAddTask(
   setToDoList,
   isToDo
 ) {
+  console.log(completionDay);
+  if (completionDay === "on-00-00") {
+    completionDay = new Date();
+    console.log(completionDay);
+  } else {
+    completionDay = new Date(completionDay + "T00:00:00");
+    console.log("Test: ", completionDay);
+  }
   if (isToDo) {
     var newToDoList = structuredClone(toDoList);
-    const key = `${completionDay.substring(0, 4)}-${completionDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
+    const key = DateToKey(completionDay);
     if (key in newToDoList) {
       newToDoList[key].push([taskDescription, completionTime]);
     } else {
@@ -45,9 +51,7 @@ export function handleAddTask(
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
     var newTaskList = structuredClone(taskList);
-    const key = `${completionDay.substring(0, 4)}-${completionDay
-      .substring(5, 7)
-      .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
+    const key = DateToKey(completionDay);
     if (key in newTaskList) {
       newTaskList[key].push([taskDescription, completionTime]);
     } else {
@@ -135,9 +139,13 @@ export function handleDeleteTask(
   setToDoList,
   isToDo
 ) {
-  const key = `${completionDay.substring(0, 4)}-${completionDay
-    .substring(5, 7)
-    .padStart(2, "0")}-${completionDay.substring(8, 10).padStart(2, "0")}`;
+  var key = "";
+  if (completionDay === "on-00-00") {
+    key = "on-00-00";
+  } else {
+    completionDay = new Date(completionDay);
+    key = DateToKey(completionDay);
+  }
   if (isToDo) {
     const newToDoList = structuredClone(toDoList);
     if (newToDoList[key] !== undefined) {
@@ -225,4 +233,3 @@ export function handleDeleteHabit(
   localStorage.setItem("userHabit", JSON.stringify(newHabitList));
   setOpenEditWindow(false);
 }
-

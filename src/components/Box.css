@@ -36,7 +36,14 @@
 .habit-container {
   width: 100%;
   height: 100%;
+  min-height: 8vh;
+  display: flex;
   position: relative;
+}
+
+.habit-title {
+  font-weight: bold;
+  text-align: center;
 }
 
 .habit-list {
@@ -44,7 +51,7 @@
   flex-direction: column;
   position: absolute;
   border-top: solid;
-  height: 6vh;
+  height: 100%;
   bottom: 0;
   font-size: 11px;
   line-height: 0;
@@ -54,6 +61,7 @@
   overflow-y: auto;
   left: 5%;
   padding: 0;
+  min-height: 8vh;
 }
 
 
@@ -64,15 +72,31 @@
   width: 100%;
   gap: 0;
   line-height: 0;
-  /* margin-bottom: 0; */
-}
-
-.habit-title {
-  font-weight: bold;
-  text-align: center;
+  height: 5vh;
 }
 
 .habit-div p {
   margin-top: 1vh;
   margin-bottom: 1vh;
+}
+
+.box-x {
+  border-radius: 100px;
+  /* width: 25%; */
+  /* height: 80%; */
+  text-align: center;
+  background-color: #242424 !important;
+  /* padding: 1vh; */
+  /* padding-bottom: 10%; */
+  border: 0;
+}
+
+.check-miss {
+  width: 25%;
+}
+
+.complete {
+  /* height: 10%; */
+  width: 100%;
+  border-top: solid white 1px;
 }

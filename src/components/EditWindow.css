@@ -28,3 +28,23 @@ input {
   width: 50%;
   text-align: center;
 }
+
+.date-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  left: 25%;
+  position: relative;
+}
+
+.date-title {
+  margin-top: 1vh;
+  margin-bottom: 0;
+}
+
+.date-box {
+  margin-top: 1vh;
+  margin-bottom: 0;
+  width: 10%;
+}

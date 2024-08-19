@@ -77,7 +77,7 @@ function ToDoPage(props) {
           <p>Estimated Completion Time</p>
         </div>
         <div className="to-do-grid">
-          {Object.entries(props.toDoList).map(([day, tasks]) =>
+          {Object.entries(props.toDoList).filter(([day, _]) => day !== "on-00-00").map(([day, tasks]) =>
             tasks.map((description, index) => (
               <ToDoItem
                 key={index}
@@ -95,6 +95,29 @@ function ToDoPage(props) {
               />
             ))
           )}
+        </div>
+        <div>
+          <h2 className="no-date-title">No Due Date Items</h2>
+            <div className="to-do-grid">
+            {Object.entries(props.toDoList).filter(([day, _]) => day === "on-00-00").map(([day, tasks]) =>
+              tasks.map((description, index) => (
+                <ToDoItem
+                  key={index}
+                  day={day}
+                  description={description}
+                  setEditDescription={setEditDescription}
+                  setEditDay={setEditDay}
+                  setOpenEditWindow={setOpenEditWindow}
+                  taskList={props.taskList}
+                  setTaskList={props.setTaskList}
+                  setOpenWindow={setOpenWindow}
+                  toDoList={props.toDoList}
+                  setToDoList={props.setToDoList}
+                  habitList={props.habitList}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>

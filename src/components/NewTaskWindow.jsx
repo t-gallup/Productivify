@@ -28,6 +28,18 @@ function NewTaskWindow(props) {
     }
   };
 
+  const toggleDateInput = (event) => {
+    const dateInput = document.getElementById("date");
+    const noDateInput = document.getElementById("noDate");
+    if (noDateInput.checked) {
+      dateInput.value = "";
+      dateInput.disabled = true;
+      setNewDay(event.target.value);
+    } else {
+      dateInput.disabled = false;
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (props.isHabit) {
@@ -77,10 +89,21 @@ function NewTaskWindow(props) {
             <input
               type="date"
               name="date"
+              id="date"
               value={props.windowDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
+            <div className="date-flex">
+            <h3 className="date-title">No Due Date</h3>
+            <input
+              className="date-box"
+              type="checkbox"
+              id="noDate"
+              name="noDate"
+              onChange={toggleDateInput}
+            ></input>
+          </div>
             <h2>Task Description</h2>
             <input
               type="text"

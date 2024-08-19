@@ -43,7 +43,7 @@ function ToDoItem(props) {
   };
   const newDate = props.day.substring(5);
   const [checked, setChecked] = useState(false);
-
+  console.log(props.day);
   return (
     <>
       <div className="to-do-box">
@@ -65,7 +65,7 @@ function ToDoItem(props) {
               checked={checked}
               onChange={() => handleCheckBoxClick(setChecked)}
             ></CheckBox>
-            <p className="task-date"> {newDate} </p>
+            <p className="task-date"> {newDate === "-00" ? "N/A" : newDate} </p>
             <p className="task-description"> {props.description[0]}</p>
             <p className="task-time">
               {" "}
