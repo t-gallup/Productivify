@@ -32,7 +32,6 @@ function HabitPage(props) {
     displayDay.getFullYear() % 4 == 0 ? 29 : 28
   );
   const daysOfWeek = ["Mon", "Tues", "Weds", "Thur", "Fri", "Sat", "Sun"];
-  console.log(displayDay + 1)
   return (
     <>
       <Navbar

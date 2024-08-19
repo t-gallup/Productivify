@@ -53,7 +53,6 @@ function NewTaskWindow(props) {
   };
 
   const handleSubmit = (event) => {
-    console.log("Test")
     event.preventDefault();
     if (props.isHabit) {
       handleAddHabit(

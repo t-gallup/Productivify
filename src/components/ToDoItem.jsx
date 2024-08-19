@@ -43,7 +43,6 @@ function ToDoItem(props) {
   };
   const newDate = props.day.substring(5);
   const [checked, setChecked] = useState(false);
-  console.log(props.day);
   return (
     <>
       <div className="to-do-box">

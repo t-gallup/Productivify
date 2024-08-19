@@ -66,7 +66,7 @@ function HabitItem(props) {
                 </div>
                 
               )}
-              {(habitWeekdays[index]) && !(date in datesDict) && (
+              {(habitWeekdays[index]) && datesDict && !(date in datesDict) && (
                 <div className="habit-grid-box habit-grid-item">
                   <button
                     className="check"
@@ -82,7 +82,7 @@ function HabitItem(props) {
                   </button>
                 </div>
               )}
-              {datesDict[date] === 1 && (
+              {datesDict && datesDict[date] === 1 && (
                 <div className="habit-grid-box habit-grid-item">
                   <div className="check-wrapper">
                     <p className="static-check">&#x2611;</p>
@@ -95,7 +95,7 @@ function HabitItem(props) {
                   </div>
                 </div>
               )}
-              {datesDict[date] === 0 && (
+              {datesDict && datesDict[date] === 0 && (
                 <div className="habit-grid-box habit-grid-item">
                   <div className="x-wrapper">
                     <p className="static-x">&#x2612;</p>

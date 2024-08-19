@@ -29,13 +29,10 @@ export function handleAddTask(
   setToDoList,
   isToDo
 ) {
-  console.log(completionDay);
   if (completionDay === "on-00-00") {
     completionDay = new Date();
-    console.log(completionDay);
   } else {
     completionDay = new Date(completionDay + "T00:00:00");
-    console.log("Test: ", completionDay);
   }
   if (isToDo) {
     var newToDoList = structuredClone(toDoList);
@@ -184,12 +181,11 @@ export function handleAddHabit(
   setOpenWindow,
   dayList
 ) {
-  const newTaskList = {};
   const habitDict = {};
   var newHabitList = structuredClone(habitList);
   habitDict["Name"] = name;
   habitDict["Time"] = time;
-  habitDict["Dates"] = newTaskList;
+  habitDict["Dates"] = {"key": "value"};
   habitDict["Weekdays"] = dayList;
   newHabitList[name] = habitDict;
   newHabitList = sortDictByKeys(newHabitList);
