@@ -71,6 +71,14 @@ function NewTaskWindow(props) {
           selectSun,
         ]
       );
+      setSelectMon(true);
+      setSelectTues(true);
+      setSelectWed(true);
+      setSelectThurs(true);
+      setSelectFri(true);
+      setSelectSat(true);
+      setSelectSun(true);
+
     } else {
       const dateValue = event.target.elements.date.value;
       handleAddTask(
