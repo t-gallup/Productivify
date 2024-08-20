@@ -12,6 +12,7 @@ import {
   readUserTaskList,
   readUserToDo,
   readUserHabit,
+  writeUserHabit,
 } from "../functions/DatabaseFunctions";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -52,6 +53,12 @@ function SignInPage(props) {
       if (habitList === undefined) {
         habitList = {};
       }
+      for (const habit in habitList) {
+        if (!("Weekdays" in habitList[habit])) {
+          habitList[habit]["Weekdays"] = [true, true, true, true, true, true, true];
+          writeUserHabit(userCredentials.user.uid, habitList);
+        }
+      }
       props.setHabitList(habitList);
       localStorage.setItem("userHabit", JSON.stringify(habitList));
       if (!auth.currentUser.emailVerified) {
@@ -87,6 +94,13 @@ function SignInPage(props) {
       let habitList = await readUserHabit(userCredentials.user.uid);
       if (habitList === undefined) {
         habitList = {};
+      }
+      for (habit in habitList) {
+        console.log(habit);
+        if (!"Weekdays" in habit) {
+          habit["Weekdays"] = [true, true, true, true, true, true, true];
+          writeUserHabit(userCredentials.user.uid, habitList);
+        }
       }
       props.setHabitList(habitList);
       localStorage.setItem("userHabit", JSON.stringify(habitList));
