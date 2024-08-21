@@ -95,9 +95,9 @@ function SignInPage(props) {
       if (habitList === undefined) {
         habitList = {};
       }
-      for (habit in habitList) {
-        if (!"Weekdays" in habit) {
-          habit["Weekdays"] = [true, true, true, true, true, true, true];
+      for (const habit in habitList) {
+        if (!"Weekdays" in habitList[habit]) {
+          habitList[habit]["Weekdays"] = [true, true, true, true, true, true, true];
           writeUserHabit(userCredentials.user.uid, habitList);
         }
       }
