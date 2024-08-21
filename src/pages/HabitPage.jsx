@@ -10,8 +10,8 @@ import {
   AddMonth,
   SubtractWeek,
   AddWeek,
-  FindMonday,
-  SetSunday,
+  FindSunday,
+  SetSaturday,
 } from "../functions/DateChanges";
 
 import EditWindow from "../components/EditWindow";
@@ -21,17 +21,17 @@ function HabitPage(props) {
   const [editDescription, setEditDescription] = useState([]);
   const [editDay, setEditDay] = useState("");
   const [openEditWindow, setOpenEditWindow] = useState(false);
-  const [displayDay, setDisplayDay] = useState(FindMonday(new Date()));
-  const [displaySunday, setDisplaySunday] = useState(new Date(displayDay));
+  const [displayDay, setDisplayDay] = useState(FindSunday(new Date()));
+  const [displaySaturday, setDisplaySaturday] = useState(new Date(displayDay));
   useEffect(() => {
-    SetSunday(displayDay, setDisplaySunday);
+    SetSaturday(displayDay, setDisplaySaturday);
   }, []);
 
   const [windowDay, setWindowDay] = useState(DateToKey(new Date()));
   const [febDays, setFebDays] = useState(
     displayDay.getFullYear() % 4 == 0 ? 29 : 28
   );
-  const daysOfWeek = ["Mon", "Tues", "Weds", "Thur", "Fri", "Sat", "Sun"];
+  const daysOfWeek = ["Sun","Mon", "Tues", "Weds", "Thur", "Fri", "Sat"];
   return (
     <>
       <Navbar
@@ -90,14 +90,14 @@ function HabitPage(props) {
         <button
           className="month-item"
           onClick={async () => {
-            var newDate = await SubtractMonth({
+            var newDate = SubtractMonth({
               displayDay,
               setDisplayDay,
               setFebDays,
             });
-            newDate = FindMonday(newDate);
+            newDate = FindSunday(newDate);
             setDisplayDay(newDate);
-            SetSunday(newDate, setDisplaySunday);
+            SetSaturday(newDate, setDisplaySaturday);
           }}
         >
           &#10094;&#10094;
@@ -105,22 +105,22 @@ function HabitPage(props) {
         <button
           className="month-item"
           onClick={async () => {
-            var newDate = await SubtractWeek({ displayDay, setDisplayDay, setFebDays });
-            SetSunday(newDate, setDisplaySunday);
+            var newDate = SubtractWeek({ displayDay, setDisplayDay, setFebDays });
+            SetSaturday(newDate, setDisplaySaturday);
           }}
         >
           &#10094;
         </button>
         <p className="month-item month-text">
           {displayDay.getMonth() + 1}/{displayDay.getDate()}/
-          {displayDay.getFullYear()%100}-{displaySunday.getMonth() + 1}/
-          {displaySunday.getDate()}/{displaySunday.getFullYear()%100}
+          {displayDay.getFullYear()%100}-{displaySaturday.getMonth() + 1}/
+          {displaySaturday.getDate()}/{displaySaturday.getFullYear()%100}
         </p>
         <button
           className="month-item"
           onClick={async () => {
-            var newDate = await AddWeek({ displayDay, setDisplayDay, setFebDays });
-            SetSunday(newDate, setDisplaySunday);
+            var newDate = AddWeek({ displayDay, setDisplayDay, setFebDays });
+            SetSaturday(newDate, setDisplaySaturday);
           }}
         >
           &#10095;
@@ -128,14 +128,14 @@ function HabitPage(props) {
         <button
           className="month-item"
           onClick={async () => {
-            var newDate = await AddMonth({
+            var newDate = AddMonth({
               displayDay,
               setDisplayDay,
               setFebDays,
             });
-            newDate = FindMonday(newDate);
+            newDate = FindSunday(newDate);
             setDisplayDay(newDate);
-            SetSunday(newDate, setDisplaySunday);
+            SetSaturday(newDate, setDisplaySaturday);
           }}
         >
           &#10095;&#10095;

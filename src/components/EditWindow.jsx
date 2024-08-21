@@ -188,6 +188,14 @@ function EditWindow(props) {
           <h2>Habit Days</h2>
             <button
               className={`${
+                selectSun ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectSun, setSelectSun)}
+            >
+              Sun
+            </button>
+            <button
+              className={`${
                 selectMon ? "button-selected" : "button-unselected"
               }`}
               onClick={() => changeDayVal(selectMon, setSelectMon)}
@@ -234,14 +242,7 @@ function EditWindow(props) {
             >
               Sat
             </button>
-            <button
-              className={`${
-                selectSun ? "button-selected" : "button-unselected"
-              }`}
-              onClick={() => changeDayVal(selectSun, setSelectSun)}
-            >
-              Sun
-            </button>
+            
         </div>
 
         <button
@@ -255,13 +256,13 @@ function EditWindow(props) {
               props.setOpenEditWindow,
               props.habitList,
               props.setHabitList,
-              [selectMon,
+              [ selectSun,
+                selectMon,
                 selectTues,
                 selectWed,
                 selectThurs,
                 selectFri,
                 selectSat,
-                selectSun
               ]
             )
           }

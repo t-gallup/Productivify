@@ -62,13 +62,14 @@ function NewTaskWindow(props) {
         props.setHabitList,
         props.setOpenWindow,
         [
+          selectSun,
           selectMon,
           selectTues,
           selectWed,
           selectThurs,
           selectFri,
-          selectSat,
-          selectSun,
+          selectSat
+          
         ]
       );
       setSelectMon(true);
@@ -190,6 +191,15 @@ function NewTaskWindow(props) {
             <button
               type="button"
               className={`${
+                selectSun ? "button-selected" : "button-unselected"
+              }`}
+              onClick={() => changeDayVal(selectSun, setSelectSun)}
+            >
+              Sun
+            </button>
+            <button
+              type="button"
+              className={`${
                 selectMon ? "button-selected" : "button-unselected"
               }`}
               onClick={() => changeDayVal(selectMon, setSelectMon)}
@@ -241,15 +251,7 @@ function NewTaskWindow(props) {
             >
               Sat
             </button>
-            <button
-              type="button"
-              className={`${
-                selectSun ? "button-selected" : "button-unselected"
-              }`}
-              onClick={() => changeDayVal(selectSun, setSelectSun)}
-            >
-              Sun
-            </button>
+            
           </div>
 
           <button type="submit" className="submit-button" ref={submitButtonRef}>

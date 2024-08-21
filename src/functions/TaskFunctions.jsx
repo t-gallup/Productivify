@@ -132,7 +132,6 @@ export function handleDeleteTask(
   setToDoList,
   isToDo
 ) {
-  console.log(completionDay)
   var key = completionDay;
   if (isToDo) {
     const newToDoList = structuredClone(toDoList);
@@ -149,7 +148,6 @@ export function handleDeleteTask(
     localStorage.setItem("userToDo", JSON.stringify(newToDoList));
   } else {
     const newTaskList = structuredClone(taskList);
-    console.log(newTaskList[key])
     if (newTaskList[key] !== undefined) {
       const delIndex = newTaskList[key].findIndex(
         (innerArray) =>

@@ -96,7 +96,6 @@ function SignInPage(props) {
         habitList = {};
       }
       for (habit in habitList) {
-        console.log(habit);
         if (!"Weekdays" in habit) {
           habit["Weekdays"] = [true, true, true, true, true, true, true];
           writeUserHabit(userCredentials.user.uid, habitList);
