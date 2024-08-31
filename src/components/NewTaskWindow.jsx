@@ -7,6 +7,7 @@ import { DateToKey } from "../functions/DateChanges";
 function NewTaskWindow(props) {
   const [taskDescription, setTaskDescription] = useState("");
   const [completionTime, setCompletionTime] = useState(0);
+  const [currDay, setCurrDay] = useState(props.windowDay);
   const [selectMon, setSelectMon] = useState(true);
   const [selectTues, setSelectTues] = useState(true);
   const [selectWed, setSelectWed] = useState(true);
@@ -23,7 +24,7 @@ function NewTaskWindow(props) {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name === "date") {
-      props.setWindowDay(value);
+      setCurrDay(value);
     }
     if (name === "taskDescription") {
       setTaskDescription(value);
@@ -44,11 +45,13 @@ function NewTaskWindow(props) {
     const dateInput = document.getElementById("date");
     const noDateInput = document.getElementById("noDate");
     if (noDateInput.checked) {
-      dateInput.value = "";
+      dateInput.value = "1111-11-11";
       dateInput.disabled = true;
-      setNewDay(event.target.value);
+      setCurrDay(dateInput.value);
     } else {
       dateInput.disabled = false;
+      dateInput.value = DateToKey(new Date());
+      setCurrDay(dateInput.value)
     }
   };
 
@@ -81,9 +84,10 @@ function NewTaskWindow(props) {
       setSelectSun(true);
 
     } else {
-      const dateValue = event.target.elements.date.value;
+      // const dateValue = event.target.elements.date.value;
+      // console.log("Final Date: ", dateValue);
       handleAddTask(
-        dateValue,
+        currDay,
         taskDescription,
         completionTime,
         props.taskList,
@@ -120,7 +124,7 @@ function NewTaskWindow(props) {
               type="date"
               name="date"
               id="date"
-              value={props.windowDay}
+              value={currDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -277,7 +281,7 @@ function NewTaskWindow(props) {
             <input
               type="date"
               name="date"
-              value={props.windowDay}
+              value={currDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />

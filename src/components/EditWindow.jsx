@@ -55,12 +55,12 @@ function EditWindow(props) {
     const dateInput = document.getElementById("newDay");
     const noDateInput = document.getElementById("noDate");
     if (noDateInput.checked) {
-      dateInput.value = "";
+      dateInput.value = "1111-11-11";
       dateInput.disabled = true;
-      setNewDay(event.target.value);
+      setNewDay(dateInput.value);
     } else {
-      dateInput.value = DateToKey(new Date());
       dateInput.disabled = false;
+      dateInput.value = DateToKey(new Date());
       setNewDay(dateInput.value)
     }
   };
@@ -90,6 +90,7 @@ function EditWindow(props) {
             name="newDay"
             value={newDay}
             onChange={handleEditDayChange}
+            disabled={newDay === "on-00-00" || newDay === "1111-11-11"}
           />
           <div className="date-flex">
             <h3 className="date-title">No Due Date</h3>
@@ -99,7 +100,7 @@ function EditWindow(props) {
               id="noDate"
               name="noDate"
               onChange={toggleDateInput}
-              checked={newDay === "on-00-00" || newDay === "on"}
+              checked={newDay === "on-00-00" || newDay === "1111-11-11"}
             ></input>
           </div>
           

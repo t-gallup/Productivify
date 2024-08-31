@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CheckBox from "@mui/joy/Checkbox";
 import { handleAddTask, handleDeleteTask } from "../functions/TaskFunctions";
 import { useState } from "react";
+import { DateToKey } from "../functions/DateChanges";
 
 function handleEditButtonClick(
   description,
@@ -18,8 +19,12 @@ function handleEditButtonClick(
 
 function ToDoItem(props) {
   const handleCheckBoxClick = (setChecked) => {
+    var assignmentDay = props.day
+    if ((props.day === "on-00-00") || (props.day === "1111-11-11")) {
+      assignmentDay = DateToKey(new Date());
+    }
     handleAddTask(
-      props.day,
+      assignmentDay,
       props.description[0],
       props.description[1],
       props.taskList,
@@ -64,7 +69,7 @@ function ToDoItem(props) {
               checked={checked}
               onChange={() => handleCheckBoxClick(setChecked)}
             ></CheckBox>
-            <p className="task-date"> {newDate === "-00" ? "N/A" : newDate} </p>
+            <p className="task-date"> {(newDate === "-00") || (newDate === "11-11") ? "N/A" : newDate} </p>
             <p className="task-description"> {props.description[0]}</p>
             <p className="task-time">
               {" "}

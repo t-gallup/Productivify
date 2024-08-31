@@ -2,13 +2,14 @@
   margin: 0 auto;
   width: 80%;
   padding: 2rem;
+  padding-bottom: 15vh;
 }
 
 .boxes {
   display: grid;
   grid-template-columns: repeat(7, minmax(11.5vw, 1fr));
-  width: 70vw;
-  height: 70vw;
+  /* width: 70vw;
+  height: 70vw; */
 }
 
 .header-wrap {
@@ -27,6 +28,7 @@
   flex-direction: column;
   align-content: flex-start;
   padding-top: 15vh;
+  min-height: 100vh;
 }
 
 .month {

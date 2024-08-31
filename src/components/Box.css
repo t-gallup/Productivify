@@ -25,11 +25,11 @@
   padding: 0;
   /* height: 0; */
   border: 0;
-  width: 0
+  width: 22%;
 
 }
 
-.day-button:hover .day-num {
+.day-button:hover {
   color: #2f4f4f;
 }
 

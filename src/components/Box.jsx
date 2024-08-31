@@ -4,6 +4,8 @@ import Task from "./Task.jsx";
 import ToDoTask from "./ToDoTask.jsx";
 import { auth } from "../firebase.js";
 import { writeUserHabit } from "../functions/DatabaseFunctions.jsx";
+import { DateToKey } from "../functions/DateChanges.jsx";
+import { useEffect, useRef } from "react";
 
 function setDayOpenWindow(day, setOpenWindow, setWindowDay) {
   setOpenWindow(true);
@@ -160,9 +162,7 @@ function habitsMissed(habitList, key, setHabitList) {
 }
 
 function Box({
-  day,
-  month,
-  year,
+  date,
   taskList,
   toDoList,
   habitList,
@@ -178,13 +178,21 @@ function Box({
   setHabitList,
   user,
 }) {
-  const key = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`;
+  const key = (date) ? DateToKey(date) : "";
+  const currDay = new Date();
+  const dayBoxRef = useRef(null);
+  const dayNumRef = useRef(null);
+  useEffect(() => {
+    if ((key === DateToKey(currDay)) && (dayBoxRef.current)) {
+      dayBoxRef.current.style.borderColor = '#2f4f4f';
+      dayNumRef.current.style.backgroundColor = '#2f4f4f';
+    }
+  }, []);
+  
   return (
     <>
-      <div className="day-box">
-        {day && (
+      <div ref={dayBoxRef} className="day-box">
+        {date && (
           <button
             className="day-button"
             onClick={() => {
@@ -193,7 +201,7 @@ function Box({
                 : alert("Sign in to start adding tasks!");
             }}
           >
-            <p className="day-num"> {day}</p>
+            <p ref={dayNumRef} className="day-num"> {date.getDate()}</p>
           </button>
         )}
         <div className="box-tasks">
@@ -223,11 +231,11 @@ function Box({
         </div>
 
         <div className="habit-container">
-          {key === "-00-00" ? (
+          {(key === "-00-00") || (key === "") ? (
             ""
           ) : (
             <div className="habit-list">
-              <p className="habit-title">Habits Missed</p>
+              <p className="habit-title">{date < currDay ? "Habits Missed" : "Upcoming Habits"}</p>
               {habitsMissed(habitList, key, setHabitList)}
               <hr className="complete" />
               <p className="habit-title">Habits Completed</p>
@@ -241,9 +249,7 @@ function Box({
 }
 
 Box.propTypes = {
-  day: PropTypes.any,
-  month: PropTypes.any,
-  year: PropTypes.any,
+  date: PropTypes.any,
   taskList: PropTypes.object,
   toDoList: PropTypes.object,
   habitList: PropTypes.object,

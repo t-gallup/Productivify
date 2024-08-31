@@ -179,9 +179,7 @@ function CalendarPage(props) {
               <Box
                 key={`empty-start-${index}`}
                 className="box-child"
-                day=""
-                month=""
-                year=""
+                date=""
                 taskList={emptyList}
                 toDoList={emptyList}
                 habitList={emptyList}
@@ -209,9 +207,7 @@ function CalendarPage(props) {
               <Box
                 key={`day-${x}`}
                 className="box-child"
-                day={x}
-                month={displayDay.getMonth() + 1}
-                year={displayDay.getFullYear()}
+                date={new Date(displayDay.getFullYear(), displayDay.getMonth(), x)}
                 taskList={props.taskList}
                 toDoList={props.toDoList}
                 habitList={props.habitList}
@@ -231,17 +227,15 @@ function CalendarPage(props) {
           })}
           {[
             ...Array(
-              7 -
-                ((firstDayOfMonth + numDaysPerMonth[displayDay.getMonth()]) % 7)
+              (7 -
+                ((firstDayOfMonth + numDaysPerMonth[displayDay.getMonth()]) % 7)) % 7
             ),
           ].map((x, index) => {
             return (
               <Box
                 key={`empty-end-${index}`}
                 className="box-child"
-                day=""
-                month=""
-                year=""
+                date=""
                 taskList={emptyList}
                 toDoList={emptyList}
                 habitList={emptyList}
