@@ -7,7 +7,8 @@ import { DateToKey } from "../functions/DateChanges";
 function NewTaskWindow(props) {
   const [taskDescription, setTaskDescription] = useState("");
   const [completionTime, setCompletionTime] = useState(0);
-  const [currDay, setCurrDay] = useState(props.windowDay);
+  // console.log(props.windowDay)
+  // const [currDay, setCurrDay] = useState(props.windowDay);
   const [selectMon, setSelectMon] = useState(true);
   const [selectTues, setSelectTues] = useState(true);
   const [selectWed, setSelectWed] = useState(true);
@@ -24,7 +25,7 @@ function NewTaskWindow(props) {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name === "date") {
-      setCurrDay(value);
+      props.setWindowDay(value);
     }
     if (name === "taskDescription") {
       setTaskDescription(value);
@@ -47,11 +48,11 @@ function NewTaskWindow(props) {
     if (noDateInput.checked) {
       dateInput.value = "1111-11-11";
       dateInput.disabled = true;
-      setCurrDay(dateInput.value);
+      props.setWindowDay(dateInput.value);
     } else {
       dateInput.disabled = false;
       dateInput.value = DateToKey(new Date());
-      setCurrDay(dateInput.value)
+      props.setWindowDay(dateInput.value)
     }
   };
 
@@ -85,7 +86,7 @@ function NewTaskWindow(props) {
 
     } else {
       handleAddTask(
-        currDay,
+        props.windowDay,
         taskDescription,
         completionTime,
         props.taskList,
@@ -122,7 +123,7 @@ function NewTaskWindow(props) {
               type="date"
               name="date"
               id="date"
-              value={currDay}
+              value={props.windowDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -279,7 +280,7 @@ function NewTaskWindow(props) {
             <input
               type="date"
               name="date"
-              value={currDay}
+              value={props.windowDay}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
