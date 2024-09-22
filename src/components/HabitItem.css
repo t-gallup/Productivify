@@ -35,7 +35,6 @@
 .circle-x {
     border-radius: 20px;
     padding: 0;
-    /* background-color: #242424 !important; */
     border: 0;
     width: 60%;
     height: 30%;
@@ -82,4 +81,8 @@
     font-size: 45px;
     margin: 0;
     text-align: center;
+}
+
+.habit-name-div {
+    overflow: scroll;
 }

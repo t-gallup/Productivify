@@ -84,8 +84,6 @@ function NewTaskWindow(props) {
       setSelectSun(true);
 
     } else {
-      // const dateValue = event.target.elements.date.value;
-      // console.log("Final Date: ", dateValue);
       handleAddTask(
         currDay,
         taskDescription,

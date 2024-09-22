@@ -9,7 +9,8 @@
     text-align: center;
     max-height: 55%;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none;
 }   
 
 .ind-task-button {

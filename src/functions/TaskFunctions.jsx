@@ -78,7 +78,6 @@ export function handleEditTask(
     .substring(5, 7)
     .padStart(2, "0")}-${newDay.substring(8, 10).padStart(2, "0")}`;
   if (isToDo) {
-    console.log("Edit", newDescription);
     var newToDoList = structuredClone(toDoList);
     const delIndex = newToDoList[oldKey].findIndex(
       (innerArray) =>

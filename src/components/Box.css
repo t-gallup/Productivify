@@ -8,8 +8,6 @@
 
 .day-num {
   text-align: center;
-  margin: none;
-  padding: none;
 }
 
 .box-tasks {
@@ -23,10 +21,8 @@
 .day-button {
   background-color: #242424 !important;
   padding: 0;
-  /* height: 0; */
   border: 0;
   width: 22%;
-
 }
 
 .day-button:hover {
@@ -62,6 +58,7 @@
   left: 5%;
   padding: 0;
   min-height: 8vh;
+  scrollbar-width: none;
 }
 
 
@@ -72,22 +69,23 @@
   width: 100%;
   gap: 0;
   line-height: 0;
-  height: 5vh;
+  min-height: 5vh;
+  overflow-x: scroll;
+  scrollbar-width: none;
 }
 
 .habit-div p {
   margin-top: 1vh;
   margin-bottom: 1vh;
+  align-content: center;
+  min-height: 2vh;
+  min-width: 20vw;
 }
 
 .box-x {
   border-radius: 100px;
-  /* width: 25%; */
-  /* height: 80%; */
   text-align: center;
   background-color: #242424 !important;
-  /* padding: 1vh; */
-  /* padding-bottom: 10%; */
   border: 0;
 }
 
@@ -96,7 +94,7 @@
 }
 
 .complete {
-  /* height: 10%; */
   width: 100%;
   border-top: solid white 1px;
 }
+

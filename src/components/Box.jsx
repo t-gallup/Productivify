@@ -182,21 +182,6 @@ function Box({
   const currDay = new Date();
   const dayBoxRef = useRef(null);
   const dayNumRef = useRef(null);
-  // console.log("key:", key);
-  // console.log("currday:", DateToKey(currDay), key === DateToKey(currDay));
-  // useEffect(() => {
-  //   if ((key === DateToKey(currDay)) && (dayBoxRef.current)) {
-  //     // console.log("Condition: ", key === DateToKey(currDay))
-  //     dayBoxRef.current.style.borderColor = '#2f4f4f';
-  //     dayNumRef.current.style.backgroundColor = '#2f4f4f';
-  //   } else if ((dayBoxRef.current) && (dayNumRef.current)) {
-  //     console.log(key, currDay);
-  //     dayBoxRef.current.style.borderColor = "rgba(49, 49, 49, 0.2)";
-  //     dayNumRef.current.style.backgroundColor = 'transparent';
-  //   } else {
-  //     console.log("");
-  //   }
-  // }, []);
   
   return (
     <>

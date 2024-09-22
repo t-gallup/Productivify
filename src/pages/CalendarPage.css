@@ -8,8 +8,6 @@
 .boxes {
   display: grid;
   grid-template-columns: repeat(7, minmax(11.5vw, 1fr));
-  /* width: 70vw;
-  height: 70vw; */
 }
 
 .header-wrap {
@@ -34,9 +32,6 @@
 .month {
   display: flex;
   width: 50%;
-  /* border: solid white; */
-  /* align-items: stretch;
-  justify-content: stretch; */
 }
 
 .month-item {

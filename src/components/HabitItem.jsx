@@ -47,7 +47,7 @@ function HabitItem(props) {
       <div className="habit-box">
         <div className="habit-button-wrapper">
           <button
-            className="habit-grid-item"
+            className="habit-name-div habit-grid-item"
             onClick={() => {
               handleEditButtonClick([props.habitName, habitTime], props.setEditDescription, props.setOpenEditWindow)
             }}
