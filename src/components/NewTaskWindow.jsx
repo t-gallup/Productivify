@@ -7,8 +7,6 @@ import { DateToKey } from "../functions/DateChanges";
 function NewTaskWindow(props) {
   const [taskDescription, setTaskDescription] = useState("");
   const [completionTime, setCompletionTime] = useState(0);
-  // console.log(props.windowDay)
-  // const [currDay, setCurrDay] = useState(props.windowDay);
   const [selectMon, setSelectMon] = useState(true);
   const [selectTues, setSelectTues] = useState(true);
   const [selectWed, setSelectWed] = useState(true);

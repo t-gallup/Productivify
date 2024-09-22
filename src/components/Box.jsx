@@ -8,7 +8,6 @@ import { DateToKey } from "../functions/DateChanges.jsx";
 import { useEffect, useRef } from "react";
 
 function setDayOpenWindow(day, setOpenWindow, setWindowDay) {
-  console.log(day);
   setOpenWindow(true);
   setWindowDay(day);
 }
