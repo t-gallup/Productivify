@@ -7,14 +7,17 @@ import ToDoItem from "../components/ToDoItem";
 
 import EditWindow from "../components/EditWindow";
 import { DateToKey } from "../functions/DateChanges";
-
 function ToDoPage(props) {
   const [openWindow, setOpenWindow] = useState(false);
   const [editDescription, setEditDescription] = useState([]);
   const [editDay, setEditDay] = useState("");
   const [openEditWindow, setOpenEditWindow] = useState(false);
   const [windowDay, setWindowDay] = useState(DateToKey(new Date()));
-  
+  const handleOpenWindow = () => {
+    props.setIsToDo(true);
+    console.log(props.isToDo);
+    setOpenWindow(true);
+  };
   return (
     <>
       <Navbar
@@ -31,7 +34,8 @@ function ToDoPage(props) {
         setTaskList={props.setTaskList}
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
-        isToDo={true}
+        isToDo={props.isToDo}
+        setIsToDo={props.setIsToDo}
         windowDay={windowDay}
         setWindowDay={setWindowDay}
         isHabit={false}
@@ -62,7 +66,7 @@ function ToDoPage(props) {
           className="task-button"
           onClick={() => {
             props.user?.email
-              ? setOpenWindow(true)
+              ? handleOpenWindow()
               : alert("Sign in to start adding tasks!");
           }}
         >
@@ -133,6 +137,8 @@ ToDoPage.propTypes = {
   setToDoList: PropTypes.func,
   habitList: PropTypes.object,
   setHabitList: PropTypes.func,
+  isToDo: PropTypes.bool,
+  setIsToDo: PropTypes.func,
 };
 
 export default ToDoPage;

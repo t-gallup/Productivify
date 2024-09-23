@@ -15,6 +15,7 @@ function App() {
   const [toDoList, setToDoList] = useState({});
   const [habitList, setHabitList] = useState({});
   const [user, setUser] = useState(null);
+  const [isToDo, setIsToDo] = useState(false);
 
   useEffect(() => {
     const storedTaskList = JSON.parse(localStorage.getItem("userTaskList"));
@@ -60,6 +61,8 @@ function App() {
                 setToDoList={setToDoList}
                 habitList={habitList}
                 setHabitList={setHabitList}
+                isToDo={isToDo}
+                setIsToDo={setIsToDo}
               />
             }
           />
@@ -103,6 +106,8 @@ function App() {
                 setToDoList={setToDoList}
                 habitList={habitList}
                 setHabitList={setHabitList}
+                isToDo={isToDo}
+                setIsToDo={setIsToDo}
               />
             }
           />
@@ -119,6 +124,8 @@ function App() {
                 setToDoList={setToDoList}
                 habitList={habitList}
                 setHabitList={setHabitList}
+                isToDo={isToDo}
+                setIsToDo={setIsToDo}
               />
             }
           />

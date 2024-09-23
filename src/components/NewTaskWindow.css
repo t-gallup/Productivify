@@ -31,3 +31,8 @@
   margin-right: 0.5vh;
 }
 
+.switch-window {
+  position: fixed;
+  top: 27%;
+  left: 15%;
+}

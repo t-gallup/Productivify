@@ -106,6 +106,14 @@ function NewTaskWindow(props) {
       <div className="window-wrapper">
         <form onSubmit={handleSubmit}>
           <h1>Add a New To Do Item</h1>
+          {/* <button
+            className="switch-window"
+            onClick={() => {
+              props.setIsToDo(false);
+            }}
+          >
+            New Task
+          </button> */}
           <button
             className="close-button"
             onClick={() => {
@@ -264,6 +272,14 @@ function NewTaskWindow(props) {
       <div className="window-wrapper">
         <form onSubmit={handleSubmit}>
           <h1>Add a New Task</h1>
+          {/* <button
+            className="switch-window"
+            onClick={() => {
+              props.setIsToDo(true);
+            }}
+          >
+            New To-Do
+          </button> */}
           <button
             className="close-button"
             onClick={() => {
@@ -319,6 +335,7 @@ NewTaskWindow.propTypes = {
   toDoList: PropTypes.object,
   setToDoList: PropTypes.func,
   isToDo: PropTypes.bool,
+  setIsToDo: PropTypes.func,
   windowDay: PropTypes.string,
   setWindowDay: PropTypes.func,
   isHabit: PropTypes.bool,

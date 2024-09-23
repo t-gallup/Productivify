@@ -27,6 +27,11 @@ function CalendarPage(props) {
   const [windowDay, setWindowDay] = useState(DateToKey(currentDay));
   const [isToDo, setIsToDo] = useState(false);
 
+  const handleOpenWindow = () => {
+    props.setIsToDo(true);
+    setOpenWindow(true);
+  }
+
   useEffect(() => {
     auth.onAuthStateChanged((newUser) => {
       props.setUser(newUser);
@@ -74,6 +79,7 @@ function CalendarPage(props) {
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={false}
+        setIsToDo={props.setIsToDo}
         windowDay={windowDay}
         setWindowDay={setWindowDay}
         isHabit={false}
@@ -113,7 +119,7 @@ function CalendarPage(props) {
             className="task-button"
             onClick={() => {
               props.user?.email
-                ? setOpenWindow(true)
+                ? handleOpenWindow()
                 : alert("Sign in to start adding tasks!");
             }}
           >
@@ -269,6 +275,8 @@ CalendarPage.propTypes = {
   setToDoList: PropTypes.func,
   habitList: PropTypes.object,
   setHabitList: PropTypes.func,
+  isToDo: PropTypes.bool,
+  setIsToDo: PropTypes.func,
 };
 
 export default CalendarPage;

@@ -49,6 +49,7 @@ function HabitPage(props) {
         toDoList={props.toDoList}
         setToDoList={props.setToDoList}
         isToDo={false}
+        setIsToDo={props.setIsToDo}
         windowDay={windowDay}
         setWindowDay={setWindowDay}
         isHabit={true}
@@ -181,6 +182,7 @@ HabitPage.propTypes = {
   setToDoList: PropTypes.func,
   habitList: PropTypes.object,
   setHabitList: PropTypes.func,
+  setIsToDo: PropTypes.func,
 };
 
 export default HabitPage;

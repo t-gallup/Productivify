@@ -6,6 +6,12 @@
   align-items: center;
 }
 
+@media (prefers-color-scheme: light) {
+  .day-box {
+    border-color: black;
+  }
+}
+
 .day-num {
   text-align: center;
 }
@@ -27,6 +33,19 @@
 
 .day-button:hover {
   color: #2f4f4f;
+}
+
+@media (prefers-color-scheme: light) {
+  .day-button {
+    background-color: white !important;
+  }
+
+  .day-button:hover {
+    background-color: grey !important;
+  }
+  .day-num {
+    color: #213547;
+  }
 }
 
 .habit-container {
@@ -87,7 +106,21 @@
   text-align: center;
   background-color: #242424 !important;
   border: 0;
+  padding: 5px;
 }
+
+@media (prefers-color-scheme: light) {
+  .box-x {
+    background-color: white !important;
+    color: #213547;
+  }
+  .box-x:hover {
+    background-color: grey !important;
+  }
+}
+
+
+
 
 .check-miss {
   width: 25%;
