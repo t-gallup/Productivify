@@ -4,6 +4,7 @@
   border: solid;
   border-color: rgba(49, 49, 49, 0.2);
   align-items: center;
+  min-height: 18vh;
 }
 
 @media (prefers-color-scheme: light) {

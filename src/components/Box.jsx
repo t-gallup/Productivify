@@ -224,7 +224,7 @@ function Box({
           )}
         </div>
 
-        <div className="habit-container">
+        <div className="habit-container" style={{ display: (habitsMissed(habitList, key, setHabitList).props.children.length === 0 && habitsCompleted(habitList, key, setHabitList).props.children.length === 0) ? 'none' : 'block' }}>
           {(key === "-00-00") || (key === "") ? (
             ""
           ) : (
