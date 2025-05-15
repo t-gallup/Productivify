@@ -48,3 +48,20 @@ input {
   margin-bottom: 0;
   width: 10%;
 }
+
+.window-input {
+  height: 2.5vh;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .edit-button {
+    left: 35%;
+    top: 65%;
+  }
+
+  .delete-button {
+    left: 35%;
+    top: 75%;
+  }
+}

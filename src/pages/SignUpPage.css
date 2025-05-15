@@ -28,3 +28,28 @@
 .sign-up-header {
     margin: 0;
 }
+
+.sign-up-input {
+    height: 40%;
+}
+
+@media (max-width: 768px) {
+    .back-button {
+        top: 6%;
+        left: 5%;
+    }
+
+    .content-wrapper {
+        display: inline;
+    }
+    
+    .sign-in-email-wrapper {
+        width: 100%;
+        gap: 2.5vh;
+    }
+
+    .sign-in-buttons {
+        width: 100%;
+        padding: 40px 0;
+    }
+}

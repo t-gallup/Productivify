@@ -13,6 +13,7 @@
 .to-do-button-text {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 
@@ -25,4 +26,29 @@
 
 .button-inner-text {
     overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .to-do-ind-task-button {
+        padding: 5px 1px;
+    }
+
+    .check-box-div {
+        width: 35%;
+        height: 10px;
+        overflow: hidden;
+    }
+
+    .task-checkbox {
+        width: 35%;
+        height: 50%;
+    }
+
+    .task-description {
+        max-height: 100%
+    }
+
+    .task-time {
+        display: none;
+    }
 }

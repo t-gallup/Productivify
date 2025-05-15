@@ -26,3 +26,16 @@ li {
 .task-time {
     margin: 0;
 }
+
+@media (max-width: 768px) {
+    .ind-task-button {
+        padding: 5px 2px;
+    }
+
+    .task-time {
+        display: none;
+    }
+    .task-description {
+        text-align: left;
+    }
+}

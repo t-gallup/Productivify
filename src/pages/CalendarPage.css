@@ -31,6 +31,7 @@
 
 .month {
   display: flex;
+  align-items: center;
   width: 50%;
 }
 
@@ -60,4 +61,41 @@
 .weekdays {
   display: flex;
   justify-content: space-around;
+}
+
+@media (max-width: 768px) {
+  #root {
+    padding: 0;
+    margin: 5%;
+    width: 90%
+  }
+
+  h1 {
+    font-size: 2em !important;
+  }
+
+  .task-button {
+    width: 20vw;
+    padding: 5px;
+  }
+
+  .month {
+    width: 100%
+  }
+
+  .month-text {
+    padding: 7px 10px;
+  }
+  
+  .habit-container {
+    display: none !important;
+  }
+
+  .task-button {
+    height: 5vh;
+  }
+
+  .calendar {
+    padding-top: 7vh;
+  }
 }

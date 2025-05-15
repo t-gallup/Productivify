@@ -37,3 +37,42 @@
 .month {
     margin-bottom: 2vh;
 }
+
+@media (max-width: 768px) {
+    .habit-header-wrap {
+        padding-top: 3vh;
+    }
+
+    .habit-grid-box {
+        flex-direction: column;
+    }
+
+    .check-wrapper {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 17fr 3fr;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .circle-x {
+        height: 100% !important;
+    }
+
+    .x-wrapper {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 17fr 3fr;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .close-button {
+        left: 80%;
+        top: 20%;
+        padding: 3%;
+        border-radius: 60px;
+    }
+
+    .submit-button {
+        width: 50vw;
+    }
+}

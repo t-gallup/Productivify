@@ -94,6 +94,7 @@ function SignUpPage(props) {
               type="text"
               placeholder="Name"
               value={displayName}
+              className="sign-up-input"
               onChange={handleDisplayNameChange}
             ></input>
           </div>
@@ -103,6 +104,7 @@ function SignUpPage(props) {
               type="email"
               placeholder="Email"
               value={email}
+              className="sign-up-input"
               onChange={handleEmailChange}
             ></input>
           </div>
@@ -112,6 +114,7 @@ function SignUpPage(props) {
               type="password"
               placeholder="Password"
               value={password}
+              className="sign-up-input"
               onChange={handlePasswordChange}
             ></input>
           </div>
@@ -121,6 +124,7 @@ function SignUpPage(props) {
               type="password"
               placeholder="Confirm Password"
               value={passwordConfirm}
+              className="sign-up-input"
               onChange={handlePasswordConfirmChange}
             ></input>
           </div>

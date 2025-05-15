@@ -23,3 +23,13 @@
     text-align: center;
 }
 
+.to-do-input {
+    height: 2.5vh;
+}
+
+@media (max-width: 768px) {
+    .to-do-header-wrap {
+        padding-top: 3vh;
+    }
+}
+

@@ -89,6 +89,7 @@ function EditWindow(props) {
             id="newDay"
             name="newDay"
             value={newDay}
+            className="window-input"
             onChange={handleEditDayChange}
             disabled={newDay === "on-00-00" || newDay === "1111-11-11"}
           />
@@ -109,6 +110,7 @@ function EditWindow(props) {
             type="text"
             name="newDescription"
             value={newDescription}
+            className="window-input"
             onChange={handleEditDescriptionChange}
           />
           <h2>Estimated Completion Time</h2>
@@ -116,6 +118,7 @@ function EditWindow(props) {
             type="number"
             name="newTime"
             value={newTime}
+            className="window-input"
             onChange={handleEditTimeChange}
           />
         </div>
@@ -177,6 +180,7 @@ function EditWindow(props) {
             type="text"
             name="newDescription"
             value={newDescription}
+            className="window-input"
             onChange={handleEditDescriptionChange}
           />
           <h2>Habit Time per Day</h2>
@@ -184,6 +188,7 @@ function EditWindow(props) {
             type="number"
             name="newTime"
             value={newTime}
+            className="window-input"
             onChange={handleEditTimeChange}
           />
           <h2>Habit Days</h2>
@@ -302,6 +307,7 @@ function EditWindow(props) {
             type="date"
             name="newDay"
             value={newDay}
+            className="window-input"
             onChange={handleEditDayChange}
           />
           <h2>Task Description</h2>
@@ -309,6 +315,7 @@ function EditWindow(props) {
             type="text"
             name="newDescription"
             value={newDescription}
+            className="window-input"
             onChange={handleEditDescriptionChange}
           />
           <h2>Completion Time</h2>
@@ -316,6 +323,7 @@ function EditWindow(props) {
             type="number"
             name="newTime"
             value={newTime}
+            className="window-input"
             onChange={handleEditTimeChange}
           />
         </div>

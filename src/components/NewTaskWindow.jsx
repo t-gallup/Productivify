@@ -130,6 +130,7 @@ function NewTaskWindow(props) {
               name="date"
               id="date"
               value={props.windowDay}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -148,6 +149,7 @@ function NewTaskWindow(props) {
               type="text"
               name="taskDescription"
               value={taskDescription}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -156,6 +158,7 @@ function NewTaskWindow(props) {
               type="number"
               name="completionTime"
               value={completionTime}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -185,6 +188,7 @@ function NewTaskWindow(props) {
               type="text"
               name="taskDescription"
               value={taskDescription}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -193,6 +197,7 @@ function NewTaskWindow(props) {
               type="number"
               name="completionTime"
               value={completionTime}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -295,6 +300,7 @@ function NewTaskWindow(props) {
               type="date"
               name="date"
               value={props.windowDay}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -303,6 +309,7 @@ function NewTaskWindow(props) {
               type="text"
               name="taskDescription"
               value={taskDescription}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
@@ -311,6 +318,7 @@ function NewTaskWindow(props) {
               type="number"
               name="completionTime"
               value={completionTime}
+              className="window-input"
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
