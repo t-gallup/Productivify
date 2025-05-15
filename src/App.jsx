@@ -139,6 +139,9 @@ function App() {
                 setTaskList={setTaskList}
                 setToDoList={setToDoList}
                 setHabitList={setHabitList}
+                taskList={taskList}
+                toDoList={toDoList}
+                habitList={habitList}
               />
             }
           />
