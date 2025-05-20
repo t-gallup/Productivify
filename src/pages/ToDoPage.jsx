@@ -15,7 +15,6 @@ function ToDoPage(props) {
   const [windowDay, setWindowDay] = useState(DateToKey(new Date()));
   const handleOpenWindow = () => {
     props.setIsToDo(true);
-    console.log(props.isToDo);
     setOpenWindow(true);
   };
   return (
